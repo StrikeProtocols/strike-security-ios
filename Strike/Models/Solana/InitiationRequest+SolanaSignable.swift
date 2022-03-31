@@ -102,7 +102,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
     
     var createDataAccounTransactionInstructionData: Data {
         get throws {
-            guard let dataAccountCreationInfo = request.dataAccountCreationInfo else {
+            guard let dataAccountCreationInfo = initiation.dataAccountCreationInfo else {
                 throw SolanaError.invalidRequest(reason: "Missing data account creation")
             }
             return try Data(
@@ -168,7 +168,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
     
     var supplyInstructions: [SolanaInstructionBatch] {
         get throws {
-            switch request.details {
+            switch requestType {
             case .dAppTransactionRequest(let request):
                 return request.instructions
             default:
@@ -259,7 +259,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
 
     func signableData(approverPublicKey: String) throws -> Data {
         var instructions = [try createOpAccountInstruction]
-        if request.dataAccountCreationInfo != nil {
+        if initiation.dataAccountCreationInfo != nil {
             instructions.append(try createDataAccountInstruction)
         }
         instructions.append(try TransactionInstruction(

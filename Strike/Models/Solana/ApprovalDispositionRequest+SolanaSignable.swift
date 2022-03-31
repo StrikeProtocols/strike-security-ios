@@ -23,7 +23,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 3
         case .signersUpdate:
             return 5
-        .dAppTransactionRequest:
+        case .dAppTransactionRequest:
             return 0
         case .unknown:
             return 0

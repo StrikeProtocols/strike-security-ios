@@ -245,12 +245,12 @@ extension StrikeApi {
             try container.encode(initiatorSignature, forKey: .initiatorSignature)
             let opAccountSignatureInfo = SignatureInfo(
                 publicKey: try self.opAccountPublicKey.base58EncodedString,
-                signature: try Keychain.signatureForKey(for: self,  email: email, ephereamalPrivateKey: self.opAccountPrivateKey))
+                signature: try Keychain.signatureForKey(for: self,  email: email, ephemeralPrivateKey: self.opAccountPrivateKey))
             try container.encode(opAccountSignatureInfo, forKey: .opAccountSignatureInfo)
-            if self.request.dataAccountCreationInfo != nil && self.dataAccountPrivateKey != nil {
+            if self.initiation.dataAccountCreationInfo != nil && self.dataAccountPrivateKey != nil {
                 let dataAccountSignatureInfo = SignatureInfo(
                     publicKey: try self.dataAccountPublicKey.base58EncodedString,
-                    signature: try Keychain.signatureForKey(for: self, email: email, ephereamalPrivateKey: self.dataAccountPrivateKey!))
+                    signature: try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.dataAccountPrivateKey!))
                 try container.encode(dataAccountSignatureInfo, forKey: .dataAccountSignatureInfo)
                 try container.encode(try Keychain.signatures(for: self, email: email), forKey: .supplyInstructionInitiatorSignatures)
             } else {

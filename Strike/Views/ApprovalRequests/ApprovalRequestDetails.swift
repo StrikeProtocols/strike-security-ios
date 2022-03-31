@@ -122,7 +122,8 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         requestType: requestType,
                         blockhash: blockhash,
                         email: user.loginName,
-                        opAccountPrivateKey: Curve25519.Signing.PrivateKey()
+                        opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
+                        dataAccountPrivateKey: Curve25519.Signing.PrivateKey()
                     )
                 )
             }
@@ -163,7 +164,8 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         requestType: requestType,
                         blockhash: blockhash,
                         email: user.loginName,
-                        opAccountPrivateKey: Curve25519.Signing.PrivateKey()
+                        opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
+                        dataAccountPrivateKey: Curve25519.Signing.PrivateKey()
                     )
                 )
             }

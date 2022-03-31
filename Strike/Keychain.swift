@@ -170,10 +170,10 @@ extension Keychain {
         }
     }
     
-    static func signatureForKey(for signable: SolanaSignable, email: String, epheremalPrivateKey: Curve25519.Signing.PrivateKey) throws -> String {
+    static func signatureForKey(for signable: SolanaSignable, email: String, ephemeralPrivateKey: Curve25519.Signing.PrivateKey) throws -> String {
         let keyInfo = try getKeyInfoForEmail(email: email)
         let signData = try signable.signableData(approverPublicKey: keyInfo.encodedPublicKey)
-        let signature = try privateKey.signature(for: signData)
+        let signature = try ephemeralPrivateKey.signature(for: signData)
 
         return signature.base64EncodedString()
     }

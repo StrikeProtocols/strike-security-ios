@@ -43,10 +43,7 @@ class StrikeTests: XCTestCase {
     
     func testSignersUpdateInitiationRequest() throws {
         let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: MultisigAccountCreationInfo(
-                accountSize: 848,
-                minBalanceForRentExemption: 6792960
-            ),
+            opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
         let requestType: SolanaApprovalRequestType = getSignersUpdateRequest()
@@ -101,10 +98,7 @@ class StrikeTests: XCTestCase {
     
     func testBalanceAccountCreationInitiationRequest() throws {
         let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: MultisigAccountCreationInfo(
-                accountSize: 848,
-                minBalanceForRentExemption: 6792960
-            ),
+            opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
         let requestType: SolanaApprovalRequestType = getBalanceAccountCreationRequest()
@@ -144,10 +138,7 @@ class StrikeTests: XCTestCase {
     
     func testSolWithdrawalRequestInitiationRequest() throws {
         let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: MultisigAccountCreationInfo(
-                accountSize: 848,
-                minBalanceForRentExemption: 6792960
-            ),
+            opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
         let requestType: SolanaApprovalRequestType = getSolWithdrawalRequest()
@@ -187,10 +178,7 @@ class StrikeTests: XCTestCase {
     
     func testSplWithdrawalRequestInitiationRequest() throws {
         let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: MultisigAccountCreationInfo(
-                accountSize: 848,
-                minBalanceForRentExemption: 6792960
-            ),
+            opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
         let requestType: SolanaApprovalRequestType = getSplWithdrawalRequest()
@@ -230,10 +218,7 @@ class StrikeTests: XCTestCase {
     
     func testUSDCconversionRequestInitiationRequest() throws {
         let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: MultisigAccountCreationInfo(
-                accountSize: 848,
-                minBalanceForRentExemption: 6792960
-            ),
+            opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
         let requestType: SolanaApprovalRequestType = getConversionRequest()
@@ -259,16 +244,21 @@ class StrikeTests: XCTestCase {
     func testDAppTransactionRequestInitiationRequest() throws {
         let opAccountPk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "427bae33c6d5ccc230996ce101a176403a050ed961245bf426a796f2bb1a59b1".data(using: .hexadecimal)!)
         let dataAccountPk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "5ea459c4f52f9423695c91a9e2862810017d1f3a517d62d5932d8743240769f8".data(using: .hexadecimal)!)
+        
+        let initiation = MultisigOpInitiation(
+            opAccountCreationInfo: getOpAccountCreationInfo(),
+            dataAccountCreationInfo: MultisigAccountCreationInfo(
+                accountSize: 2696,
+                minBalanceForRentExemption: 19655040
+            )
+        )
+        let requestType: SolanaApprovalRequestType = getDAppTransactionRequest()
+        let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let initiationRequest = StrikeApi.InitiationRequest(
             disposition: .Approve,
-            request: MultisigOpInitiation(
-                details: getDAppTransactionRequest(),
-                opAccountCreationInfo: getOpAccountCreationInfo(),
-                dataAccountCreationInfo: MultisigAccountCreationInfo(
-                    accountSize: 2696,
-                    minBalanceForRentExemption: 19655040
-                )
-            ),
+            requestID: request.id,
+            initiation: initiation,
+            requestType: requestType,
             blockhash: getRecentBlockhash("HAmRrbJbQ99rhoyNwzdb2j5W9EheJ4bBNoGvDDfMCQcS"),
             email: "dont care",
             opAccountPrivateKey: opAccountPk,
