@@ -88,6 +88,7 @@ enum SolanaApprovalRequestType: Codable, Equatable {
     case conversionRequest(ConversionRequest)
     case signersUpdate(SignersUpdate)
     case balanceAccountCreation(BalanceAccountCreation)
+    case dAppTransactionRequest(DAppTransactionRequest)
     case unknown
 
     enum DetailsCodingKeys: String, CodingKey {
@@ -106,6 +107,8 @@ enum SolanaApprovalRequestType: Codable, Equatable {
             self = .signersUpdate(try SignersUpdate(from: decoder))
         case "BalanceAccountCreation":
             self = .balanceAccountCreation(try BalanceAccountCreation(from: decoder))
+        case "DAppTransactionRequest":
+            self = .dAppTransactionRequest(try DAppTransactionRequest(from: decoder))
         default:
             self = .unknown
         }
@@ -126,6 +129,9 @@ enum SolanaApprovalRequestType: Codable, Equatable {
         case .balanceAccountCreation(let balanceAccountCreation):
             try container.encode("BalanceAccountCreation", forKey: .type)
             try balanceAccountCreation.encode(to: encoder)
+        case .dAppTransactionRequest(let dAppTransactionRequest):
+            try container.encode("DAppTransactionRequest", forKey: .type)
+            try dAppTransactionRequest.encode(to: encoder)
         case .unknown:
             try container.encode("Unknown", forKey: .type)
         }
@@ -212,6 +218,12 @@ struct SignerInfo: Codable, Equatable {
     let email: String
 }
 
+struct SolanaDApp: Codable, Equatable {
+    let address: String
+    let name: String
+    let logo: String
+}
+
 struct SlotSignerInfo: Codable, Equatable {
     let slotId: UInt8
     let value: SignerInfo
@@ -229,6 +241,31 @@ struct ConversionRequest: Codable, Equatable {
     var symbolAndAmountInfo: SymbolAndAmountInfo
     var destination: DestinationAddress
     var destinationSymbolInfo: SymbolInfo
+    var signingData: SolanaSigningData
+}
+
+struct SolanaAccountMeta: Codable, Equatable {
+    var address: String
+    var signer: Bool
+    var writeable: Bool
+}
+
+struct SolanaInstruction: Codable, Equatable {
+    var programId: String
+    var accountMetas: [SolanaAccountMeta]
+    var data: String
+}
+
+struct SolanaInstructionBatch: Codable, Equatable {
+    var from: UInt8
+    var instructions: [SolanaInstruction]
+}
+
+struct DAppTransactionRequest: Codable, Equatable  {
+    var account: AccountInfo
+    var dAppInfo: SolanaDApp
+    var balanceChanges: [SymbolAndAmountInfo]
+    var instructions: [SolanaInstructionBatch]
     var signingData: SolanaSigningData
 }
 
@@ -262,6 +299,10 @@ struct MultisigOpInitiation: Codable, Equatable {
 
 protocol SolanaSignable {
     func signableData(approverPublicKey: String) throws -> Data
+}
+
+protocol SolanaSignableSupplyInstructions {
+    func signableSupplyInstructions(approverPublicKey: String) throws -> [Data]
 }
 
 #if DEBUG

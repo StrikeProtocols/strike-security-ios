@@ -225,12 +225,14 @@ extension StrikeApi {
         let blockhash: Blockhash
         let email: String
         let opAccountPrivateKey: Curve25519.Signing.PrivateKey
+        let dataAccountPrivateKey: Curve25519.Signing.PrivateKey?
 
         enum CodingKeys: String, CodingKey {
             case initiatorSignature
             case approvalDisposition
             case recentBlockhash
             case opAccountSignatureInfo
+            case dataAccountSignatureInfo
             case supplyInstructionInitiatorSignatures
         }
 
@@ -241,10 +243,19 @@ extension StrikeApi {
 
             let initiatorSignature = try Keychain.signature(for: self, email: email)
             try container.encode(initiatorSignature, forKey: .initiatorSignature)
-            let opAccountSignatureInfo = SignatureInfo(publicKey: try self.opAccountPublicKey.base58EncodedString,
-                                                       signature: try Keychain.signatureForKey(for: self, ephemeralPrivateKey: self.opAccountPrivateKey, email: email))
+            let opAccountSignatureInfo = SignatureInfo(
+                publicKey: try self.opAccountPublicKey.base58EncodedString,
+                signature: try Keychain.signatureForKey(for: self,  email: email, ephereamalPrivateKey: self.opAccountPrivateKey))
             try container.encode(opAccountSignatureInfo, forKey: .opAccountSignatureInfo)
-            try container.encode([String](), forKey: .supplyInstructionInitiatorSignatures)
+            if self.request.dataAccountCreationInfo != nil && self.dataAccountPrivateKey != nil {
+                let dataAccountSignatureInfo = SignatureInfo(
+                    publicKey: try self.dataAccountPublicKey.base58EncodedString,
+                    signature: try Keychain.signatureForKey(for: self, email: email, ephereamalPrivateKey: self.dataAccountPrivateKey!))
+                try container.encode(dataAccountSignatureInfo, forKey: .dataAccountSignatureInfo)
+                try container.encode(try Keychain.signatures(for: self, email: email), forKey: .supplyInstructionInitiatorSignatures)
+            } else {
+                try container.encode([String](), forKey: .supplyInstructionInitiatorSignatures)
+            }
         }
     }
 }

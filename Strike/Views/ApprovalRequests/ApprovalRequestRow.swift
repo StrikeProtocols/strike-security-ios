@@ -182,6 +182,8 @@ extension SolanaApprovalRequestType {
             return "Balance Account Creation"
         case .balanceAccountCreation:
             return "Stake Account Creation"
+        case .dAppTransactionRequest:
+            return "dApp Transaction"
         }
     }
 
@@ -199,6 +201,8 @@ extension SolanaApprovalRequestType {
             return "the addition of `\(signersUpdate.signer.value.name)`"
         case .balanceAccountCreation(let balanceAccountCreation):
             return "an account creation of \(balanceAccountCreation.accountInfo.name)"
+        case .dAppTransactionRequest(let dAppTransactionRequest):
+            return "a dApp transaction with \(dAppTransactionRequest.dAppInfo.name)"
         }
     }
 
@@ -214,6 +218,8 @@ extension SolanaApprovalRequestType {
             return Image(systemName: "iphone")
         case .balanceAccountCreation:
             return Image("policy")
+        case .dAppTransactionRequest:
+            return Image("conversion")
         }
     }
 }

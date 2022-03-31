@@ -23,6 +23,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 3
         case .signersUpdate:
             return 5
+        .dAppTransactionRequest:
+            return 0
         case .unknown:
             return 0
         }
@@ -80,6 +82,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     [request.slotUpdateType.toSolanaProgramValue()] +
                     request.signer.combinedBytes
                 )
+            case .dAppTransactionRequest:
+                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
             case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
@@ -97,6 +101,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                 return request.signingData
             case .signersUpdate(let request):
                 return request.signingData
+            case .dAppTransactionRequest:
+                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
             case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
@@ -184,6 +190,14 @@ extension UInt64 {
 }
 
 extension UInt32 {
+    
+    var bytes: [UInt8] {
+        var littleEndian = self.littleEndian
+        return withUnsafeBytes(of: &littleEndian) { Array($0) }
+    }
+}
+
+extension UInt16 {
     
     var bytes: [UInt8] {
         var littleEndian = self.littleEndian

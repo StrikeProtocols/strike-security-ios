@@ -44,6 +44,8 @@ struct ApprovalRequestItem: View {
             } detail: {
                 AccountCreationDetails(request: request, accountCreation: accountCreation)
             }
+        case .dAppTransactionRequest(let dAppTransactionRequest):
+            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         }
     }
 }

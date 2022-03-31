@@ -8,7 +8,7 @@
 import Foundation
 import CryptoKit
 
-extension StrikeApi.InitiationRequest: SolanaSignable {
+extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstructions {
 
     var opCode: UInt8 {
         switch requestType {
@@ -20,6 +20,8 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
             return 7
         case .signersUpdate:
             return 12
+        case .dAppTransactionRequest:
+            return 16
         default:
             return 0
         }
@@ -40,7 +42,16 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
         }
     }
     
-    var createAccountMeta: [Account.Meta] {
+    var dataAccountPublicKey: PublicKey {
+        get throws {
+            guard let privateKey = dataAccountPrivateKey else {
+                throw SolanaError.invalidRequest(reason: "Missing data account private key")
+            }
+            return try PublicKey(string: Base58.encode(privateKey.publicKey.rawRepresentation.bytes))
+        }
+    }
+    
+    var createOpAccountMeta: [Account.Meta] {
         get throws {
             try [
                 Account.Meta(publicKey: PublicKey(string: signingData.feePayer), isSigner: true, isWritable: true),
@@ -52,7 +63,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
     var createOpAccountInstruction: TransactionInstruction {
         get throws {
             try TransactionInstruction(
-                keys: try createAccountMeta,
+                keys: try createOpAccountMeta,
                 programId: SYS_PROGRAM_ID,
                 data: [UInt8](createOpAccounTransactionInstructionData)
             )
@@ -70,12 +81,45 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
         }
     }
     
+    var createDataAccountMeta: [Account.Meta] {
+        get throws {
+            try [
+                Account.Meta(publicKey: PublicKey(string: signingData.feePayer), isSigner: true, isWritable: true),
+                Account.Meta(publicKey: dataAccountPublicKey, isSigner: true, isWritable: true)
+            ]
+        }
+    }
+    
+    var createDataAccountInstruction: TransactionInstruction {
+        get throws {
+            try TransactionInstruction(
+                keys: try createDataAccountMeta,
+                programId: SYS_PROGRAM_ID,
+                data: [UInt8](createDataAccounTransactionInstructionData)
+            )
+        }
+    }
+    
+    var createDataAccounTransactionInstructionData: Data {
+        get throws {
+            guard let dataAccountCreationInfo = request.dataAccountCreationInfo else {
+                throw SolanaError.invalidRequest(reason: "Missing data account creation")
+            }
+            return try Data(
+                UInt32(0).bytes +
+                dataAccountCreationInfo.minBalanceForRentExemption.bytes +
+                dataAccountCreationInfo.accountSize.bytes +
+                signingData.walletProgramId.base58Bytes
+            )
+        }
+    }
+    
 
     var instructionData: Data {
         get throws {
             switch requestType {
             case .balanceAccountCreation(let request):
-                return try Data(
+                return Data(
                     [opCode] +
                     request.accountInfo.identifier.sha256HashBytes +
                     [request.accountSlot] +
@@ -108,8 +152,27 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                     [request.slotUpdateType.toSolanaProgramValue()] +
                     request.signer.combinedBytes
                 )
+            case .dAppTransactionRequest(let request):
+                return Data(
+                    [opCode] +
+                    request.account.identifier.sha256HashBytes +
+                    request.dAppInfo.address.base58Bytes +
+                    request.dAppInfo.name.sha256HashBytes +
+                    ([UInt8(request.instructions.map { $0.instructions.count }.reduce(0, +))])
+                )
             default:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
+            }
+        }
+    }
+    
+    var supplyInstructions: [SolanaInstructionBatch] {
+        get throws {
+            switch request.details {
+            case .dAppTransactionRequest(let request):
+                return request.instructions
+            default:
+                return []
             }
         }
     }
@@ -124,6 +187,8 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
             case .conversionRequest(let request):
                 return request.signingData
             case .signersUpdate(let request):
+                return request.signingData
+            case .dAppTransactionRequest(let request):
                 return request.signingData
             default:
                 throw SolanaError.invalidRequest(reason: "Unknown Initiation")
@@ -147,6 +212,14 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                 tokenMintAddress: request.symbolAndAmountInfo.symbolInfo.tokenMintAddress,
                 approverPublicKey: approverPublicKey
             )
+        case .dAppTransactionRequest:
+            return [
+                Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
+                Account.Meta(publicKey: try dataAccountPublicKey, isSigner: false, isWritable: true),
+                Account.Meta(publicKey: try PublicKey(string: signingData.walletAddress), isSigner: false, isWritable: false),
+                Account.Meta(publicKey: approverPublicKey, isSigner: true, isWritable: false),
+                Account.Meta(publicKey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false)
+            ]
         default:
             return [
                 Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
@@ -185,17 +258,77 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
 
 
     func signableData(approverPublicKey: String) throws -> Data {
+        var instructions = [try createOpAccountInstruction]
+        if request.dataAccountCreationInfo != nil {
+            instructions.append(try createDataAccountInstruction)
+        }
+        instructions.append(try TransactionInstruction(
+            keys: instructionAccountMeta(approverPublicKey: try PublicKey(string: approverPublicKey)),
+            programId: PublicKey(string: signingData.walletProgramId),
+            data: [UInt8](instructionData)
+        ))
         return try Transaction.compileMessage(
-            feePayer: try PublicKey(string: signingData.feePayer),
+            feePayer: PublicKey(string: signingData.feePayer),
             recentBlockhash: blockhash.value,
-            instructions: [
-                createOpAccountInstruction,
-                TransactionInstruction(
-                    keys: instructionAccountMeta(approverPublicKey: try PublicKey(string: approverPublicKey)),
-                    programId: PublicKey(string: signingData.walletProgramId),
-                    data: [UInt8](instructionData)
-                )
-            ]
+            instructions: instructions
         ).serialize()
+    }
+    
+    func signableSupplyInstructions(approverPublicKey: String) throws -> [Data] {
+        try supplyInstructions.map {
+            try Transaction.compileMessage(
+                feePayer: try PublicKey(string: signingData.feePayer),
+                recentBlockhash: blockhash.value,
+                instructions: [TransactionInstruction(
+                    keys: [
+                        Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
+                        Account.Meta(publicKey: try dataAccountPublicKey, isSigner: false, isWritable: true),
+                        Account.Meta(publicKey: try PublicKey(string: approverPublicKey), isSigner: true, isWritable: false)
+                    ],
+                    programId: try PublicKey(string: signingData.walletProgramId),
+                    data: [UInt8]($0.combinedBytes)
+                    )
+                ]
+            ).serialize()
+        }
+    }
+}
+
+
+extension SolanaAccountMeta {
+    var flags: UInt8 {
+        return (writeable ? 1 : 0) + (signer ? 2 : 0)
+    }
+    
+    var combinedBytes: [UInt8] {
+        return [flags] + address.base58Bytes
+    }
+}
+
+extension SolanaInstructionBatch {
+    
+    var combinedBytes: [UInt8] {
+        return [UInt8](Data(
+            [28] +
+            ([from]) +
+            UInt16(instructions.count).bytes +
+            (instructions.flatMap(\.combinedBytes) as [UInt8])
+        ))
+    }
+}
+
+extension SolanaInstruction {
+    
+    var combinedBytes: [UInt8] {
+        guard let b64DecodedData = Data(base64Encoded: data) else {
+            return []
+        }
+        return [UInt8](Data(
+            programId.base58Bytes +
+            (UInt16(accountMetas.count).bytes) +
+            (accountMetas.flatMap(\.combinedBytes) as [UInt8]) +
+            (UInt16(b64DecodedData.count).bytes) +
+            Data(base64Encoded: data)!
+        ))
     }
 }

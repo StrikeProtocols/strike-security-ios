@@ -155,20 +155,30 @@ extension Keychain {
 
 extension Keychain {
     static func signature(for signable: SolanaSignable, email: String) throws -> String {
-        guard let privateKeyData = load(account: email, service: privateKeyService) else {
-            throw KeyError.noPrivateKey
-        }
+        let keyInfo = try getKeyInfoForEmail(email: email)
+        let signData = try signable.signableData(approverPublicKey: keyInfo.encodedPublicKey)
+        let signature = try keyInfo.privateKey.signature(for: signData)
 
-        let privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: privateKeyData)
-        let publicKeyData = privateKey.publicKey.rawRepresentation
-        let encodedPublicKey = Base58.encode(publicKeyData.bytes)
-        let signData = try signable.signableData(approverPublicKey: encodedPublicKey)
+        return signature.base64EncodedString()
+    }
+    
+    static func signatures(for signable: SolanaSignableSupplyInstructions, email: String) throws -> [String] {
+        let keyInfo = try getKeyInfoForEmail(email: email)
+        return try signable.signableSupplyInstructions(approverPublicKey: keyInfo.encodedPublicKey).map {
+            let signature = try keyInfo.privateKey.signature(for: $0)
+            return signature.base64EncodedString()
+        }
+    }
+    
+    static func signatureForKey(for signable: SolanaSignable, email: String, epheremalPrivateKey: Curve25519.Signing.PrivateKey) throws -> String {
+        let keyInfo = try getKeyInfoForEmail(email: email)
+        let signData = try signable.signableData(approverPublicKey: keyInfo.encodedPublicKey)
         let signature = try privateKey.signature(for: signData)
 
         return signature.base64EncodedString()
     }
     
-    static func signatureForKey(for signable: SolanaSignable, ephemeralPrivateKey: Curve25519.Signing.PrivateKey, email: String) throws -> String {
+    private static func getKeyInfoForEmail(email: String) throws -> (privateKey: Curve25519.Signing.PrivateKey, encodedPublicKey: String) {
         guard let privateKeyData = load(account: email, service: privateKeyService) else {
             throw KeyError.noPrivateKey
         }
@@ -176,9 +186,6 @@ extension Keychain {
         let privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: privateKeyData)
         let publicKeyData = privateKey.publicKey.rawRepresentation
         let encodedPublicKey = Base58.encode(publicKeyData.bytes)
-        let signData = try signable.signableData(approverPublicKey: encodedPublicKey)
-        let signature = try ephemeralPrivateKey.signature(for: signData)
-
-        return signature.base64EncodedString()
+        return (privateKey, encodedPublicKey)
     }
 }

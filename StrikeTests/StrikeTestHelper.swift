@@ -144,6 +144,7 @@ extension StrikeTests {
             )
         )
     }
+
     func getConversionRequest() -> SolanaApprovalRequestType {
         return .conversionRequest(
             ConversionRequest(
@@ -183,6 +184,51 @@ extension StrikeTests {
         )
     }
     
+    func getDAppTransactionRequest() -> SolanaApprovalRequestType {
+        return .dAppTransactionRequest(
+            DAppTransactionRequest(
+                account: AccountInfo(
+                    name: "Account 1",
+                    identifier: "e5792728-0ba8-4332-8d2d-bd86cab1fbb6",
+                    accountType: AccountType.BalanceAccount,
+                    address: "51XimWWEALnZ2hsybTY2kLeLSwDuKkRMyQvZuen93LHn"
+                ),
+                dAppInfo: SolanaDApp(
+                    address: "ECGifmb7hqUCePXgs6Df5Vrpip9QZXSyQfqLHp8vueYm",
+                    name: "DApp Name",
+                    logo: "dapp-icon"
+                ),
+                balanceChanges: [],
+                instructions: [
+                    SolanaInstructionBatch(
+                        from: 0,
+                        instructions: [
+                            SolanaInstruction(
+                                programId: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+                                accountMetas: [
+                                    SolanaAccountMeta(address: "51XimWWEALnZ2hsybTY2kLeLSwDuKkRMyQvZuen93LHn", signer: true, writeable: true),
+                                    SolanaAccountMeta(address: "28u8Cv5HrYgxYe96xj3rH19P2wMZN9Z77b3jqwRFsdP3", signer: false, writeable: true),
+                                    SolanaAccountMeta(address: "51XimWWEALnZ2hsybTY2kLeLSwDuKkRMyQvZuen93LHn", signer: true, writeable: true),
+                                    SolanaAccountMeta(address: "GcrfZehbg9fYkZ9C8EjTTh2gZ1dkpyJQUzQmWTKXN837", signer: false, writeable: false),
+                                    SolanaAccountMeta(address: "11111111111111111111111111111111", signer: false, writeable: false),
+                                    SolanaAccountMeta(address: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", signer: false, writeable: false),
+                                    SolanaAccountMeta(address: "SysvarRent111111111111111111111111111111111", signer: false, writeable: false),
+                                ],
+                                data: "AQIDrA=="
+                            )
+                        ]
+                    )
+                ],
+                signingData: SolanaSigningData(
+                    feePayer: "87VXbkJsqdDvXYfDBtS4kW4TcFor7ogofZXbXjT7t7AU",
+                    walletProgramId: "GPD4r7wKZkaqoVKeJwvwNp6RECKytDTmxmxNe6UE6n2d",
+                    multisigOpAccountAddress: "11111111111111111111111111111111",
+                    walletAddress: "J3JWJ7K5nCcUxce9MyXJxXZG3LxSmAuzwWaQqcbWCeP8"
+                )
+            )
+        )
+    }
+    
     
     func getWalletApprovalRequest(_ requestType: SolanaApprovalRequestType) -> WalletApprovalRequest {
         return WalletApprovalRequest(
@@ -211,6 +257,13 @@ extension StrikeTests {
             numberOfApprovalsReceived: 1,
             numberOfDeniesReceived: 1,
             details: .multisigOpInitiation(initiation, requestType: requestType)
+        )
+    }
+    
+    func getOpAccountCreationInfo() -> MultisigAccountCreationInfo {
+        return MultisigAccountCreationInfo(
+            accountSize: 848,
+            minBalanceForRentExemption: 6792960
         )
     }
     

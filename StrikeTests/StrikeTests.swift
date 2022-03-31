@@ -59,7 +59,8 @@ class StrikeTests: XCTestCase {
             requestType: requestType,
             blockhash: getRecentBlockhash("J3u7zr89XajLDc7KN97dkwBeaBEwrM9ksHzd2MnkfnGX"),
             email: "dont care",
-            opAccountPrivateKey: pk
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
@@ -116,7 +117,8 @@ class StrikeTests: XCTestCase {
             requestType: requestType,
             blockhash: getRecentBlockhash("9ZcVaD3iwrTCcEUU8RDWSNFhJfhqXDRhWgahgU2QrDqG"),
             email: "dont care",
-            opAccountPrivateKey: pk
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
@@ -158,7 +160,8 @@ class StrikeTests: XCTestCase {
             requestType: requestType,
             blockhash: getRecentBlockhash("GwH732RyF7V5vXFuCXsoU5ijurTdCtm9qAMZ6WJWeVvN"),
             email: "dont care",
-            opAccountPrivateKey: pk
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
@@ -200,7 +203,8 @@ class StrikeTests: XCTestCase {
             requestType: requestType,
             blockhash: getRecentBlockhash("8AJmcSXpfahcEfbL9cUq271oYvNVUNfs2gprAMaNB4Hr"),
             email: "dont care",
-            opAccountPrivateKey: pk
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
@@ -242,12 +246,44 @@ class StrikeTests: XCTestCase {
             requestType: requestType,
             blockhash: getRecentBlockhash("4fkgvna8G3TPwHiBeWG6Hx6aTHx3qthuBAyBxVeYLD5P"),
             email: "dont care",
-            opAccountPrivateKey: pk
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
             try initiationRequest.signableData(approverPublicKey: "6bpAbKqWrtXBtdnWqA8YSybGTeyD91u9MNzQuP7641MH").toHexString(),
             "0301090ed2c2e3ac53223ce6b5a6e04fe0f98071cf10a62646b6c1c100f9829afcced04e17ce130f4d1b123ff7f5f840aee4e9fa5665106de0cf2d1245c2b60f6ade6e245335831f99da167bf80d87be098dbaafc9309035be4aedd53460c3571c05b6a0d1e5bffc491a1b7890805d162a2cf8f0a2facae1df8579eddfed575e44f958108e829493f87ba7dc9497154a2cf8e656ee9979277f9ac88b5570775e7cb447d11bbc7e99fc43d0c442a698780fa1c7e4bcfbe5f100df263390ef0ab695e1b85aa1a993efade361c637af59e4d387db1aec381df43083f38e789f4bd57280889906a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b21000000008ac94d970e27bc29711d382b1d5fac3fe82f590485b065e57fcc6e83424110cd000000000000000000000000000000000000000000000000000000000000000006ddf6e1d765a193d9cbe146ceeb79ac1cb485ed5f5b37913a8cf5857eff00a906a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a000000008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f859a78bdd1907176367f56f7fab4bee90dabaa7372794fb0403f75f2a9658099847368087b86f466669f67bd484fc7ff4e7efe78ddff6e3f6abb399becabd8603360209020001340000000000a76700000000005003000000000000a78bdd1907176367f56f7fab4bee90dabaa7372794fb0403f75f2a96580998470d0d010503060207080400090a0b0c4907138543b25e89429dae0ec18a0fa198dc5006898f91b3b99d80a58d65bcdff9d00065cd1d00000000455c311d68d6d25a36bb09d58c4f62e6e637031c29b7fd3bd205b658500739cf"
+        )
+    }
+    
+    func testDAppTransactionRequestInitiationRequest() throws {
+        let opAccountPk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "427bae33c6d5ccc230996ce101a176403a050ed961245bf426a796f2bb1a59b1".data(using: .hexadecimal)!)
+        let dataAccountPk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "5ea459c4f52f9423695c91a9e2862810017d1f3a517d62d5932d8743240769f8".data(using: .hexadecimal)!)
+        let initiationRequest = StrikeApi.InitiationRequest(
+            disposition: .Approve,
+            request: MultisigOpInitiation(
+                details: getDAppTransactionRequest(),
+                opAccountCreationInfo: getOpAccountCreationInfo(),
+                dataAccountCreationInfo: MultisigAccountCreationInfo(
+                    accountSize: 2696,
+                    minBalanceForRentExemption: 19655040
+                )
+            ),
+            blockhash: getRecentBlockhash("HAmRrbJbQ99rhoyNwzdb2j5W9EheJ4bBNoGvDDfMCQcS"),
+            email: "dont care",
+            opAccountPrivateKey: opAccountPk,
+            dataAccountPrivateKey: dataAccountPk
+        )
+        
+        XCTAssertEqual(
+            try initiationRequest.signableData(approverPublicKey: "8Wy7f6iLogS2jjqsAmqwipYG8SLqoQo9JktJ6ogPYE8E").toHexString(),
+            "0401040869ab8cb05413af9614f898a1f1fdfbc07e7ad5eb2eb1d0f1c49f448bd179c71522e751350f46e9e376632755acf9e726dd509d1727eb393633f2a55fef09d8c63bf5de3a06b66133071d3e95c0089cecb839508044a870e532f0d455cd085a4e6faf19e34b077fa6fc0aa169772175f79e48702c0e16b08386ab4417fdda690ffd2da1e6ebb413150f6060185bd26c1cf68ec83f22c951da306f4806a4bf1cbf06a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b21000000000000000000000000000000000000000000000000000000000000000000000000e48fb9a24efc096601390bd1e6520fe5fc7334261760edd323ee24bfb2bebaeaf03b741fa589f8d771794b55f708641c8f3804528d3f75d8d824e0734c2f94fb0306020001340000000000a76700000000005003000000000000e48fb9a24efc096601390bd1e6520fe5fc7334261760edd323ee24bfb2bebaea06020002340000000080e92b0100000000880a000000000000e48fb9a24efc096601390bd1e6520fe5fc7334261760edd323ee24bfb2bebaea070501020403056210207cd1182db29dea5667c9b5fac4d2c23a19cd6283b6d68de2291f9ba50b6869c40b1781602bc1c83ab6c10cc39633b6e721ffbdfb61006557ee2132709919f62e90c13b0d471b592c2984568133a41676460f72c885db57ad26bd5b628f938201"
+        )
+        let signableInstructions = try initiationRequest.signableSupplyInstructions(approverPublicKey: "8Wy7f6iLogS2jjqsAmqwipYG8SLqoQo9JktJ6ogPYE8E")
+        XCTAssertEqual(signableInstructions.count, 1)
+        XCTAssertEqual(
+            signableInstructions[0].toHexString(),
+            "0201010569ab8cb05413af9614f898a1f1fdfbc07e7ad5eb2eb1d0f1c49f448bd179c7156faf19e34b077fa6fc0aa169772175f79e48702c0e16b08386ab4417fdda690f22e751350f46e9e376632755acf9e726dd509d1727eb393633f2a55fef09d8c63bf5de3a06b66133071d3e95c0089cecb839508044a870e532f0d455cd085a4ee48fb9a24efc096601390bd1e6520fe5fc7334261760edd323ee24bfb2bebaeaf03b741fa589f8d771794b55f708641c8f3804528d3f75d8d824e0734c2f94fb01040302030193021c0001008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f8590700033b917baa190d282c5d8558f14b3fb88767b12c9d44af0c255fc22788a7b6cea90110e1b08cab22278dcde5c7cc8817ba98806a9c6fc6676c0a155e2badda54373e033b917baa190d282c5d8558f14b3fb88767b12c9d44af0c255fc22788a7b6cea900e80ec9d9255634baed16a97a0a5f3e306a4201610e3822ae823060f5dc440fde0000000000000000000000000000000000000000000000000000000000000000000006ddf6e1d765a193d9cbe146ceeb79ac1cb485ed5f5b37913a8cf5857eff00a90006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a000000000400010203ac"
         )
     }
 
