@@ -46,6 +46,8 @@
 		3D61A0FC2655B4FF00AD1EE7 /* SignedInNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61A0FA2655B4FF00AD1EE7 /* SignedInNavigationView.swift */; };
 		3D61A0FE2655B50700AD1EE7 /* MessageSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61A0FD2655B50700AD1EE7 /* MessageSupport.swift */; };
 		3D633E162748656500BACCCE /* BiometryCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D633E152748656500BACCCE /* BiometryCheck.swift */; };
+		3D7FFFED27FA0F7D003B3F48 /* DAppTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FFFEC27FA0F7D003B3F48 /* DAppTransactionRow.swift */; };
+		3D7FFFEF27FA0F88003B3F48 /* DAppTransactionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FFFEE27FA0F88003B3F48 /* DAppTransactionDetails.swift */; };
 		3D8CA666272C5E1900C68657 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D8CA665272C5E1900C68657 /* Theme.xcassets */; };
 		3DA133A526B1AEB300BB4AF4 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA133A426B1AEB300BB4AF4 /* Profile.swift */; };
 		3DAA26F0262F5147000F453D /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA26EF262F5147000F453D /* PrimaryButtonStyle.swift */; };
@@ -155,6 +157,8 @@
 		3D61A0FA2655B4FF00AD1EE7 /* SignedInNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignedInNavigationView.swift; sourceTree = "<group>"; };
 		3D61A0FD2655B50700AD1EE7 /* MessageSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSupport.swift; sourceTree = "<group>"; };
 		3D633E152748656500BACCCE /* BiometryCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryCheck.swift; sourceTree = "<group>"; };
+		3D7FFFEC27FA0F7D003B3F48 /* DAppTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppTransactionRow.swift; sourceTree = "<group>"; };
+		3D7FFFEE27FA0F88003B3F48 /* DAppTransactionDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppTransactionDetails.swift; sourceTree = "<group>"; };
 		3D8CA665272C5E1900C68657 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
 		3DA133A426B1AEB300BB4AF4 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		3DAA26EF262F5147000F453D /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 				3DAF53B7262E1402000DD558 /* ApprovalRequestDetails.swift */,
 				3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */,
 				3DB7F9BF26D6C2CD00A49B4E /* UnknownRequestRow.swift */,
+				3D7FFFEB27FA0F4E003B3F48 /* DAppTransaction */,
 				3DB995F927EB74E9005655F0 /* AccountCreation */,
 				3DB995F427EB71D7005655F0 /* SignerUpdate */,
 				3DB7F9BA26D6C0E100A49B4E /* Conversion */,
@@ -390,6 +395,15 @@
 				3DB995FE27EE1804005655F0 /* BiometryError.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		3D7FFFEB27FA0F4E003B3F48 /* DAppTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				3D7FFFEC27FA0F7D003B3F48 /* DAppTransactionRow.swift */,
+				3D7FFFEE27FA0F88003B3F48 /* DAppTransactionDetails.swift */,
+			);
+			path = DAppTransaction;
 			sourceTree = "<group>";
 		};
 		3D88B02D2640647100090749 /* Withdrawal */ = {
@@ -699,6 +713,7 @@
 				3D1C761927D8501C0016BB32 /* PublicKey.swift in Sources */,
 				3DAA26F6262F5156000F453D /* DestructiveButtonStyle.swift in Sources */,
 				3D311D57260A3A1A007A0B98 /* MockAuthProvider.swift in Sources */,
+				3D7FFFEF27FA0F88003B3F48 /* DAppTransactionDetails.swift in Sources */,
 				3DB995FD27EB79A4005655F0 /* AccountCreationDetails.swift in Sources */,
 				3D11A60B275851BA008C03B1 /* WalletConnected.swift in Sources */,
 				3D11A60027580CD2008C03B1 /* CaptureController.swift in Sources */,
@@ -726,6 +741,7 @@
 				3D3D6D102616447200FEEE0B /* FilledButtonStyle.swift in Sources */,
 				3D11A60D27585F72008C03B1 /* ImageLoader.swift in Sources */,
 				3DEC0C8F2641B4DB00309A0F /* FactsSection.swift in Sources */,
+				3D7FFFED27FA0F7D003B3F48 /* DAppTransactionRow.swift in Sources */,
 				3D311D45260A336A007A0B98 /* HelpButton.swift in Sources */,
 				3DA133A526B1AEB300BB4AF4 /* Profile.swift in Sources */,
 				3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift in Sources */,
@@ -1354,8 +1370,8 @@
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
-				SOLANA_COMMITMENT = confirmed;
-				SOLANA_RPC_URL = "https://solana-validator-demo1.strikeprotocols.com";
+				SOLANA_COMMITMENT = finalized;
+				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1476,8 +1492,8 @@
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
-				SOLANA_COMMITMENT = confirmed;
-				SOLANA_RPC_URL = "https://solana-validator-demo1.strikeprotocols.com";
+				SOLANA_COMMITMENT = finalized;
+				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;

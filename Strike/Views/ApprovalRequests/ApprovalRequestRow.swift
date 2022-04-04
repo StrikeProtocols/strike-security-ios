@@ -237,7 +237,7 @@ extension SolanaApprovalRequestType {
         case .wrapConversionRequest(let wrapConversion):
             return "a conversion of \(wrapConversion.symbolAndAmountInfo.formattedAmount) \(wrapConversion.symbolAndAmountInfo.symbolInfo.symbol) to \(wrapConversion.destinationSymbolInfo.symbol)"
         case .dAppTransactionRequest(let dAppTransactionRequest):
-            return "a dApp transaction with \(dAppTransactionRequest.dAppInfo.name)"
+            return "a dApp transaction with \(dAppTransactionRequest.dappInfo.name)"
         case .loginApproval:
             return "Login Approval"
         }

@@ -33,16 +33,22 @@ struct ApprovalRequestItem: View {
                 ConversionDetails(request: request, conversion: conversion)
             }
         case .signersUpdate(let signersUpdate):
-            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher) {
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
                 SignerUpdateRow(signersUpdate: signersUpdate)
             } detail: {
                 SignerUpdateDetails(request: request, signersUpdate: signersUpdate)
             }
         case .balanceAccountCreation(let accountCreation):
-            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher) {
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
                 AccountCreationRow(accountCreation: accountCreation)
             } detail: {
                 AccountCreationDetails(request: request, accountCreation: accountCreation)
+            }
+        case .dAppTransactionRequest(let dAppTransactionRequest):
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                DAppTransactionRow(transactionRequest: dAppTransactionRequest)
+            } detail: {
+                DAppTransactionDetails(request: request, transactionRequest: dAppTransactionRequest)
             }
         case .balanceAccountNameUpdate(let balanceAccountNameUpdate):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
@@ -57,8 +63,6 @@ struct ApprovalRequestItem: View {
         case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .splTokenAccountCreation(let splTokenAccountCreation):
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .dAppTransactionRequest(let dAppTransactionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .wrapConversionRequest(let wrapConversionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)

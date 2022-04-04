@@ -170,8 +170,8 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
                 return Data(
                     [opCode] +
                     request.account.identifier.sha256HashBytes +
-                    request.dAppInfo.address.base58Bytes +
-                    request.dAppInfo.name.sha256HashBytes +
+                    request.dappInfo.address.base58Bytes +
+                    request.dappInfo.name.sha256HashBytes +
                     ([UInt8(request.instructions.map { $0.instructions.count }.reduce(0, +))])
                 )
             case .balanceAccountNameUpdate(let request):
@@ -403,7 +403,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
 
 extension SolanaAccountMeta {
     var flags: UInt8 {
-        return (writeable ? 1 : 0) + (signer ? 2 : 0)
+        return (writable ? 1 : 0) + (signer ? 2 : 0)
     }
     
     var combinedBytes: [UInt8] {
