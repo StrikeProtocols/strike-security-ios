@@ -39,9 +39,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 12
         case .splTokenAccountCreation:
             return 13
-        case .dAppTransactionRequest:
-            return 0
-        case .unknown:
+        default:
             return 0
         }
     }
@@ -139,9 +137,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     [request.slotUpdateType.toSolanaProgramValue()] +
                     request.signer.combinedBytes
                 )
-            case .dAppTransactionRequest:
-                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
-            case .unknown:
+            default:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
         }
@@ -174,9 +170,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                 return request.signingData
             case .signersUpdate(let request):
                 return request.signingData
-            case .dAppTransactionRequest:
-                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
-            case .unknown:
+            default:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
         }
@@ -194,21 +188,26 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
     }
 
     func signableData(approverPublicKey: String) throws -> Data {
-        return try Transaction.compileMessage(
-            feePayer: try PublicKey(string: signingData.feePayer),
-            recentBlockhash: blockhash.value,
-            instructions: [
-                TransactionInstruction(
-                    keys: [
-                        Account.Meta(publicKey: try PublicKey(string: signingData.multisigOpAccountAddress), isSigner: false, isWritable: true),
-                        Account.Meta(publicKey: PublicKey(string: approverPublicKey), isSigner: true, isWritable: false),
-                        Account.Meta(publicKey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false)
-                    ],
-                    programId: PublicKey(string: signingData.walletProgramId),
-                    data: [UInt8](transactionInstructionData)
-                )
-            ]
-        ).serialize()
+        switch requestType {
+        case .loginApproval(let request):
+            return request.jwtToken.data(using: .utf8)!
+        default:
+            return try Transaction.compileMessage(
+                feePayer: try PublicKey(string: signingData.feePayer),
+                recentBlockhash: blockhash.value,
+                instructions: [
+                    TransactionInstruction(
+                        keys: [
+                            Account.Meta(publicKey: try PublicKey(string: signingData.multisigOpAccountAddress), isSigner: false, isWritable: true),
+                            Account.Meta(publicKey: PublicKey(string: approverPublicKey), isSigner: true, isWritable: false),
+                            Account.Meta(publicKey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false)
+                        ],
+                        programId: PublicKey(string: signingData.walletProgramId),
+                        data: [UInt8](transactionInstructionData)
+                    )
+                ]
+            ).serialize()
+        }
     }
 }
 

@@ -97,6 +97,7 @@ enum SolanaApprovalRequestType: Codable, Equatable {
     case walletConfigPolicyUpdate(WalletConfigPolicyUpdate)
     case splTokenAccountCreation(SPLTokenAccountCreation)
     case dAppTransactionRequest(DAppTransactionRequest)
+    case loginApproval(LoginApproval)
     case unknown
 
     enum DetailsCodingKeys: String, CodingKey {
@@ -133,6 +134,8 @@ enum SolanaApprovalRequestType: Codable, Equatable {
             self = .splTokenAccountCreation(try SPLTokenAccountCreation(from: decoder))
         case "DAppTransactionRequest":
             self = .dAppTransactionRequest(try DAppTransactionRequest(from: decoder))
+        case "LoginApproval":
+            self = .loginApproval(try LoginApproval(from: decoder))
         default:
             self = .unknown
         }
@@ -180,6 +183,9 @@ enum SolanaApprovalRequestType: Codable, Equatable {
         case .dAppTransactionRequest(let dAppTransactionRequest):
             try container.encode("DAppTransactionRequest", forKey: .type)
             try dAppTransactionRequest.encode(to: encoder)
+        case .loginApproval(let loginApproval):
+            try container.encode("LoginApproval", forKey: .type)
+            try loginApproval.encode(to: encoder)
         case .unknown:
             try container.encode("Unknown", forKey: .type)
         }
@@ -425,6 +431,10 @@ protocol SolanaSignable {
 
 protocol SolanaSignableSupplyInstructions {
     func signableSupplyInstructions(approverPublicKey: String) throws -> [Data]
+}
+
+struct LoginApproval: Codable, Equatable  {
+    var jwtToken: String
 }
 
 #if DEBUG

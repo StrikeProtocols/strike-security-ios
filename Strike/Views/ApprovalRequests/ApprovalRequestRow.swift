@@ -201,6 +201,8 @@ extension SolanaApprovalRequestType {
             return "SPL Token Account Creation"
         case .dAppTransactionRequest:
             return "dApp Transaction"
+        case .loginApproval:
+            return "Login Approval"
         }
     }
 
@@ -236,6 +238,8 @@ extension SolanaApprovalRequestType {
             return "a conversion of \(wrapConversion.symbolAndAmountInfo.formattedAmount) \(wrapConversion.symbolAndAmountInfo.symbolInfo.symbol) to \(wrapConversion.destinationSymbolInfo.symbol)"
         case .dAppTransactionRequest(let dAppTransactionRequest):
             return "a dApp transaction with \(dAppTransactionRequest.dAppInfo.name)"
+        case .loginApproval:
+            return "Login Approval"
         }
     }
 
@@ -269,6 +273,8 @@ extension SolanaApprovalRequestType {
             return Image("policy")
         case .dAppTransactionRequest:
             return Image("conversion")
+        case .loginApproval:
+            return Image("policy")
         }
     }
 }

@@ -728,5 +728,21 @@ class StrikeTests: XCTestCase {
             "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34e6e137f1b3e582e55db0f594a6cb6f05d5a08fc71d7413042921bf24f72e73ebe7b32e6d93f1c1f4dbb3409025e13c12a5435a91acd65bae3a898d0c89f086e606a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000005415f4b0cb8304a7975aa7869199943d71dafffc5b9d93f9d7b796f4618bf50c069cb21b4742b9d9525d977328dbc26c920364dc56d70bb6abd30f5c7ddae3d010403020103220901a15ac12f9dcfdaeea5d80de21a6e3195288f17d4a57f9835151301ed7061a545"
         )
     }
+    
+    func testLoginApproval() throws {
+        let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6IlNvbHIifQ.SWCJDd6B_m7xr_puQH-wgbxvXyJYXH9lTpldOU0eQKc"
+        let request = getWalletApprovalRequest(getLoginApproval(jwtToken))
+        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
+            disposition: .Approve,
+            requestID: request.id,
+            requestType: request.requestType,
+            blockhash: getRecentBlockhash("AyQ8biRdSG1koAMyRVBQGp3NG6NGZtNZMUAxcEpydqFP"),
+            email: "dont care"
+        )
+        XCTAssertEqual(
+            String(decoding: try approvalRequest.signableData(approverPublicKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL"), as: UTF8.self),
+            jwtToken
+        )
+    }
 
 }
