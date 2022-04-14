@@ -39,7 +39,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 12
         case .splTokenAccountCreation:
             return 13
-        default:
+        case .dAppTransactionRequest, .loginApproval, .unknown:
             return 0
         }
     }
@@ -137,7 +137,9 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     [request.slotUpdateType.toSolanaProgramValue()] +
                     request.signer.combinedBytes
                 )
-            default:
+            case .dAppTransactionRequest, .loginApproval:
+                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
+            case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
         }
@@ -170,7 +172,9 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                 return request.signingData
             case .signersUpdate(let request):
                 return request.signingData
-            default:
+            case .dAppTransactionRequest, .loginApproval:
+                throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
+            case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
         }
