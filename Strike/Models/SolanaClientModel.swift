@@ -293,11 +293,10 @@ struct SlotDAppInfo: Codable, Equatable {
     let value: SolanaDApp
 }
 
-struct ApprovalPolicyUpdate: Codable, Equatable {
-    let approvalsRequired: UInt8?
-    let approvalTimeout: UInt64?
-    let approversToAdd: [SlotSignerInfo]
-    let approversToRemove: [SlotSignerInfo]
+struct ApprovalPolicy: Codable, Equatable {
+    let approvalsRequired: UInt8
+    let approvalTimeout: UInt64
+    let approvers: [SlotSignerInfo]
 }
 
 struct WhitelistUpdate: Codable, Equatable {
@@ -362,9 +361,7 @@ struct SignersUpdate: Codable, Equatable  {
 struct BalanceAccountCreation: Codable, Equatable  {
     var accountSlot: UInt8
     var accountInfo: AccountInfo
-    var approvalsRequired: UInt8
-    var approvalTimeout: UInt64
-    var approvers: [SlotSignerInfo]
+    var approvalPolicy: ApprovalPolicy
     var whitelistEnabled: BooleanSetting
     var dappsEnabled: BooleanSetting
     var addressBookSlot: UInt8
@@ -379,7 +376,7 @@ struct BalanceAccountNameUpdate: Codable, Equatable  {
 
 struct BalanceAccountPolicyUpdate: Codable, Equatable  {
     var accountInfo: AccountInfo
-    var policyChanges: ApprovalPolicyUpdate
+    var approvalPolicy: ApprovalPolicy
     var signingData: SolanaSigningData
 }
 
@@ -404,7 +401,7 @@ struct DAppBookUpdate: Codable, Equatable  {
 }
 
 struct WalletConfigPolicyUpdate: Codable, Equatable  {
-    var policyChanges: ApprovalPolicyUpdate
+    var approvalPolicy: ApprovalPolicy
     var signingData: SolanaSigningData
 }
 

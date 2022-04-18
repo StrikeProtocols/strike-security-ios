@@ -66,33 +66,18 @@ class StrikeTests: XCTestCase {
         )
     }
     
-    func testBalanceAccountCreationSerializedOp() throws {
-        let request = getWalletApprovalRequest(getBalanceAccountCreationRequest())
-        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            requestType: request.requestType,
-            blockhash: getRecentBlockhash("123455"),
-            email: "dont care"
-        )
-        XCTAssertEqual(
-            try approvalRequest.opHashData.toHexString(),
-            "01759b1a550341b7d556b7fca0cc41d898f1bd85f24988494d29bb88ec5262c055c47958892a80bb2a2f40ac092a4f5f946354d2d3848a4883e0f6997ff2d0800b00b94e0c79c1fb7db6ff3380f8bd8f09376fb8f87c488f98ec920164e1e3a7417101100e0000000000000100542dc7218c23d87e0e5d9cf0b7cda11507871716641c663e0ae428ba65f0bf45000000"
-        )
-    }
-    
     func testBalanceAccountCreationApprovalDisposition() throws {
         let request = getWalletApprovalRequest(getBalanceAccountCreationRequest())
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            blockhash: getRecentBlockhash("DumeKnMBQxYVeXNuhc9paKn9hMooPpbJ6KCMA49UDSQn"),
+            blockhash: getRecentBlockhash("Dkdb79TLNTRVzf1w3H6ShSqr34wHAEa1SoxnA8y84NWM"),
             email: "dont care"
         )
         XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "8CpMnz9RNojAZWMyzWirH3Y7vBebkf2965SGmcwgYSY").toHexString(),
-            "02010205a64dc04c0577c717e1de8999d7891989fe2a5e43025ec414a045d3e53c5e216601d86d390e73db0061cc718bad82036d774f115923c2e5e6c675ca99dd41c4fdfa3e0f982ee37deaf0b5f82667cb6e201427a3ae2611f303026d5b599540ce2d06a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000f9abb695c5f886e1d0756c588a872dec5915c1bc5d454e86ffdaa17dc94250d7bfd0ec7c3ad222d262fbce36f0aa114a6a98d7a84c5b111dd40ac17bc80698b701040302010322090130ce60882b394aeef62c528d1f03622b1a77cb5a6761c93d56f2ca98a33eddc6"
+            try approvalRequest.signableData(approverPublicKey: "3tSshpPL1WyNR7qDfxPffinndQmgfvTGoZc3PgL65Z9o").toHexString(),
+            "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af342ae5404ca4d115addf760a932a2564636c071f3d93077c7722926026963d760e631a8298317f9291ee863ec4f900b9213341828b6ec8ee46ce9fc9414aac7ca706a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacfbd79968f918c540d27a31c936a3be43f07c6e9e931b64307d107fb6b1b17ccc2010403020103220901f6c209de6aa7973eaafbbc9416fd72f7f9fed1b527a4b71eb3c1c30d36b388f8"
         )
     }
     
@@ -103,21 +88,21 @@ class StrikeTests: XCTestCase {
         )
         let requestType: SolanaApprovalRequestType = getBalanceAccountCreationRequest()
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "fc57704ac1985d1ceb68880b8431d5dd6027771c9b4d65ea5724585694a85b01".data(using: .hexadecimal)!)
+        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "bda2d5239064df336700833fd4092414ff0b220153718154ccf93e6bd5c6fe9f".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
             disposition: .Approve,
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            blockhash: getRecentBlockhash("9ZcVaD3iwrTCcEUU8RDWSNFhJfhqXDRhWgahgU2QrDqG"),
+            blockhash: getRecentBlockhash("5g9Yqjwjpp2nyJ4M36rtwzpxXzM8pNUKfHfDo3fqU2sR"),
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "6fbjW55k7m1ERjJ6cDKhHvpc6MryEyZyncpEXVd5EYKE").toHexString(),
-            "03010407a64dc04c0577c717e1de8999d7891989fe2a5e43025ec414a045d3e53c5e21665cc746dd3b9aac95ca9bf3d787e0ab540023dd8dd63907fbf9515c382ea7dfc6542dc7218c23d87e0e5d9cf0b7cda11507871716641c663e0ae428ba65f0bf45759b1a550341b7d556b7fca0cc41d898f1bd85f24988494d29bb88ec5262c05506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b21000000000000000000000000000000000000000000000000000000000000000000000000f9abb695c5f886e1d0756c588a872dec5915c1bc5d454e86ffdaa17dc94250d77f383683a196f15bf40e73455e34c490fb156f326eab8ce3fc107df5da7f34970205020001340000000000a76700000000005003000000000000f9abb695c5f886e1d0756c588a872dec5915c1bc5d454e86ffdaa17dc94250d70604010302047003c47958892a80bb2a2f40ac092a4f5f946354d2d3848a4883e0f6997ff2d0800b00b94e0c79c1fb7db6ff3380f8bd8f09376fb8f87c488f98ec920164e1e3a7417101100e0000000000000100542dc7218c23d87e0e5d9cf0b7cda11507871716641c663e0ae428ba65f0bf45000000"
+            try initiationRequest.signableData(approverPublicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV").toHexString(),
+            "03010407d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34631a8298317f9291ee863ec4f900b9213341828b6ec8ee46ce9fc9414aac7ca74a3e400b6f36e0b517ed08ced47959f691ac7badf37f3894b745a78ae4c4a01a0a4b19fe3af610a9e087ccad29c92dbcbc2a3a6671794cd819a6004877bb0ea006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf457610cbf81f090b0acb2f1817ddf832d7d91ebc7f041092626711f364206b080205020001340000000000a7670000000000500300000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf06040103020470034769675cd49f8236615121384afba87c6573c04f5b131f5f831ad85045ed099b00b94e0c79c1fb7db6ff3380f8bd8f09376fb8f87c488f98ec920164e1e3a7417101100e000000000000010011bc008a04027d5cefeeb9d1b4a0b3efa2a1a04db7deee2ffe5ae17e599a5a5f000000"
         )
     }
     
@@ -533,12 +518,12 @@ class StrikeTests: XCTestCase {
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            blockhash: getRecentBlockhash("7pTNK6y6qEDZj5joHpCEvXQ6eL7xeJmuj6Xxm6ZM9ouB"),
+            blockhash: getRecentBlockhash("Es934LEc4AUG1VvtZVmhhmu518qHmWGeGUfsGkYD1g7n"),
             email: "dont care"
         )
         XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL").toHexString(),
-            "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34e6e137f1b3e582e55db0f594a6cb6f05d5a08fc71d7413042921bf24f72e73eb31cab2db85988f02cdaf0fdee819c128cf99f61da76db2bb52e41df99cecec9506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9f654e3bbd34210a73431d2dfddb73a1c1377545c89a8b3a7ca0b471661c8ca70a010403020103220901c7a6b13f401fccb54168d1a0970a9fe18b179b43f0884f1d455943d660811e56"
+            try approvalRequest.signableData(approverPublicKey: "3tSshpPL1WyNR7qDfxPffinndQmgfvTGoZc3PgL65Z9o").toHexString(),
+            "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af342ae5404ca4d115addf760a932a2564636c071f3d93077c7722926026963d760ed17a6a48d07bbbf8d76e02379e0758f4580f3cb34a56980929e72e9b0d58e97206a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacfce000e6566f2c3e7ce3b2d0d3b97571702fd93559e0ea54c780f2ea3d5b029650104030201032209019a8396d2fa315bafcfe5ca0d78946f4bf31297feb3036fd82998f28c0af3332c"
         )
     }
     
@@ -549,22 +534,21 @@ class StrikeTests: XCTestCase {
         )
         let requestType: SolanaApprovalRequestType = getWalletConfigPolicyUpdate()
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
-
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "ba79cd832d94634cd7a9095dd0ec2a802c53d7fe865c79f81599f2b59e8df8c6".data(using: .hexadecimal)!)
+        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "9fa146dbd7f5bdaef9b0b4c99980a0acb0bfc4b874d02c86694f1193acfbb87f".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
             disposition: .Approve,
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            blockhash: getRecentBlockhash("GR5h66Q1LBvD6snaM1kQrNBBFR1h3bEniYKWLCjkCVsR"),
+            blockhash: getRecentBlockhash("BHBT3QmGb7ZkXCk3WKfJ5bSqQq6MGQHCiKXHCiKEEzLd"),
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "Bg38YKHxGQrVRMB254yCKgVjtRapi68H4SD1RCiwWo7b").toHexString(),
-            "03010307d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af3431cab2db85988f02cdaf0fdee819c128cf99f61da76db2bb52e41df99cecec959e94ede101ab5be0734b6500e0fc10b51ca23e89e67391657197fd7b2529c13e3468bd8cddd071cd3bb0a3c50c4b5cab7dfe4ae3328081889ebabd48d8b7c9c006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9fe50a8c31ce120417a6af1dd5e65a4e896f71a1dce03a8a52dddf1bc423f1ea440205020001340000000000a7670000000000500300000000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9f0604010302042f0e010300000000000000000001027bb36fc2ac6bacbbba6e60de5c59ab7fa18f5fb45a5100311706d02017aa8f0000"
+            try initiationRequest.signableData(approverPublicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV").toHexString(),
+            "03010307d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34d17a6a48d07bbbf8d76e02379e0758f4580f3cb34a56980929e72e9b0d58e9724a3e400b6f36e0b517ed08ced47959f691ac7badf37f3894b745a78ae4c4a01a0a4b19fe3af610a9e087ccad29c92dbcbc2a3a6671794cd819a6004877bb0ea006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf98b9fa178cf6ae68bdc3efcafbcf245bc40866c97121581950adcc1388e9e44e0205020001340000000000a7670000000000500300000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf0604010302042e0e035046000000000000030001024041109cb8f8611bd2813af557df74e80cb9da3a2599894d5d990fc13536d917"
         )
     }
     
@@ -614,12 +598,12 @@ class StrikeTests: XCTestCase {
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            blockhash: getRecentBlockhash("FnkMGFjqJLXCBwHewMv1ZhDoyhLMDgyByzcqesxSsmE"),
+            blockhash: getRecentBlockhash("6Neim24UMYvnZHFLcCZqT57KUGXoPPBtXuRPzyyevDn6"),
             email: "dont care"
         )
         XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL").toHexString(),
-            "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34e6e137f1b3e582e55db0f594a6cb6f05d5a08fc71d7413042921bf24f72e73ebe7b32e6d93f1c1f4dbb3409025e13c12a5435a91acd65bae3a898d0c89f086e606a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9f03c9dbab26829d45371555ee003b4b4cc72678302ec48ff1c37cfde891c7ace5010403020103220901dbecd0c2412e3797ecd7a8492839fb564996be5f1007aaf00aff2a89ab768260"
+            try approvalRequest.signableData(approverPublicKey: "3tSshpPL1WyNR7qDfxPffinndQmgfvTGoZc3PgL65Z9o").toHexString(),
+            "02010205d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af342ae5404ca4d115addf760a932a2564636c071f3d93077c7722926026963d760e2ede24d6b2e1b97138f6f38d2ba3ea9b237a0e6d072f5e23b0f8c7ba22cd0cb206a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf4fd648203706fcad20208365d4d8c64959b9fe83062cf04d9f25990a84d1baff0104030201032209017ccb45a1034fd22dfee5c3636f43eb2d63bee375415019e3bfd1d6c06a07c745"
         )
     }
     
@@ -631,21 +615,21 @@ class StrikeTests: XCTestCase {
         let requestType: SolanaApprovalRequestType = getBalanceAccountPolicyUpdate()
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
 
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "b27a30c398bad586458534848ecc77d20582780c505d79f1872d98ffe5209691".data(using: .hexadecimal)!)
+        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "505f102d7c741f53165ec1feb6d00cc45600bdfa34300a5ad551b062bf2a54d4".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
             disposition: .Approve,
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            blockhash: getRecentBlockhash("26YtehjR685j9947VENmwR3p1vicKhzMontW2gfqLesR"),
+            blockhash: getRecentBlockhash("4QpShEKsnJTxFtnNFYHqZW1wTPe4WZ3Bmt4FqQo4qk2T"),
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
         )
         
         XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "Bg38YKHxGQrVRMB254yCKgVjtRapi68H4SD1RCiwWo7b").toHexString(),
-            "03010307d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34e7b32e6d93f1c1f4dbb3409025e13c12a5435a91acd65bae3a898d0c89f086e69e94ede101ab5be0734b6500e0fc10b51ca23e89e67391657197fd7b2529c13e3468bd8cddd071cd3bb0a3c50c4b5cab7dfe4ae3328081889ebabd48d8b7c9c006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9f1047a6526e389a5abc3c6cc3e328afea2c53b24d8d598c786f28bc67e474d8980205020001340000000000a7670000000000500300000000000064424795ac2edb4b21b281bd120d0ababb12d4ae690773f41f5f61027a7add9f0604010302044f1a3c69f1851b7318b7f14f04992a80df6054b8bc4f325f24bce0d378d770e870c401020000000000000000000101e6e137f1b3e582e55db0f594a6cb6f05d5a08fc71d7413042921bf24f72e73eb00"
+            try initiationRequest.signableData(approverPublicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV").toHexString(),
+            "03010307d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af342ede24d6b2e1b97138f6f38d2ba3ea9b237a0e6d072f5e23b0f8c7ba22cd0cb24a3e400b6f36e0b517ed08ced47959f691ac7badf37f3894b745a78ae4c4a01a0a4b19fe3af610a9e087ccad29c92dbcbc2a3a6671794cd819a6004877bb0ea006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf32ad1037cc85a1bb8e71021657196e70fa63d15787cc0d26be01ec1359ce56900205020001340000000000a7670000000000500300000000000046b0ea2883f065b5469948ac86ffcda8d7fb98f891b0c6f805c4cccb9dabcacf0604010302044d1a4769675cd49f8236615121384afba87c6573c04f5b131f5f831ad85045ed099b02100e00000000000002000133d16784b488113764a49a5f1e7217ca5ec64d62a610d7cb1ab8beb8514bdb77"
         )
     }
     

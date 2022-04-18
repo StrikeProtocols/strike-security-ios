@@ -192,7 +192,7 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
             case .walletConfigPolicyUpdate(let request):
                 return Data(
                     [opCode] +
-                    request.policyChanges.combinedBytes
+                    request.approvalPolicy.combinedBytes
                 )
             case .addressBookUpdate(let request):
                 return Data(

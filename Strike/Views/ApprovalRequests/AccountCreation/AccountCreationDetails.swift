@@ -36,8 +36,8 @@ struct AccountCreationDetails: View {
 
             VStack(spacing: 20) {
                 FactsSection(title: "Who can approve outbound transfers") {
-                    if accountCreation.approvers.count > 0 {
-                        for approver in accountCreation.approvers {
+                    if accountCreation.approvalPolicy.approvers.count > 0 {
+                        for approver in accountCreation.approvalPolicy.approvers {
                             Fact(approver.value.name, approver.value.email)
                         }
                     } else {
@@ -46,11 +46,11 @@ struct AccountCreationDetails: View {
                 }
 
                 FactsSection(title: "Approvals required for outbound transfers") {
-                    Fact("\(accountCreation.approvalsRequired)", "")
+                    Fact("\(accountCreation.approvalPolicy.approvalsRequired)", "")
                 }
 
                 FactsSection(title: "Approval timeout") {
-                    Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(accountCreation.approvalTimeout / 1000))) ?? "")", "")
+                    Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(accountCreation.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
                 }
 
                 FactsSection(title: "Whitelisting Enabled") {

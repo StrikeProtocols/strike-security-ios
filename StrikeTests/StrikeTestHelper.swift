@@ -53,25 +53,27 @@ extension StrikeTests {
                 accountSlot: 0,
                 accountInfo: AccountInfo(
                     name: "Account 1",
-                    identifier: "e1cf64d8-4f7c-4cca-8859-c94f27645aca",
+                    identifier: "f57e48ca-dfac-484e-9ea8-92ef34d22814",
                     accountType: AccountType.BalanceAccount,
                     address: nil
                 ),
-                approvalsRequired: 1,
-                approvalTimeout: 3600000,
-                approvers: [SlotSignerInfo(slotId: 0, value: SignerInfo(
-                    publicKey: "6fbjW55k7m1ERjJ6cDKhHvpc6MryEyZyncpEXVd5EYKE",
-                    name: "User 1",
-                    email: "authorized1@org1"
-                ))],
+                approvalPolicy: ApprovalPolicy(
+                    approvalsRequired: 1,
+                    approvalTimeout: 3600000,
+                    approvers: [SlotSignerInfo(slotId: 0, value: SignerInfo(
+                        publicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV",
+                        name: "User 1",
+                        email: "authorized1@org1"
+                    ))]
+                ),
                 whitelistEnabled: BooleanSetting.Off,
                 dappsEnabled: BooleanSetting.Off,
                 addressBookSlot: 0,
                 signingData: SolanaSigningData(
-                    feePayer: "CCBSbhNarxjfL7njJApxz6VKaXjJ8z9b1QjML91pp8MT",
-                    walletProgramId: "HocP5yBGUdwRpk5YWuHiRDHN3pBu7hbdGHSMHY8oE4Qn",
-                    multisigOpAccountAddress: "Hqqp4eXDCbKkV5VedFmd6wfirjyrZsP73U62nNMEFbvc",
-                    walletAddress: "8v5siTf1GwSDMqDDDbkY5ecc1mPmMdv73ikzduHP28X6"
+                    feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
+                    walletProgramId: "5kx1BNgMpBbEfrrzfqZrmW8xfqpdbC8b34TkwGbXg42r",
+                    multisigOpAccountAddress: "7frorMnQPMRZgCwGFBdf2Kwv84tghwhEfN63j3cfbYhk",
+                    walletAddress: "hBVqSAZ3Z7dSrWXoQdKJGttgHVrWa3qzdeHpiX6WKk3"
                 )
             )
         )
@@ -386,19 +388,28 @@ extension StrikeTests {
     func getWalletConfigPolicyUpdate() -> SolanaApprovalRequestType {
         return .walletConfigPolicyUpdate(
             WalletConfigPolicyUpdate(
-                policyChanges: ApprovalPolicyUpdate(
+                approvalPolicy: ApprovalPolicy(
                     approvalsRequired: 3,
-                    approvalTimeout: nil,
-                    approversToAdd: [SlotSignerInfo(
-                        slotId: 2,
-                        value: SignerInfo(publicKey: "9KsqoaRA68zJj4AMkYU5RyUbqaGNJ61XjrYUCqzG6vpF", name: "User 3", email: "user3@org1")
-                    )],
-                    approversToRemove: []),
+                    approvalTimeout: 18000000,
+                    approvers: [
+                        SlotSignerInfo(
+                            slotId: 0,
+                            value: SignerInfo(publicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV", name: "User 1", email: "authorized1@org1")
+                        ),
+                        SlotSignerInfo(
+                            slotId: 1,
+                            value: SignerInfo(publicKey: "3tSshpPL1WyNR7qDfxPffinndQmgfvTGoZc3PgL65Z9o", name: "User 2", email: "user2@org1")
+                        ),
+                        SlotSignerInfo(
+                            slotId: 2,
+                            value: SignerInfo(publicKey: "5rt9dFozMbpPf2mMgiMuu2f4CxQa3pWS1Exo9wHPbwJK", name: "User 3", email: "user3@org1")
+                        )
+                    ]),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
-                    walletProgramId: "7kNPVcK2cpyaZsLsqmhZbjcbt433vYUckH1PM5gZeJ1L",
-                    multisigOpAccountAddress: "4MNFCtngd12Dxh28KPXBkVyBKv77cvAk3x6JqQaDAgGk",
-                    walletAddress: "4XaqL4MtTUDrncTGBqvTC9ketf8WVqrUocDkYhKAnDju"
+                    walletProgramId: "5kx1BNgMpBbEfrrzfqZrmW8xfqpdbC8b34TkwGbXg42r",
+                    multisigOpAccountAddress: "F6iUTdJDE4vnTgBanCtBgtoNHag57Uaut82xATGVVps3",
+                    walletAddress: "hBVqSAZ3Z7dSrWXoQdKJGttgHVrWa3qzdeHpiX6WKk3"
                 ))
         )
     }
@@ -408,23 +419,29 @@ extension StrikeTests {
             BalanceAccountPolicyUpdate(
                 accountInfo: AccountInfo(
                     name: "Account 1",
-                    identifier: "b645a5d9-227f-4a9f-9331-52af64bf1989",
+                    identifier: "f57e48ca-dfac-484e-9ea8-92ef34d22814",
                     accountType: AccountType.BalanceAccount,
-                    address: "DcvZ2k6ygvvu2Z5ihrSxRZL7bHJ38gPRgpCie8GzztTP"
+                    address: "9PjDLDAPp42e4BEhaCtm2YoaX7yktGf5yeVTfjcB6KSH"
                 ),
-                policyChanges: ApprovalPolicyUpdate(
+                approvalPolicy: ApprovalPolicy(
                     approvalsRequired: 2,
-                    approvalTimeout: nil,
-                    approversToAdd: [SlotSignerInfo(
-                        slotId: 1,
-                        value: SignerInfo(publicKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL", name: "User 2", email: "user2@org1")
-                    )],
-                    approversToRemove: []),
+                    approvalTimeout: 3600000,
+                    approvers: [
+                        SlotSignerInfo(
+                            slotId: 0,
+                            value: SignerInfo(publicKey: "5zpDzYujD8xnZ5B9m93qHCGMSeLDb7eAKCo4kWha7knV", name: "User 1", email: "authorized1@org1")
+                        ),
+                        SlotSignerInfo(
+                            slotId: 1,
+                            value: SignerInfo(publicKey: "3tSshpPL1WyNR7qDfxPffinndQmgfvTGoZc3PgL65Z9o", name: "User 2", email: "user2@org1")
+                        ),
+                    ]
+                ),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
-                    walletProgramId: "7kNPVcK2cpyaZsLsqmhZbjcbt433vYUckH1PM5gZeJ1L",
-                    multisigOpAccountAddress: "GbTeXoA4KJX19YbpWQQvUi1Xx8bbadKiTRBqhmADxdNV",
-                    walletAddress: "4XaqL4MtTUDrncTGBqvTC9ketf8WVqrUocDkYhKAnDju"
+                    walletProgramId: "5kx1BNgMpBbEfrrzfqZrmW8xfqpdbC8b34TkwGbXg42r",
+                    multisigOpAccountAddress: "49xDigxiP3DLHcMc9Q8ZGwix1b1ZDFENc2E83m1pM4Yq",
+                    walletAddress: "hBVqSAZ3Z7dSrWXoQdKJGttgHVrWa3qzdeHpiX6WKk3"
                 ))
         )
     }

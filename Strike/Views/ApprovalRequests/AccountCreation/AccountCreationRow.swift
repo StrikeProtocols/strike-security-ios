@@ -49,7 +49,7 @@ struct AccountCreationRow_Previews: PreviewProvider {
 
 extension BalanceAccountCreation {
     static var sample: Self {
-        BalanceAccountCreation(accountSlot: 1, accountInfo: AccountInfo(name: "Rainbows", identifier: "dffdg", accountType: .BalanceAccount, address: nil), approvalsRequired: 3, approvalTimeout: 4000000, approvers: [SlotSignerInfo(slotId: 3, value: SignerInfo(publicKey: "dsfgsfdg4534gf4", name: "John Q", email: "johnny@crypto.com"))], whitelistEnabled: .On, dappsEnabled: .On, addressBookSlot: 4, signingData: .sample)
+        BalanceAccountCreation(accountSlot: 1, accountInfo: AccountInfo(name: "Rainbows", identifier: "dffdg", accountType: .BalanceAccount, address: nil), approvalPolicy: ApprovalPolicy(approvalsRequired: 3, approvalTimeout: 4000000, approvers: [SlotSignerInfo(slotId: 3, value: SignerInfo(publicKey: "dsfgsfdg4534gf4", name: "John Q", email: "johnny@crypto.com"))]), whitelistEnabled: .On, dappsEnabled: .On, addressBookSlot: 4, signingData: .sample)
     }
 }
 

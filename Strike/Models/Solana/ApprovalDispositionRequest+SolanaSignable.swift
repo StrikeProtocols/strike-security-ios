@@ -84,7 +84,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                 return try Data(
                     [opCode] +
                     signingData.walletAddress.base58Bytes +
-                    request.policyChanges.combinedBytes
+                    request.approvalPolicy.combinedBytes
                 )
             case .addressBookUpdate(let request):
                 return try Data(
@@ -255,17 +255,14 @@ extension SlotDestinationInfo {
 }
 
 
-extension ApprovalPolicyUpdate {
+extension ApprovalPolicy {
     var combinedBytes: [UInt8] {
         return [UInt8](Data(
-            ([UInt8(approvalsRequired != nil ? 1 : 0)] as [UInt8]) +
-            [approvalsRequired != nil ? approvalsRequired! : UInt8(0)] +
-            ([UInt8(approvalTimeout != nil ? 1 : 0)] as [UInt8]) +
-            (approvalTimeout != nil ? approvalTimeout!.convertToSeconds : UInt64(0)).bytes +
-            ([UInt8(approversToAdd.count)] as [UInt8]) +
-            (approversToAdd.flatMap(\.combinedBytes) as [UInt8]) +
-            ([UInt8(approversToRemove.count)] as [UInt8]) +
-            (approversToRemove.flatMap(\.combinedBytes) as [UInt8])
+            [approvalsRequired] +
+            approvalTimeout.convertToSeconds.bytes +
+            ([UInt8(approvers.count)] as [UInt8]) +
+            (approvers.flatMap({ $0.slotId }) as [UInt8]) +
+            Data(approvers.flatMap({ $0.value.publicKey.base58Bytes })).sha256HashBytes
         ))
     }
 }
@@ -291,6 +288,12 @@ extension String {
 extension String {
     var sha256HashBytes: [UInt8] {
         Data(SHA256.hash(data: Data(utf8))).bytes
+    }
+}
+
+extension Data {
+    var sha256HashBytes: [UInt8] {
+        Data(SHA256.hash(data: self)).bytes
     }
 }
 
@@ -358,10 +361,7 @@ extension BalanceAccountCreation {
             accountInfo.identifier.sha256HashBytes +
             [accountSlot] +
             accountInfo.name.sha256HashBytes +
-            [approvalsRequired] +
-            approvalTimeout.convertToSeconds.bytes +
-            ([UInt8(approvers.count)] as [UInt8]) +
-            (approvers.flatMap(\.combinedBytes) as [UInt8]) +
+            approvalPolicy.combinedBytes + 
             ([whitelistEnabled.toSolanaProgramValue()] as [UInt8]) +
             ([dappsEnabled.toSolanaProgramValue()] as [UInt8]) +
             ([addressBookSlot] as [UInt8])
@@ -382,7 +382,7 @@ extension BalanceAccountPolicyUpdate {
     var combinedBytes: [UInt8] {
         return [UInt8](Data(
             accountInfo.identifier.sha256HashBytes +
-            policyChanges.combinedBytes
+            approvalPolicy.combinedBytes
         ))
     }
 }
