@@ -274,7 +274,7 @@ extension SolanaApprovalRequestType {
         case .dAppTransactionRequest:
             return Image("conversion")
         case .loginApproval:
-            return Image("policy")
+            return Image("person.crop.circle.badge.questionmark")
         }
     }
 }

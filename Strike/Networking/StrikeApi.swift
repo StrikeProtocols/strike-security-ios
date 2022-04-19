@@ -269,6 +269,10 @@ struct AuthProviderPlugin: Moya.PluginType {
 
         if let authProvider = authProvider, authProvider.isAuthenticated, let token = authProvider.bearerToken {
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+            if let email = authProvider.email, let signature = try? Keychain.signature(for: token, email: email) {
+                request.addValue(signature, forHTTPHeaderField: "X-Strike-Authorization-Signature")
+            }
         } else {
             debugPrint("Unauthenticated request: \(request)")
         }
@@ -285,6 +289,12 @@ struct AuthProviderPlugin: Moya.PluginType {
         default:
             return result
         }
+    }
+}
+
+extension String: SolanaSignable {
+    func signableData(approverPublicKey: String) throws -> Data {
+        data(using: .utf8) ?? Data()
     }
 }
 

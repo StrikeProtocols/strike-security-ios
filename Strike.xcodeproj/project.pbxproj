@@ -68,6 +68,8 @@
 		3DB995FD27EB79A4005655F0 /* AccountCreationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB995FC27EB79A4005655F0 /* AccountCreationDetails.swift */; };
 		3DB995FF27EE1804005655F0 /* BiometryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB995FE27EE1804005655F0 /* BiometryError.swift */; };
 		3DB9960127EE1A1B005655F0 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9960027EE1A1B005655F0 /* Data+Extensions.swift */; };
+		3DBC44E3280F17660016E1AB /* LoginRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC44E2280F17660016E1AB /* LoginRow.swift */; };
+		3DBC44E5280F18830016E1AB /* LoginDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC44E4280F18830016E1AB /* LoginDetails.swift */; };
 		3DBD7DCE2655CE0F00662C62 /* ApprovalsNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */; };
 		3DBF9DAF26DE7A0E00D7683E /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBF9DAE26DE7A0E00D7683E /* ViewRouter.swift */; };
 		3DBF9DC326E000CC00D7683E /* EmptyApprovalRequestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBF9DC226E000CC00D7683E /* EmptyApprovalRequestsList.swift */; };
@@ -179,6 +181,8 @@
 		3DB995FC27EB79A4005655F0 /* AccountCreationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCreationDetails.swift; sourceTree = "<group>"; };
 		3DB995FE27EE1804005655F0 /* BiometryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryError.swift; sourceTree = "<group>"; };
 		3DB9960027EE1A1B005655F0 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		3DBC44E2280F17660016E1AB /* LoginRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRow.swift; sourceTree = "<group>"; };
+		3DBC44E4280F18830016E1AB /* LoginDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDetails.swift; sourceTree = "<group>"; };
 		3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalsNeeded.swift; sourceTree = "<group>"; };
 		3DBF9DAE26DE7A0E00D7683E /* ViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
 		3DBF9DC226E000CC00D7683E /* EmptyApprovalRequestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyApprovalRequestsList.swift; sourceTree = "<group>"; };
@@ -377,6 +381,7 @@
 				3DAF53B7262E1402000DD558 /* ApprovalRequestDetails.swift */,
 				3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */,
 				3DB7F9BF26D6C2CD00A49B4E /* UnknownRequestRow.swift */,
+				3DBC44E1280F17510016E1AB /* Login */,
 				3D7FFFEB27FA0F4E003B3F48 /* DAppTransaction */,
 				3DB995F927EB74E9005655F0 /* AccountCreation */,
 				3DB995F427EB71D7005655F0 /* SignerUpdate */,
@@ -450,6 +455,15 @@
 				3DB995FC27EB79A4005655F0 /* AccountCreationDetails.swift */,
 			);
 			path = AccountCreation;
+			sourceTree = "<group>";
+		};
+		3DBC44E1280F17510016E1AB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3DBC44E2280F17660016E1AB /* LoginRow.swift */,
+				3DBC44E4280F18830016E1AB /* LoginDetails.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		3DD9568D25EF5625003F9ECF /* Networking */ = {
@@ -687,6 +701,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D2BCA08264D7A79000A6D56 /* ChangeDetails.swift in Sources */,
+				3DBC44E5280F18830016E1AB /* LoginDetails.swift in Sources */,
 				3DBF9DC326E000CC00D7683E /* EmptyApprovalRequestsList.swift in Sources */,
 				3DB995FB27EB7997005655F0 /* AccountCreationRow.swift in Sources */,
 				3D11A60327580D3F008C03B1 /* DAppScan.swift in Sources */,
@@ -700,6 +715,7 @@
 				40CB67F925C3195D00DB15D6 /* Mock.swift in Sources */,
 				3DAF53BC262E1421000DD558 /* Countdown.swift in Sources */,
 				40BCB0B7261BA17C00CF58A8 /* MFAChallengeView.swift in Sources */,
+				3DBC44E3280F17660016E1AB /* LoginRow.swift in Sources */,
 				3DC7A74327D006A900A2BBA7 /* KeyRetrieval.swift in Sources */,
 				40B093A625DF27CC00EA51C6 /* String+Masked.swift in Sources */,
 				3DBD7DCE2655CE0F00662C62 /* ApprovalsNeeded.swift in Sources */,

@@ -66,8 +66,12 @@ struct ApprovalRequestItem: View {
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .wrapConversionRequest(let wrapConversionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .loginApproval(let loginApproval):
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+        case .loginApproval:
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                LoginRow()
+            } detail: {
+                LoginDetails()
+            }
         }
     }
 }

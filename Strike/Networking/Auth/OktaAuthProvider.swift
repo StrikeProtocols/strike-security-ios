@@ -31,6 +31,14 @@ extension OktaAuthProvider: AuthProvider {
         stateManager?.idToken
     }
 
+    var email: String? {
+        guard let idToken = bearerToken, let decodedToken = try? OktaOidcStateManager.decodeJWT(idToken) else {
+            return nil
+        }
+
+        return decodedToken["email"] as? String
+    }
+
     func authenticate(with sessionToken: String, completion: @escaping (Swift.Error?) -> Void) {
         Configuration.oktaOidc.authenticate(withSessionToken: sessionToken) { [weak self] stateManager, error in
             self?.objectWillChange.send()

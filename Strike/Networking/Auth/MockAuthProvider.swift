@@ -17,6 +17,8 @@ class MockAuthProvider: AuthProvider, ObservableObject {
 
     var bearerToken: String?
 
+    var email: String?
+
     func authenticate(with sessionToken: String, completion: @escaping (Error?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.isAuthenticated = true
