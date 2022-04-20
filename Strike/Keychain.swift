@@ -162,11 +162,15 @@ extension Keychain {
         return signature.base64EncodedString()
     }
     
-    static func signatures(for signable: SolanaSignableSupplyInstructions, email: String) throws -> [String] {
+    static func signaturesForSupplyInstructions(for signable: SolanaSignableSupplyInstructions, nonceInfos: [StrikeApi.NonceInfo], email: String) throws -> [StrikeApi.SupplyDappInstructionsTxSignature] {
         let keyInfo = try getKeyInfoForEmail(email: email)
-        return try signable.signableSupplyInstructions(approverPublicKey: keyInfo.encodedPublicKey).map {
-            let signature = try keyInfo.privateKey.signature(for: $0)
-            return signature.base64EncodedString()
+        return try signable.signableSupplyInstructions(approverPublicKey: keyInfo.encodedPublicKey, nonceInfos: nonceInfos).map {
+            let signature = try keyInfo.privateKey.signature(for: $0.data)
+            return StrikeApi.SupplyDappInstructionsTxSignature(
+                nonce: $0.nonce,
+                nonceAccountAddress: $0.nonceAccountAddress,
+                signature: signature.base64EncodedString()
+            )
         }
     }
     

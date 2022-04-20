@@ -264,6 +264,7 @@ struct SolanaSigningData: Codable, Equatable {
     let walletProgramId: String
     let multisigOpAccountAddress: String
     let walletAddress: String
+    let nonceAccountAddresses: [String]
 }
 
 struct SignerInfo: Codable, Equatable {
@@ -438,7 +439,7 @@ protocol SolanaSignable {
 }
 
 protocol SolanaSignableSupplyInstructions {
-    func signableSupplyInstructions(approverPublicKey: String) throws -> [Data]
+    func signableSupplyInstructions(approverPublicKey: String, nonceInfos: [StrikeApi.NonceInfo]) throws -> [StrikeApi.SupplyDappInstructionsTxData]
 }
 
 struct LoginApproval: Codable, Equatable  {
@@ -506,7 +507,8 @@ extension SolanaSigningData {
             feePayer: "feePayer",
             walletProgramId: "walletPrgramId",
             multisigOpAccountAddress: "multisigAddress",
-            walletAddress: "walletAddress"
+            walletAddress: "walletAddress",
+            nonceAccountAddresses: ["nonceAccountAddress"]
         )
     }
 }

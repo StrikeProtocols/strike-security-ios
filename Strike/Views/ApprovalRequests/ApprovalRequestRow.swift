@@ -114,7 +114,7 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
                         disposition: .Approve,
                         requestID: request.id,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName
                     )
                 )
@@ -125,7 +125,7 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()

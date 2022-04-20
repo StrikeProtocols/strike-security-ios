@@ -13,7 +13,7 @@ let SYS_PROGRAM_ID = try! PublicKey(string: "11111111111111111111111111111111")
 let TOKEN_PROGRAM_ID = try! PublicKey(string: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
 let ASSOCIATED_TOKEN_PROGRAM_ID = try! PublicKey(string: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL")
 let WRAPPED_SOL_MINT = try! PublicKey(string: "So11111111111111111111111111111111111111112")
-
+let RECENT_BLOCKHASHES_SYSVAR_ID = try! PublicKey(string: "SysvarRecentB1ockHashes11111111111111111111")
 let EMPTY_KEY = try! PublicKey(string: "11111111111111111111111111111111")
 
 struct PublicKey: Codable, Equatable, CustomStringConvertible, Hashable {

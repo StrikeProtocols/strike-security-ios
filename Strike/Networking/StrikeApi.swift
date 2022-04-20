@@ -160,6 +160,68 @@ extension StrikeApi {
 
         let errors: [Description]
     }
+    
+    struct Params: Codable {
+        var commitment = Configuration.solanaCommitment
+        var encoding = "base64"
+    }
+    
+    enum ParamItem: Encodable {
+        case string(String)
+        case params(Params)
+
+        func encode(to encoder: Encoder) throws {
+            switch self {
+            case .string(let value):
+                var container = encoder.singleValueContainer()
+                try container.encode(value)
+            case .params(let value):
+                try value.encode(to: encoder)
+            }
+        }
+    }
+    
+    struct GetAccountInfoRequest: Encodable {
+        let accountKey: String
+        let id: String
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case method
+            case jsonrpc
+            case params
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var params = [ParamItem]()
+            params.append(.string(accountKey))
+            params.append(.params(Params()))
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(id, forKey: .id)
+            try container.encode("getAccountInfo", forKey: .method)
+            try container.encode("2.0", forKey: .jsonrpc)
+            try container.encode(params, forKey: .params)
+        }
+
+    }
+    
+    struct NonceAccountInfo: Codable {
+        struct Result: Codable {
+            struct AccountData: Codable {
+                let data: [String]
+            }
+
+            let value: AccountData
+        }
+
+        let id: String
+        let result: Result
+
+        
+        var nonce: String {
+            Data(base64Encoded: result.value.data[0])!.subdata(in: 40 ..< 72).base58String
+        }
+    }
 
     fileprivate struct RecentBlockhashRequest: Codable {
         struct Params: Codable {
@@ -193,18 +255,22 @@ extension StrikeApi {
         let disposition: ApprovalDisposition
         let requestID: String
         let requestType: SolanaApprovalRequestType
-        let blockhash: Blockhash
+        let nonceInfos: [NonceInfo]
         let email: String
 
         enum CodingKeys: String, CodingKey {
             case signature
             case approvalDisposition
-            case recentBlockhash
+            case nonce
+            case nonceAccountAddress
         }
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(blockhash.value, forKey: .recentBlockhash)
+            if nonceInfos.count > 0 {
+                try container.encode(nonceInfos[0].nonce, forKey: .nonce)
+                try container.encode(nonceInfos[0].nonceAccountAddress, forKey: .nonceAccountAddress)
+            }
             try container.encode(disposition.rawValue, forKey: .approvalDisposition)
 
             let signature = try Keychain.signature(for: self, email: email)
@@ -212,9 +278,27 @@ extension StrikeApi {
         }
     }
     
-    struct SignatureInfo: Codable {
-        let publicKey: String
+    struct SupplyDappInstructionsTxData: Encodable {
+        let nonce: String
+        let nonceAccountAddress: String
+        let data: Data
+    }
+    
+    struct SupplyDappInstructionsTxSignature: Encodable {
+        let nonce: String
+        let nonceAccountAddress: String
         let signature: String
+    }
+    
+    struct SupplyDAppInstructions: Encodable {
+        let dataAccountAddress: String
+        let dataAccountSignature: String
+        let supplyInstructionInitiatorSignatures: [SupplyDappInstructionsTxSignature]
+    }
+    
+    struct NonceInfo {
+        let nonceAccountAddress: String
+        let nonce: String
     }
     
     struct InitiationRequest: Encodable {
@@ -222,7 +306,7 @@ extension StrikeApi {
         let requestID: String
         let initiation: MultisigOpInitiation
         let requestType: SolanaApprovalRequestType
-        let blockhash: Blockhash
+        let nonceInfos: [NonceInfo]
         let email: String
         let opAccountPrivateKey: Curve25519.Signing.PrivateKey
         let dataAccountPrivateKey: Curve25519.Signing.PrivateKey?
@@ -230,31 +314,32 @@ extension StrikeApi {
         enum CodingKeys: String, CodingKey {
             case initiatorSignature
             case approvalDisposition
-            case recentBlockhash
-            case opAccountSignatureInfo
-            case dataAccountSignatureInfo
-            case supplyInstructionInitiatorSignatures
+            case nonce
+            case nonceAccountAddress
+            case opAccountAddress
+            case opAccountSignature
+            case supplyDappInstructions
         }
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(blockhash.value, forKey: .recentBlockhash)
+            try container.encode(nonceInfos[0].nonce, forKey: .nonce)
+            try container.encode(nonceInfos[0].nonceAccountAddress, forKey: .nonceAccountAddress)
             try container.encode(disposition.rawValue, forKey: .approvalDisposition)
 
             let initiatorSignature = try Keychain.signature(for: self, email: email)
             try container.encode(initiatorSignature, forKey: .initiatorSignature)
-            let opAccountSignatureInfo = SignatureInfo(
-                publicKey: try self.opAccountPublicKey.base58EncodedString,
-                signature: try Keychain.signatureForKey(for: self,  email: email, ephemeralPrivateKey: self.opAccountPrivateKey))
-            try container.encode(opAccountSignatureInfo, forKey: .opAccountSignatureInfo)
+            try container.encode(try self.opAccountPublicKey.base58EncodedString, forKey: .opAccountAddress)
+            try container.encode(try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.opAccountPrivateKey), forKey: .opAccountSignature)
+            
+            
             if self.initiation.dataAccountCreationInfo != nil && self.dataAccountPrivateKey != nil {
-                let dataAccountSignatureInfo = SignatureInfo(
-                    publicKey: try self.dataAccountPublicKey.base58EncodedString,
-                    signature: try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.dataAccountPrivateKey!))
-                try container.encode(dataAccountSignatureInfo, forKey: .dataAccountSignatureInfo)
-                try container.encode(try Keychain.signatures(for: self, email: email), forKey: .supplyInstructionInitiatorSignatures)
-            } else {
-                try container.encode([String](), forKey: .supplyInstructionInitiatorSignatures)
+                let supplyDappInstructions = SupplyDAppInstructions(
+                    dataAccountAddress: try self.dataAccountPublicKey.base58EncodedString,
+                    dataAccountSignature: try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.dataAccountPrivateKey!),
+                    supplyInstructionInitiatorSignatures: try Keychain.signaturesForSupplyInstructions(for: self, nonceInfos: Array(nonceInfos.dropFirst()), email: email)
+                )
+                try container.encode(supplyDappInstructions, forKey: .supplyDappInstructions)
             }
         }
     }

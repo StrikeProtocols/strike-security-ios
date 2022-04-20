@@ -196,10 +196,16 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
         case .loginApproval(let request):
             return request.jwtToken.data(using: .utf8)!
         default:
+            if nonceInfos.count == 0 {
+                throw SolanaError.invalidRequest(reason: "Not enough nonce accounts")
+            }
             return try Transaction.compileMessage(
                 feePayer: try PublicKey(string: signingData.feePayer),
-                recentBlockhash: blockhash.value,
+                recentBlockhash: nonceInfos[0].nonce,
                 instructions: [
+                    try TransactionInstruction.createAdvanceNonceInstruction(
+                        nonceAccountAddress: nonceInfos[0].nonceAccountAddress,
+                        feePayer: signingData.feePayer),
                     TransactionInstruction(
                         keys: [
                             Account.Meta(publicKey: try PublicKey(string: signingData.multisigOpAccountAddress), isSigner: false, isWritable: true),
@@ -272,9 +278,13 @@ extension WhitelistUpdate {
         return [UInt8](Data(
             account.identifier.sha256HashBytes +
             ([UInt8(destinationsToAdd.count)] as [UInt8]) +
-            (destinationsToAdd.flatMap(\.combinedBytes) as [UInt8]) +
+            (destinationsToAdd.flatMap({ $0.slotId }) as [UInt8]) +
             ([UInt8(destinationsToRemove.count)] as [UInt8]) +
-            (destinationsToRemove.flatMap(\.combinedBytes) as [UInt8])
+            (destinationsToRemove.flatMap({ $0.slotId }) as [UInt8]) +
+            Data(destinationsToAdd.flatMap({ $0.value.name.sha256HashBytes }) +
+                 [UInt8(1)] +
+                 destinationsToRemove.flatMap({ $0.value.name.sha256HashBytes })
+            ).sha256HashBytes
         ))
     }
 }
@@ -294,6 +304,12 @@ extension String {
 extension Data {
     var sha256HashBytes: [UInt8] {
         Data(SHA256.hash(data: self)).bytes
+    }
+}
+
+extension Data {
+    var base58String: String {
+        Base58.encode(self.bytes)
     }
 }
 

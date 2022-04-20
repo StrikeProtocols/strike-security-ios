@@ -361,10 +361,16 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
             Account.Meta(publicKey: ASSOCIATED_TOKEN_PROGRAM_ID, isSigner: false, isWritable: false)
         ]
     }
-
-
+    
     func signableData(approverPublicKey: String) throws -> Data {
-        var instructions = [try createOpAccountInstruction]
+        if nonceInfos.count == 0 {
+            throw SolanaError.invalidRequest(reason: "Not enough nonce accounts")
+        }
+        var instructions = try [TransactionInstruction.createAdvanceNonceInstruction(
+            nonceAccountAddress: nonceInfos[0].nonceAccountAddress,
+            feePayer: signingData.feePayer)
+        ]
+        instructions.append(try createOpAccountInstruction)
         if initiation.dataAccountCreationInfo != nil {
             instructions.append(try createDataAccountInstruction)
         }
@@ -375,27 +381,41 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
         ))
         return try Transaction.compileMessage(
             feePayer: PublicKey(string: signingData.feePayer),
-            recentBlockhash: blockhash.value,
+            recentBlockhash: nonceInfos[0].nonce,
             instructions: instructions
         ).serialize()
     }
     
-    func signableSupplyInstructions(approverPublicKey: String) throws -> [Data] {
-        try supplyInstructions.map {
-            try Transaction.compileMessage(
-                feePayer: try PublicKey(string: signingData.feePayer),
-                recentBlockhash: blockhash.value,
-                instructions: [TransactionInstruction(
-                    keys: [
-                        Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
-                        Account.Meta(publicKey: try dataAccountPublicKey, isSigner: false, isWritable: true),
-                        Account.Meta(publicKey: try PublicKey(string: approverPublicKey), isSigner: true, isWritable: false)
-                    ],
-                    programId: try PublicKey(string: signingData.walletProgramId),
-                    data: [UInt8]($0.combinedBytes)
-                    )
-                ]
-            ).serialize()
+    func signableSupplyInstructions(approverPublicKey: String, nonceInfos: [StrikeApi.NonceInfo]) throws -> [StrikeApi.SupplyDappInstructionsTxData] {
+        try supplyInstructions.enumerated().map {
+            if $0 >= nonceInfos.count {
+                throw SolanaError.invalidRequest(reason: "Not enough nonce accounts for supply instructions")
+            }
+            let nonce = nonceInfos[$0].nonce
+            let nonceAccountAddress = nonceInfos[$0].nonceAccountAddress
+            return StrikeApi.SupplyDappInstructionsTxData(
+                nonce: nonce,
+                nonceAccountAddress: nonceAccountAddress,
+                data: try Transaction.compileMessage(
+                    feePayer: try PublicKey(string: signingData.feePayer),
+                    recentBlockhash: nonce,
+                    instructions: [
+                        TransactionInstruction.createAdvanceNonceInstruction(
+                            nonceAccountAddress: nonceAccountAddress,
+                            feePayer: signingData.feePayer
+                        ),
+                        TransactionInstruction(
+                            keys: [
+                                Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
+                                Account.Meta(publicKey: try dataAccountPublicKey, isSigner: false, isWritable: true),
+                                Account.Meta(publicKey: try PublicKey(string: approverPublicKey), isSigner: true, isWritable: false)
+                            ],
+                            programId: try PublicKey(string: signingData.walletProgramId),
+                            data: [UInt8]($1.combinedBytes)
+                        )
+                    ]
+                ).serialize()
+            )
         }
     }
 }
@@ -438,3 +458,18 @@ extension SolanaInstruction {
         ))
     }
 }
+
+extension TransactionInstruction {
+    static func createAdvanceNonceInstruction(nonceAccountAddress: String, feePayer: String) throws -> TransactionInstruction {
+        return try TransactionInstruction(
+            keys: [
+                Account.Meta(publicKey: PublicKey(string: nonceAccountAddress), isSigner: false, isWritable: true),
+                Account.Meta(publicKey: RECENT_BLOCKHASHES_SYSVAR_ID, isSigner: false, isWritable: false),
+                Account.Meta(publicKey: PublicKey(string: feePayer), isSigner: true, isWritable: false)
+            ],
+            programId: SYS_PROGRAM_ID,
+            data: UInt32(4).bytes
+        )
+    }
+}
+

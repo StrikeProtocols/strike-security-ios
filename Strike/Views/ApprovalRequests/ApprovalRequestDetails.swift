@@ -109,7 +109,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         disposition: .Approve,
                         requestID: request.id,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName
                     )
                 )
@@ -120,7 +120,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()
@@ -151,7 +151,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         disposition: .Deny,
                         requestID: request.id,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName
                     )
                 )
@@ -162,7 +162,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        blockhash: blockhash,
+                        nonceInfos: [],
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()
