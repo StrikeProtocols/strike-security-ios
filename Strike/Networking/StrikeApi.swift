@@ -167,12 +167,12 @@ extension StrikeApi {
     }
     
     enum ParamItem: Encodable {
-        case string(String)
+        case stringList([String])
         case params(Params)
 
         func encode(to encoder: Encoder) throws {
             switch self {
-            case .string(let value):
+            case .stringList(let value):
                 var container = encoder.singleValueContainer()
                 try container.encode(value)
             case .params(let value):
@@ -181,8 +181,8 @@ extension StrikeApi {
         }
     }
     
-    struct GetAccountInfoRequest: Encodable {
-        let accountKey: String
+    struct GetMultipleAccountsRequest: Encodable {
+        let accountKeys: [String]
         let id: String
         
         enum CodingKeys: String, CodingKey {
@@ -194,32 +194,32 @@ extension StrikeApi {
 
         func encode(to encoder: Encoder) throws {
             var params = [ParamItem]()
-            params.append(.string(accountKey))
+            params.append(.stringList(accountKeys))
             params.append(.params(Params()))
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(id, forKey: .id)
-            try container.encode("getAccountInfo", forKey: .method)
+            try container.encode("getMultipleAccounts", forKey: .method)
             try container.encode("2.0", forKey: .jsonrpc)
             try container.encode(params, forKey: .params)
         }
 
     }
     
-    struct NonceAccountInfo: Codable {
+    struct GetMultipleAccountsResponse: Codable {
         struct Result: Codable {
             struct AccountData: Codable {
                 let data: [String]
             }
 
-            let value: AccountData
+            let value: [AccountData]
         }
 
         let id: String
         let result: Result
 
         
-        var nonce: String {
-            Data(base64Encoded: result.value.data[0])!.subdata(in: 40 ..< 72).base58String
+        var nonces: [String] {
+            result.value.map({ Data(base64Encoded: $0.data[0])!.subdata(in: 40 ..< 72).base58String })
         }
     }
 

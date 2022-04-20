@@ -737,28 +737,22 @@ class StrikeTests: XCTestCase {
         )
     }
     
-    func testBuildGetAccountInfo() throws {
+    func testBuildGetMultipleAccountsRequest() throws {
     
-        let getAccountInfoRequest = StrikeApi.GetAccountInfoRequest.init(
-            accountKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL",
+        let getMultipleAccountsRequest = StrikeApi.GetMultipleAccountsRequest.init(
+            accountKeys: ["GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL", "AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy"],
             id: "B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9"
         )
         
-        XCTAssertEqual(String(decoding: Mock.encodeJsonType(value: getAccountInfoRequest), as: UTF8.self), "{\"id\":\"B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9\",\"method\":\"getAccountInfo\",\"jsonrpc\":\"2.0\",\"params\":[\"GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL\",{\"encoding\":\"base64\",\"commitment\":\"finalized\"}]}")
+        XCTAssertEqual(String(decoding: Mock.encodeJsonType(value: getMultipleAccountsRequest), as: UTF8.self), "{\"id\":\"B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9\",\"method\":\"getMultipleAccounts\",\"jsonrpc\":\"2.0\",\"params\":[[\"GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL\",\"AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN\",\"9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy\"],{\"encoding\":\"base64\",\"commitment\":\"finalized\"}]}")
        
     }
 
-    func testExtractNonce() throws {
-        let getAccountInfoResponse = StrikeApi.NonceAccountInfo.init(
-            id: "1234",
-            result: StrikeApi.NonceAccountInfo.Result(
-                value: StrikeApi.NonceAccountInfo.Result.AccountData(
-                    data: ["AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNCdJE0k9Ajpn/cEy3TSbbYl5dgEsceAKtAIKa1nvxf6QiBMAAAAAAAA=", "base64"]
-                )
-            )
-        )
-
-        XCTAssertEqual("3eMXeaEkwY5C6UxB6jsMjRGAsDcozgMCdjbZoowSTXZy", getAccountInfoResponse.nonce)
+    func testExtractNonces() throws {
+        
+        let response = "{\"jsonrpc\":\"2.0\",\"result\":{\"context\":{\"slot\":402},\"value\":[{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNCdJE0k9Ajpn/cEy3TSbbYl5dgEsceAKtAIKa1nvxf6QiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNPowQba3TsNG8RNMBrZK/RZighANP8iUyL4yx85rzJDLiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNIQJ8qqFaevM1IJGpCc4YNY67rnrwwyslHS6t+htayrBiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},]},\"id\":\"5c0c319a-4482-45c3-b9b9-d54975c1c4eb\"}"
+        let getAccountInfoResponse: StrikeApi.GetMultipleAccountsResponse = Mock.decodeJsonType(data: response.data(using: .utf8)!)
+        XCTAssertEqual(["3eMXeaEkwY5C6UxB6jsMjRGAsDcozgMCdjbZoowSTXZy", "HqdbyB576ggyavQPaodKiS8XNPHBoo95rb75Le7XzXrr", "9tRccoR8XEVfP32LEZYtZuR8YFYFbPg9kCKnBicdPQHN"], getAccountInfoResponse.nonces)
     }
 
 }
