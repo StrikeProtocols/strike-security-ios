@@ -182,21 +182,21 @@ extension SolanaApprovalRequestType {
         case .signersUpdate:
             return "Signers Update"
         case .balanceAccountCreation(let accountCreation) where accountCreation.accountInfo.accountType == .BalanceAccount:
-            return "Balance Account Creation"
+            return "Wallet Creation"
         case .balanceAccountCreation:
-            return "Stake Account Creation"
+            return "Stake Wallet Creation"
         case .balanceAccountNameUpdate:
-            return "Balance Account Name Update"
+            return "Wallet Name Update"
         case .balanceAccountPolicyUpdate:
-            return "Balance Account Policy Update"
+            return "Wallet Policy Update"
         case .balanceAccountSettingsUpdate:
-            return "Balance Account Settings Update"
+            return "Wallet Settings Update"
         case .addressBookUpdate:
             return "Address Book Update"
         case .dAppBookUpdate:
             return "dApp Book Update"
         case .walletConfigPolicyUpdate:
-            return "Wallet Config Policy Update"
+            return "Vault Config Policy Update"
         case .splTokenAccountCreation:
             return "SPL Token Account Creation"
         case .dAppTransactionRequest:
@@ -219,9 +219,9 @@ extension SolanaApprovalRequestType {
         case .signersUpdate(let signersUpdate):
             return "the addition of `\(signersUpdate.signer.value.name)`"
         case .balanceAccountCreation(let balanceAccountCreation):
-            return "an account creation of \(balanceAccountCreation.accountInfo.name)"
+            return "a wallet creation of \(balanceAccountCreation.accountInfo.name)"
         case .balanceAccountNameUpdate(let balanceAccountNameUpdate):
-            return "account name change to \(balanceAccountNameUpdate.newAccountName)"
+            return "wallet name change to \(balanceAccountNameUpdate.newAccountName)"
         case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate):
             return "policy update for \(balanceAccountPolicyUpdate.accountInfo.name)"
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
@@ -231,7 +231,7 @@ extension SolanaApprovalRequestType {
         case .dAppBookUpdate:
             return "dApp book update"
         case .walletConfigPolicyUpdate:
-            return "wallet config policy update"
+            return "vault config policy update"
         case .splTokenAccountCreation(let splTokenAccountCreation):
             return "SPL token account creation for \(splTokenAccountCreation.tokenSymbolInfo.symbolDescription)"
         case .wrapConversionRequest(let wrapConversion):

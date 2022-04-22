@@ -33,9 +33,9 @@ extension AccountType: CustomStringConvertible {
     var description: String {
         switch self {
         case .BalanceAccount:
-            return "Balance"
+            return "Wallet"
         case .StakeAccount:
-            return "Stake"
+            return "Stake Wallet"
         }
     }
 }

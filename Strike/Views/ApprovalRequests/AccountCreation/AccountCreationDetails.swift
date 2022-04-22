@@ -14,7 +14,7 @@ struct AccountCreationDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("New Account")
+            Text("New Wallet")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
