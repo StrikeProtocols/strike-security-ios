@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D115202282169D4007CD43D /* WalletConfigPolicyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D115201282169D4007CD43D /* WalletConfigPolicyRow.swift */; };
+		3D115204282169E1007CD43D /* WalletConfigPolicyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D115203282169E1007CD43D /* WalletConfigPolicyDetails.swift */; };
+		3D11520728216FBD007CD43D /* BalanceAccountPolicyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11520628216FBD007CD43D /* BalanceAccountPolicyRow.swift */; };
+		3D11520928216FCC007CD43D /* BalanceAccountPolicyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11520828216FCC007CD43D /* BalanceAccountPolicyDetails.swift */; };
+		3D11520C28217321007CD43D /* BalanceAccountNameRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11520B28217321007CD43D /* BalanceAccountNameRow.swift */; };
+		3D11520E2821732E007CD43D /* BalanceAccountNameDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11520D2821732E007CD43D /* BalanceAccountNameDetails.swift */; };
+		3D115211282176FD007CD43D /* AddressBookUpdateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D115210282176FD007CD43D /* AddressBookUpdateRow.swift */; };
+		3D11521328217709007CD43D /* AddressBookUpdateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521228217709007CD43D /* AddressBookUpdateDetails.swift */; };
+		3D11521628217FB5007CD43D /* BalanceAccountSettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521528217FB5007CD43D /* BalanceAccountSettingsRow.swift */; };
+		3D11521828217FC2007CD43D /* BalanceAccountSettingsDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521728217FC2007CD43D /* BalanceAccountSettingsDetails.swift */; };
+		3D11521B282181EF007CD43D /* SPLTokenAccountCreationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */; };
+		3D11521D282181FB007CD43D /* SPLTokenAccountCreationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */; };
 		3D11A60027580CD2008C03B1 /* CaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A5FF27580CD2008C03B1 /* CaptureController.swift */; };
 		3D11A60327580D3F008C03B1 /* DAppScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A60227580D3F008C03B1 /* DAppScan.swift */; };
 		3D11A60527580D81008C03B1 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A60427580D81008C03B1 /* CameraPreview.swift */; };
@@ -120,6 +132,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D115201282169D4007CD43D /* WalletConfigPolicyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConfigPolicyRow.swift; sourceTree = "<group>"; };
+		3D115203282169E1007CD43D /* WalletConfigPolicyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConfigPolicyDetails.swift; sourceTree = "<group>"; };
+		3D11520628216FBD007CD43D /* BalanceAccountPolicyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountPolicyRow.swift; sourceTree = "<group>"; };
+		3D11520828216FCC007CD43D /* BalanceAccountPolicyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountPolicyDetails.swift; sourceTree = "<group>"; };
+		3D11520B28217321007CD43D /* BalanceAccountNameRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountNameRow.swift; sourceTree = "<group>"; };
+		3D11520D2821732E007CD43D /* BalanceAccountNameDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountNameDetails.swift; sourceTree = "<group>"; };
+		3D115210282176FD007CD43D /* AddressBookUpdateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookUpdateRow.swift; sourceTree = "<group>"; };
+		3D11521228217709007CD43D /* AddressBookUpdateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookUpdateDetails.swift; sourceTree = "<group>"; };
+		3D11521528217FB5007CD43D /* BalanceAccountSettingsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountSettingsRow.swift; sourceTree = "<group>"; };
+		3D11521728217FC2007CD43D /* BalanceAccountSettingsDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountSettingsDetails.swift; sourceTree = "<group>"; };
+		3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLTokenAccountCreationRow.swift; sourceTree = "<group>"; };
+		3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLTokenAccountCreationDetails.swift; sourceTree = "<group>"; };
 		3D11A5FF27580CD2008C03B1 /* CaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureController.swift; sourceTree = "<group>"; };
 		3D11A60227580D3F008C03B1 /* DAppScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppScan.swift; sourceTree = "<group>"; };
 		3D11A60427580D81008C03B1 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
@@ -249,6 +273,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D115200282169A5007CD43D /* WalletConfigPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				3D115201282169D4007CD43D /* WalletConfigPolicyRow.swift */,
+				3D115203282169E1007CD43D /* WalletConfigPolicyDetails.swift */,
+			);
+			path = WalletConfigPolicy;
+			sourceTree = "<group>";
+		};
+		3D11520528216FA1007CD43D /* BalanceAccountPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				3D11520628216FBD007CD43D /* BalanceAccountPolicyRow.swift */,
+				3D11520828216FCC007CD43D /* BalanceAccountPolicyDetails.swift */,
+			);
+			path = BalanceAccountPolicy;
+			sourceTree = "<group>";
+		};
+		3D11520A2821730C007CD43D /* BalanceAccountName */ = {
+			isa = PBXGroup;
+			children = (
+				3D11520B28217321007CD43D /* BalanceAccountNameRow.swift */,
+				3D11520D2821732E007CD43D /* BalanceAccountNameDetails.swift */,
+			);
+			path = BalanceAccountName;
+			sourceTree = "<group>";
+		};
+		3D11520F282176D8007CD43D /* AddressBookUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				3D115210282176FD007CD43D /* AddressBookUpdateRow.swift */,
+				3D11521228217709007CD43D /* AddressBookUpdateDetails.swift */,
+			);
+			path = AddressBookUpdate;
+			sourceTree = "<group>";
+		};
+		3D11521428217F9E007CD43D /* BalanceAccountSettings */ = {
+			isa = PBXGroup;
+			children = (
+				3D11521528217FB5007CD43D /* BalanceAccountSettingsRow.swift */,
+				3D11521728217FC2007CD43D /* BalanceAccountSettingsDetails.swift */,
+			);
+			path = BalanceAccountSettings;
+			sourceTree = "<group>";
+		};
+		3D115219282181D4007CD43D /* SPLTokenAccountCreation */ = {
+			isa = PBXGroup;
+			children = (
+				3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */,
+				3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */,
+			);
+			path = SPLTokenAccountCreation;
+			sourceTree = "<group>";
+		};
 		3D11A60127580D1C008C03B1 /* DApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +459,12 @@
 				3DAF53B7262E1402000DD558 /* ApprovalRequestDetails.swift */,
 				3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */,
 				3DB7F9BF26D6C2CD00A49B4E /* UnknownRequestRow.swift */,
+				3D115219282181D4007CD43D /* SPLTokenAccountCreation */,
+				3D11521428217F9E007CD43D /* BalanceAccountSettings */,
+				3D11520F282176D8007CD43D /* AddressBookUpdate */,
+				3D11520A2821730C007CD43D /* BalanceAccountName */,
+				3D11520528216FA1007CD43D /* BalanceAccountPolicy */,
+				3D115200282169A5007CD43D /* WalletConfigPolicy */,
 				3DBC44E1280F17510016E1AB /* Login */,
 				3D7FFFEB27FA0F4E003B3F48 /* DAppTransaction */,
 				3DB995F927EB74E9005655F0 /* AccountCreation */,
@@ -702,11 +786,13 @@
 			files = (
 				3D2BCA08264D7A79000A6D56 /* ChangeDetails.swift in Sources */,
 				3DBC44E5280F18830016E1AB /* LoginDetails.swift in Sources */,
+				3D11521628217FB5007CD43D /* BalanceAccountSettingsRow.swift in Sources */,
 				3DBF9DC326E000CC00D7683E /* EmptyApprovalRequestsList.swift in Sources */,
 				3DB995FB27EB7997005655F0 /* AccountCreationRow.swift in Sources */,
 				3D11A60327580D3F008C03B1 /* DAppScan.swift in Sources */,
 				3DB995FF27EE1804005655F0 /* BiometryError.swift in Sources */,
 				3DBF9DAF26DE7A0E00D7683E /* ViewRouter.swift in Sources */,
+				3D11520E2821732E007CD43D /* BalanceAccountNameDetails.swift in Sources */,
 				3DAF53B8262E1402000DD558 /* ApprovalRequestDetails.swift in Sources */,
 				3D1C762427DA861F0016BB32 /* ApprovalDispositionRequest+SolanaSignable.swift in Sources */,
 				3D3D6D4F261B957800FEEE0B /* RetryView.swift in Sources */,
@@ -718,6 +804,7 @@
 				3DBC44E3280F17660016E1AB /* LoginRow.swift in Sources */,
 				3DC7A74327D006A900A2BBA7 /* KeyRetrieval.swift in Sources */,
 				40B093A625DF27CC00EA51C6 /* String+Masked.swift in Sources */,
+				3D11520928216FCC007CD43D /* BalanceAccountPolicyDetails.swift in Sources */,
 				3DBD7DCE2655CE0F00662C62 /* ApprovalsNeeded.swift in Sources */,
 				3DC7A74127D0067D00A2BBA7 /* KeyGeneration.swift in Sources */,
 				3D3854222639BD7F00C8693C /* Data+Hex.swift in Sources */,
@@ -725,12 +812,14 @@
 				3D311DEA260BD14A007A0B98 /* Moya+AuthProvider.swift in Sources */,
 				3DC7A74527D67E8900A2BBA7 /* SolanaClientModel.swift in Sources */,
 				3D311D56260A3A1A007A0B98 /* OktaAuthProvider.swift in Sources */,
+				3D11521B282181EF007CD43D /* SPLTokenAccountCreationRow.swift in Sources */,
 				3D3D6CF12616437400FEEE0B /* AuthProvider.swift in Sources */,
 				3D1C761927D8501C0016BB32 /* PublicKey.swift in Sources */,
 				3DAA26F6262F5156000F453D /* DestructiveButtonStyle.swift in Sources */,
 				3D311D57260A3A1A007A0B98 /* MockAuthProvider.swift in Sources */,
 				3D7FFFEF27FA0F88003B3F48 /* DAppTransactionDetails.swift in Sources */,
 				3DB995FD27EB79A4005655F0 /* AccountCreationDetails.swift in Sources */,
+				3D11520728216FBD007CD43D /* BalanceAccountPolicyRow.swift in Sources */,
 				3D11A60B275851BA008C03B1 /* WalletConnected.swift in Sources */,
 				3D11A60027580CD2008C03B1 /* CaptureController.swift in Sources */,
 				3DB7F9BC26D6C0F800A49B4E /* ConversionRow.swift in Sources */,
@@ -739,6 +828,7 @@
 				3D11A60527580D81008C03B1 /* CameraPreview.swift in Sources */,
 				3DC2F3FF25F896C40061BB3A /* RemoteResult.swift in Sources */,
 				3DBF9DC526E0020300D7683E /* ApprovalRequestItem.swift in Sources */,
+				3D115204282169E1007CD43D /* WalletConfigPolicyDetails.swift in Sources */,
 				3DB995F627EB71EE005655F0 /* SignerUpdateRow.swift in Sources */,
 				6C0E3EED27EE5AFE002FEE7C /* InitiationRequest+SolanaSignable.swift in Sources */,
 				3DDAF32F2639F7010015B54B /* RefreshScrollView.swift in Sources */,
@@ -747,6 +837,7 @@
 				3D311D43260A336A007A0B98 /* RoundedCell.swift in Sources */,
 				40BCB0B1261B963100CF58A8 /* OktaError+LocalizedError.swift in Sources */,
 				40A9AF0E25DF5F0E004320EF /* ComposeMail.swift in Sources */,
+				3D11521328217709007CD43D /* AddressBookUpdateDetails.swift in Sources */,
 				3D3D6CEC2616432000FEEE0B /* RecoverPasswordView.swift in Sources */,
 				6C0E3EF227EE5E29002FEE7C /* NaclLowLevel.swift in Sources */,
 				3D3D6D54261B95B100FEEE0B /* ApprovalRequestsView.swift in Sources */,
@@ -763,6 +854,7 @@
 				3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift in Sources */,
 				40A9AF0425DF32B9004320EF /* FactList.swift in Sources */,
 				3D3D6D122616447200FEEE0B /* LoadingModifier.swift in Sources */,
+				3D11520C28217321007CD43D /* BalanceAccountNameRow.swift in Sources */,
 				3D2CE49925F8423800137E05 /* SignInView.swift in Sources */,
 				40F907A625DDC31B00B107B0 /* StrikeApi+Mock.swift in Sources */,
 				3D1C762227DA850A0016BB32 /* Base58.swift in Sources */,
@@ -773,8 +865,10 @@
 				3D3D6D112616447200FEEE0B /* Alert+DismissButton.swift in Sources */,
 				3DAFFD2E25F8951100B408AD /* MainView.swift in Sources */,
 				3DC36BB5262B4E8C005DB1A7 /* ApprovalRequestsList.swift in Sources */,
+				3D115202282169D4007CD43D /* WalletConfigPolicyRow.swift in Sources */,
 				40328E102593ED9900F2EE41 /* StrikeApp.swift in Sources */,
 				3D3D6CED2616432000FEEE0B /* LockedOutAccountView.swift in Sources */,
+				3D11521828217FC2007CD43D /* BalanceAccountSettingsDetails.swift in Sources */,
 				3D3D6D362616B84700FEEE0B /* RegistrationView.swift in Sources */,
 				3DAF53B4262E13A4000DD558 /* ApprovalRequestRow.swift in Sources */,
 				40CB67AD25C1076300DB15D6 /* Configuration.swift in Sources */,
@@ -783,10 +877,12 @@
 				6C0E3EF727EE6367002FEE7C /* SMP Bignum Extensions.swift in Sources */,
 				4006422F259A422400A8D8D3 /* StrikeApi.swift in Sources */,
 				6C0E3EF927EE64BA002FEE7C /* SMP.swift in Sources */,
+				3D11521D282181FB007CD43D /* SPLTokenAccountCreationDetails.swift in Sources */,
 				3DC7A73C27CE749F00A2BBA7 /* Keychain.swift in Sources */,
 				3D633E162748656500BACCCE /* BiometryCheck.swift in Sources */,
 				3D11A60727581510008C03B1 /* CameraAccessRequired.swift in Sources */,
 				3D3D6D162616449C00FEEE0B /* HelpView.swift in Sources */,
+				3D115211282176FD007CD43D /* AddressBookUpdateRow.swift in Sources */,
 				3D3D6CEB2616432000FEEE0B /* RecoverPasswordChallengeView.swift in Sources */,
 				3DC2F42D25FAAFD00061BB3A /* MoyaLoader.swift in Sources */,
 				3D61A0FC2655B4FF00AD1EE7 /* SignedInNavigationView.swift in Sources */,

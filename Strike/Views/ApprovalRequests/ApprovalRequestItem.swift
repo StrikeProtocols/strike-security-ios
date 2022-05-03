@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import Alamofire
 
 
 struct ApprovalRequestItem: View {
@@ -51,19 +52,43 @@ struct ApprovalRequestItem: View {
                 DAppTransactionDetails(request: request, transactionRequest: dAppTransactionRequest)
             }
         case .balanceAccountNameUpdate(let balanceAccountNameUpdate): // 3
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                BalanceAccountNameRow(update: balanceAccountNameUpdate)
+            } detail: {
+                BalanceAccountNameDetails(request: request, update: balanceAccountNameUpdate)
+            }
         case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate): // 2
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                BalanceAccountPolicyRow(update: balanceAccountPolicyUpdate)
+            } detail: {
+                BalanceAccountPolicyDetails(request: request, update: balanceAccountPolicyUpdate, user: user)
+            }
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate): // 5
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                BalanceAccountSettingsRow(update: balanceAccountSettingsUpdate)
+            } detail: {
+                BalanceAccountSettingsDetails(request: request, update: balanceAccountSettingsUpdate, user: user)
+            }
         case .addressBookUpdate(let addressBookUpdate): // 4 - remove whitelist
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                AddressBookUpdateRow(update: addressBookUpdate)
+            } detail: {
+                AddressBookUpdateDetails(request: request, update: addressBookUpdate)
+            }
         case .dAppBookUpdate(let dAppBookUpdate):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate): // 1
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                WalletConfigPolicyRow(update: walletConfigPolicyUpdate)
+            } detail: {
+                WalletConfigPolicyDetails(request: request, update: walletConfigPolicyUpdate)
+            }
         case .splTokenAccountCreation(let splTokenAccountCreation): // 6
-            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
+                SPLTokenAccountCreationRow(creation: splTokenAccountCreation)
+            } detail: {
+                SPLTokenAccountCreationDetails(request: request, creation: splTokenAccountCreation)
+            }
         case .wrapConversionRequest(let wrapConversionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .loginApproval:

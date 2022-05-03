@@ -73,6 +73,12 @@ struct DAppTransactionDetails: View {
                 }
             }
             .padding([.bottom], 20)
+
+            FactList {
+                Fact("Requested By", request.submitterEmail)
+                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
+            }
+
         }
         .navigationTitle("Change Details")
     }
