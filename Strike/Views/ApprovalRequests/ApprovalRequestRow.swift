@@ -106,7 +106,9 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
     private func approve() {
         isLoading = true
 
-        strikeApi.provider.requestWithRecentBlockhash { blockhash in
+        strikeApi.provider.requestWithNonces(
+            accountAddresses: request.requestType.nonceAccountAddresses
+        ) { nonces in
             switch request.details {
             case .approval(let requestType):
                 return .registerApprovalDisposition(
@@ -114,7 +116,7 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
                         disposition: .Approve,
                         requestID: request.id,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName
                     )
                 )
@@ -125,7 +127,7 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()

@@ -438,12 +438,55 @@ protocol SolanaSignable {
     func signableData(approverPublicKey: String) throws -> Data
 }
 
-protocol SolanaSignableSupplyInstructions {
-    func signableSupplyInstructions(approverPublicKey: String, nonceInfos: [StrikeApi.NonceInfo]) throws -> [StrikeApi.SupplyDappInstructionsTxData]
-}
-
 struct LoginApproval: Codable, Equatable  {
     var jwtToken: String
+}
+
+extension SolanaApprovalRequestDetails {
+    var nonceAccountAddresses: [String] {
+        switch self {
+        case .approval(let requestType):
+            return requestType.nonceAccountAddresses
+        case .multisigOpInitiation(_, let requestType):
+            return requestType.nonceAccountAddresses
+        }
+    }
+}
+
+extension SolanaApprovalRequestType {
+    var nonceAccountAddresses: [String] {
+        switch self {
+        case .dAppTransactionRequest(let request):
+            return request.signingData.nonceAccountAddresses
+        case .addressBookUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .balanceAccountCreation(let request):
+            return request.signingData.nonceAccountAddresses
+        case .balanceAccountNameUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .balanceAccountPolicyUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .balanceAccountSettingsUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .conversionRequest(let request):
+            return request.signingData.nonceAccountAddresses
+        case .dAppBookUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .signersUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .withdrawalRequest(let request):
+            return request.signingData.nonceAccountAddresses
+        case .splTokenAccountCreation(let request):
+            return request.signingData.nonceAccountAddresses
+        case .walletConfigPolicyUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .wrapConversionRequest(let request):
+            return request.signingData.nonceAccountAddresses
+        case .loginApproval,
+             .unknown:
+            return []
+        }
+    }
 }
 
 #if DEBUG

@@ -8,7 +8,7 @@
 import Foundation
 import CryptoKit
 
-extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstructions {
+extension StrikeApi.InitiationRequest: SolanaSignable {
 
     var opCode: UInt8 {
         switch requestType {
@@ -214,12 +214,23 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
             }
         }
     }
-    
-    var supplyInstructions: [SolanaInstructionBatch] {
+
+    var supplyInstructions: [SupplyDappInstruction] {
         get throws {
             switch requestType {
-            case .dAppTransactionRequest(let request):
-                return request.instructions
+            case .dAppTransactionRequest(let request) where request.instructions.count + 1 == nonces.count && nonces.count == request.signingData.nonceAccountAddresses.count:
+                return try request.instructions.enumerated().map { (i, instructionBatch) in
+                    SupplyDappInstruction(
+                        nonce: nonces[i + 1],
+                        nonceAccountAddress: request.signingData.nonceAccountAddresses[i + 1],
+                        instructionBatch: instructionBatch,
+                        signingData: try signingData,
+                        opAccountPublicKey: try opAccountPublicKey,
+                        dataAccountPublicKey: try dataAccountPublicKey
+                    )
+                }
+            case .dAppTransactionRequest:
+                throw SolanaError.invalidRequest(reason: "Nonce count does not match instruction count")
             default:
                 return []
             }
@@ -363,42 +374,47 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
     }
     
     func signableData(approverPublicKey: String) throws -> Data {
-        if nonceInfos.count == 0 {
+        guard let nonce = nonces.first, let nonceAccountAddress = requestType.nonceAccountAddresses.first else {
             throw SolanaError.invalidRequest(reason: "Not enough nonce accounts")
         }
+
         var instructions = try [TransactionInstruction.createAdvanceNonceInstruction(
-            nonceAccountAddress: nonceInfos[0].nonceAccountAddress,
+            nonceAccountAddress: nonceAccountAddress,
             feePayer: signingData.feePayer)
         ]
+
         instructions.append(try createOpAccountInstruction)
+
         if initiation.dataAccountCreationInfo != nil {
             instructions.append(try createDataAccountInstruction)
         }
+
         instructions.append(try TransactionInstruction(
-            keys: instructionAccountMeta(approverPublicKey: try PublicKey(string: approverPublicKey)),
-            programId: PublicKey(string: signingData.walletProgramId),
-            data: [UInt8](instructionData)
-        ))
+                keys: instructionAccountMeta(approverPublicKey: try PublicKey(string: approverPublicKey)),
+                programId: PublicKey(string: signingData.walletProgramId),
+                data: [UInt8](instructionData)
+            )
+        )
+
         return try Transaction.compileMessage(
             feePayer: PublicKey(string: signingData.feePayer),
-            recentBlockhash: nonceInfos[0].nonce,
+            recentBlockhash: nonce.value,
             instructions: instructions
         ).serialize()
     }
-    
-    func signableSupplyInstructions(approverPublicKey: String, nonceInfos: [StrikeApi.NonceInfo]) throws -> [StrikeApi.SupplyDappInstructionsTxData] {
-        try supplyInstructions.enumerated().map {
-            if $0 >= nonceInfos.count {
-                throw SolanaError.invalidRequest(reason: "Not enough nonce accounts for supply instructions")
-            }
-            let nonce = nonceInfos[$0].nonce
-            let nonceAccountAddress = nonceInfos[$0].nonceAccountAddress
-            return StrikeApi.SupplyDappInstructionsTxData(
-                nonce: nonce,
-                nonceAccountAddress: nonceAccountAddress,
-                data: try Transaction.compileMessage(
+
+    struct SupplyDappInstruction: SolanaSignable {
+        var nonce: StrikeApi.Nonce
+        var nonceAccountAddress: String
+        var instructionBatch: SolanaInstructionBatch
+        var signingData: SolanaSigningData
+        var opAccountPublicKey: PublicKey
+        var dataAccountPublicKey: PublicKey
+
+        func signableData(approverPublicKey: String) throws -> Data {
+            return try Transaction.compileMessage(
                     feePayer: try PublicKey(string: signingData.feePayer),
-                    recentBlockhash: nonce,
+                    recentBlockhash: nonce.value,
                     instructions: [
                         TransactionInstruction.createAdvanceNonceInstruction(
                             nonceAccountAddress: nonceAccountAddress,
@@ -406,16 +422,15 @@ extension StrikeApi.InitiationRequest: SolanaSignable, SolanaSignableSupplyInstr
                         ),
                         TransactionInstruction(
                             keys: [
-                                Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
-                                Account.Meta(publicKey: try dataAccountPublicKey, isSigner: false, isWritable: true),
+                                Account.Meta(publicKey: opAccountPublicKey, isSigner: false, isWritable: true),
+                                Account.Meta(publicKey: dataAccountPublicKey, isSigner: false, isWritable: true),
                                 Account.Meta(publicKey: try PublicKey(string: approverPublicKey), isSigner: true, isWritable: false)
                             ],
                             programId: try PublicKey(string: signingData.walletProgramId),
-                            data: [UInt8]($1.combinedBytes)
+                            data: [UInt8](instructionBatch.combinedBytes)
                         )
                     ]
                 ).serialize()
-            )
         }
     }
 }

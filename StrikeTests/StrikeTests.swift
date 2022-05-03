@@ -12,12 +12,12 @@ import CryptoKit
 class StrikeTests: XCTestCase {
     
     func testSignersUpdateSerializedOp() throws {
-        let request: WalletApprovalRequest = getSignersUpdateWalletRequest()
+        let request: WalletApprovalRequest = getSignersUpdateWalletRequest(nonceAccountAddresses: ["123455"])
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("123455", "12345")],
+            nonces: [StrikeApi.Nonce("12345")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -27,12 +27,12 @@ class StrikeTests: XCTestCase {
     }
     
     func testSignersUpdateApprovalDisposition() throws {
-        let request: WalletApprovalRequest = getWalletApprovalRequest(getSignersUpdateRequest())
+        let request: WalletApprovalRequest = getWalletApprovalRequest(getSignersUpdateRequest(nonceAccountAddresses: ["BzZpoiceSXQTtrrZUMU67s6pCJzqCDJAVvgJCRw64fJV"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("BzZpoiceSXQTtrrZUMU67s6pCJzqCDJAVvgJCRw64fJV", "HPaFoRv9A6T14AhGu5nJWMWTb6YuJYCNZEGnteXe728v")],
+            nonces: [StrikeApi.Nonce("HPaFoRv9A6T14AhGu5nJWMWTb6YuJYCNZEGnteXe728v")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -46,7 +46,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getSignersUpdateRequest()
+        let requestType: SolanaApprovalRequestType = getSignersUpdateRequest(nonceAccountAddresses: ["5Fx8Nk98DbUcNUe4izqJkcYwfaMGmKRbXi1A7fVPfzj7"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "4ec605d194c0279e9b615464d8c6a723f8995e951b1d192b4123c602389af046".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -54,7 +54,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("5Fx8Nk98DbUcNUe4izqJkcYwfaMGmKRbXi1A7fVPfzj7", "6HeTZQvWzhX8aLpm7K213scyGExytur2qiXxqLAMKnBb")],
+            nonces: [StrikeApi.Nonce("6HeTZQvWzhX8aLpm7K213scyGExytur2qiXxqLAMKnBb")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -67,12 +67,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testBalanceAccountCreationApprovalDisposition() throws {
-        let request = getWalletApprovalRequest(getBalanceAccountCreationRequest())
+        let request = getWalletApprovalRequest(getBalanceAccountCreationRequest(nonceAccountAddresses: ["9R4VxgBXwFZr244eb8mf3hD7NdCw87pfEDbWwSV7Hvy4"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("9R4VxgBXwFZr244eb8mf3hD7NdCw87pfEDbWwSV7Hvy4", "8kNEgm8XHszsu1wfMxTJ5ggn6pTLs1ieoKqfAxjEP3mK")],
+            nonces: [StrikeApi.Nonce("8kNEgm8XHszsu1wfMxTJ5ggn6pTLs1ieoKqfAxjEP3mK")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -86,7 +86,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getBalanceAccountCreationRequest()
+        let requestType: SolanaApprovalRequestType = getBalanceAccountCreationRequest(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "5d4596a82bc0381481cb5facc5851a5558b9472f705d410f7272a7c8efed33f3".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -94,7 +94,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -107,12 +107,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testSolWithdrawalRequestApprovalDisposition() throws {
-        let request = getWalletApprovalRequest(getSolWithdrawalRequest())
+        let request = getWalletApprovalRequest(getSolWithdrawalRequest(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -126,7 +126,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getSolWithdrawalRequest()
+        let requestType: SolanaApprovalRequestType = getSolWithdrawalRequest(nonceAccountAddresses: ["9NDFtaczqouZ9SGTfd489EfN3KvMQgrAjpuu4QEr9Kys"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "0c7c37ea5a2f70937405de74bee9bb7a5c161d161789aa8ed7c3f78be106fa70".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -134,7 +134,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("9NDFtaczqouZ9SGTfd489EfN3KvMQgrAjpuu4QEr9Kys", "Dht1NBhu5uzMknbEYNzK5XCi8cXaJ51bHM8XQTqVx7eP")],
+            nonces: [StrikeApi.Nonce("Dht1NBhu5uzMknbEYNzK5XCi8cXaJ51bHM8XQTqVx7eP")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -147,12 +147,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testSplWithdrawalRequestApprovalDisposition() throws {
-        let request = getWalletApprovalRequest(getSplWithdrawalRequest())
+        let request = getWalletApprovalRequest(getSplWithdrawalRequest(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -166,7 +166,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getSplWithdrawalRequest()
+        let requestType: SolanaApprovalRequestType = getSplWithdrawalRequest(nonceAccountAddresses: ["6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "4ba2d7074c6fa66dca792b64260b0513a229fa0849b1ceaa5b9cff1285fedee7".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -174,7 +174,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX", "9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
+            nonces: [StrikeApi.Nonce("9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -187,12 +187,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testUSDCconversionRequestApprovalDisposition() throws {
-        let request = getWalletApprovalRequest(getConversionRequest())
+        let request = getWalletApprovalRequest(getConversionRequest(nonceAccountAddresses: ["6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX", "9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
+            nonces: [StrikeApi.Nonce("9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -206,7 +206,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getConversionRequest()
+        let requestType: SolanaApprovalRequestType = getConversionRequest(nonceAccountAddresses: ["6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "5f27be66e3eb697a4274f9359c87f9069762a5e2cb7a63a622e923bd6119b963".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -214,7 +214,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX", "9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
+            nonces: [StrikeApi.Nonce("9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -231,7 +231,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getWrapConversionRequest()
+        let requestType: SolanaApprovalRequestType = getWrapConversionRequest(nonceAccountAddresses: ["6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "46b397c81d81f9c745bb61baf28337888907696c5e653a08a98b5ecbcc1c82c8".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -239,7 +239,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX", "9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
+            nonces: [StrikeApi.Nonce("9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -256,7 +256,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getUnwrapConversionRequest()
+        let requestType: SolanaApprovalRequestType = getUnwrapConversionRequest(nonceAccountAddresses: ["6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "4cdbc626f9cb68219d52d49d80041ab0b3b130d1880323a763b3eed8d4f8ff0f".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -264,7 +264,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX", "9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
+            nonces: [StrikeApi.Nonce("9kV51VcoGhA1YFkBxBhd7rG1nz7ZCVcsBpqaaGa1hgCD")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -287,19 +287,18 @@ class StrikeTests: XCTestCase {
                 minBalanceForRentExemption: 19655040
             )
         )
-        let nonceInfos = [
-            getNonceAccountInfo("CeQNynfs9Mx1MGTeGQaDZDZnCiUWTkUsUyYf4qT51Cek", "HqdbyB576ggyavQPaodKiS8XNPHBoo95rb75Le7XzXrr"),
-            getNonceAccountInfo("HSwjDt3MYHutJcXtryaQEG3SBfRktqkuoU8cVyWoRE7P", "6PuZZuAFFYutbMY1JuYFHQUnZMXQeBe9ZrzoCaL4YGD5")
-        ]
-        
-        let requestType: SolanaApprovalRequestType = getDAppTransactionRequest()
+
+        let nonceAccountAddresses = ["CeQNynfs9Mx1MGTeGQaDZDZnCiUWTkUsUyYf4qT51Cek", "HSwjDt3MYHutJcXtryaQEG3SBfRktqkuoU8cVyWoRE7P"]
+        let nonces = [StrikeApi.Nonce("HqdbyB576ggyavQPaodKiS8XNPHBoo95rb75Le7XzXrr"), StrikeApi.Nonce("6PuZZuAFFYutbMY1JuYFHQUnZMXQeBe9ZrzoCaL4YGD5")]
+
+        let requestType: SolanaApprovalRequestType = getDAppTransactionRequest(nonceAccountAddresses: nonceAccountAddresses)
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let initiationRequest = StrikeApi.InitiationRequest(
             disposition: .Approve,
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: nonceInfos,
+            nonces: nonces,
             email: "dont care",
             opAccountPrivateKey: opAccountPk,
             dataAccountPrivateKey: dataAccountPk
@@ -309,26 +308,24 @@ class StrikeTests: XCTestCase {
             try initiationRequest.signableData(approverPublicKey: "HnCLpPZrMdXdogoesmx6bX3z3tPo8mvvaRXXkaonzZtf").toHexString(),
             "0401050ad5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34910d0175251385b1ee8fd8a19a360563f04ebdf43e6a7d0040f85ed2e6ec00e29c361e34407dab66e0d07e010c882241a9e967912a087b517092cb177093de69f94ef38875324ed73252ad52b51449f4615b2f1da3645635582db54dafe4a56cad057b14f59401a098a66e40e1bed86e00f949ba796e9a5af604d1e84cd96f1906a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000051a5c79873c30d67e853c870935f0b76c02dfbc48624afc1188ede15558fb77a06a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b21000000000000000000000000000000000000000000000000000000000000000000000000baec1d8d88c2a1f9c53d90c084f0288926771f41a2a363e9493b3d35e9b7fdfcfa3041b6b74ec346f1134c06b64afd166282100d3fc894c8be32c7ce6bcc90cb040803040500040400000008020001340000000000a76700000000005003000000000000baec1d8d88c2a1f9c53d90c084f0288926771f41a2a363e9493b3d35e9b7fdfc08020002340000000080e92b0100000000880a000000000000baec1d8d88c2a1f9c53d90c084f0288926771f41a2a363e9493b3d35e9b7fdfc0905010206030762105858d7574baea93cb0dd0e2c9a5c9c6a18d4b58fd0079d0fbf02aee8e7ca93814a2401cbeb9bb1c99935b6775fa040b4f0e4c90b5e473c28d871e8f240b5b5432e90c13b0d471b592c2984568133a41676460f72c885db57ad26bd5b628f938201"
         )
-        let signableInstructions = try initiationRequest.signableSupplyInstructions(
-            approverPublicKey: "HnCLpPZrMdXdogoesmx6bX3z3tPo8mvvaRXXkaonzZtf",
-            nonceInfos: [nonceInfos[1]]
-        )
-        XCTAssertEqual(signableInstructions.count, 1)
-        XCTAssertEqual(signableInstructions[0].nonce, nonceInfos[1].nonce)
-        XCTAssertEqual(signableInstructions[0].nonceAccountAddress, nonceInfos[1].nonceAccountAddress)
-        XCTAssertEqual(
-            signableInstructions[0].data.toHexString(),
+
+        let supplyInstructions = try initiationRequest.supplyInstructions
+        XCTAssertEqual(supplyInstructions.count, 1)
+        XCTAssertEqual(supplyInstructions[0].nonce, nonces[1])
+        XCTAssertEqual(supplyInstructions[0].nonceAccountAddress, nonceAccountAddresses[1])
+        try XCTAssertEqual(
+            supplyInstructions[0].signableData(approverPublicKey: "HnCLpPZrMdXdogoesmx6bX3z3tPo8mvvaRXXkaonzZtf").toHexString(),
             "02010308d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34f94ef38875324ed73252ad52b51449f4615b2f1da3645635582db54dafe4a56cf46064647351baf7c5594ff5df2c40351745fc44521994a2d22c76243775c506910d0175251385b1ee8fd8a19a360563f04ebdf43e6a7d0040f85ed2e6ec00e29c361e34407dab66e0d07e010c882241a9e967912a087b517092cb177093de6906a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea94000000000000000000000000000000000000000000000000000000000000000000000baec1d8d88c2a1f9c53d90c084f0288926771f41a2a363e9493b3d35e9b7fdfc5028a4d782430b75cf8637ccc7df21fe6d186a69ddb048cc9dc925a78e1472800206030205000404000000070303040193021c0001008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f8590700035916cb79b8ad2bae04f10515239d1c14887f73176f3e999782551840df5e982e0159fba9d95655503acdbd5e4817229ecd4fe12aca67536b5ddc9d4782ca22d11a035916cb79b8ad2bae04f10515239d1c14887f73176f3e999782551840df5e982e00c726a968258c654f7622595c108fc3333d676e45b15b9d541c1034d2a68031440000000000000000000000000000000000000000000000000000000000000000000006ddf6e1d765a193d9cbe146ceeb79ac1cb485ed5f5b37913a8cf5857eff00a90006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a000000000400010203ac"
         )
     }
 
     func testAddDAppBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddDAppBookEntry())
+        let request = getWalletApprovalRequest(getAddDAppBookEntry(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -342,7 +339,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getAddDAppBookEntry()
+        let requestType: SolanaApprovalRequestType = getAddDAppBookEntry(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "72ff8f7fb4a441c93d4003e2bf67dd367e3293311c4f9433c422a2fbf305c477".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -350,7 +347,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -363,12 +360,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testRemoveDAppBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getRemoveDAppBookEntry())
+        let request = getWalletApprovalRequest(getRemoveDAppBookEntry(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -382,7 +379,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getRemoveDAppBookEntry()
+        let requestType: SolanaApprovalRequestType = getRemoveDAppBookEntry(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "1d3462075eae5a46257981c00c20982dd27a88b70a88ff95455dad6bc88859aa".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -390,7 +387,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -407,7 +404,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getAddAddressBookEntry()
+        let requestType: SolanaApprovalRequestType = getAddAddressBookEntry(nonceAccountAddresses: ["AFpfUonk56y9aZdjnbs1N2VUsUrtPQfVgFncAMyTReeH"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "d593c3bc464cf65719a8881ef79c66d8a4684870ccdbf314f012ff8ed879295a".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -415,7 +412,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AFpfUonk56y9aZdjnbs1N2VUsUrtPQfVgFncAMyTReeH", "F2MWViB8wyK77MHVUbzyWDABgXu8SFBcM3iEREUdevAd")],
+            nonces: [StrikeApi.Nonce("F2MWViB8wyK77MHVUbzyWDABgXu8SFBcM3iEREUdevAd")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -428,12 +425,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testAddAddressBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddAddressBookEntry())
+        let request = getWalletApprovalRequest(getAddAddressBookEntry(nonceAccountAddresses: ["Hd4srpDtCzUsySDVZVeaBNJA7txQrJfvaZjhVpWePnK9"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("Hd4srpDtCzUsySDVZVeaBNJA7txQrJfvaZjhVpWePnK9", "F2MWViB8wyK77MHVUbzyWDABgXu8SFBcM3iEREUdevAd")],
+            nonces: [StrikeApi.Nonce("F2MWViB8wyK77MHVUbzyWDABgXu8SFBcM3iEREUdevAd")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -447,7 +444,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistUpdate()
+        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistUpdate(nonceAccountAddresses: ["DcQPFjFjaTWCSvCNDu3fMzHjJJZggtgM69qasNGiKp7J"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "d289ad6ec351ed2fa1dca209ac8e3bbdd19f3a7d5444e6583187631e0044022b".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -455,7 +452,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("DcQPFjFjaTWCSvCNDu3fMzHjJJZggtgM69qasNGiKp7J", "9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
+            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -468,12 +465,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testWhitelistAddressBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddressBookWhitelistUpdate())
+        let request = getWalletApprovalRequest(getAddressBookWhitelistUpdate(nonceAccountAddresses: ["CDXW6vcyi78ZwLPpXJwumV4dqDYyW4Wg37a8FZznaTs3"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("CDXW6vcyi78ZwLPpXJwumV4dqDYyW4Wg37a8FZznaTs3", "9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
+            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -487,7 +484,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistAddAndRemove()
+        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistAddAndRemove(nonceAccountAddresses: ["H7zYfWgtQE36oFigyuGY4XKuScoCWJaJjFESZbwMKBXk"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "c72dc3b10c6905ac3d824707d37378238d5410fc2e4f975aeaa035b601e8705c".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -495,7 +492,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("H7zYfWgtQE36oFigyuGY4XKuScoCWJaJjFESZbwMKBXk", "9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
+            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -508,12 +505,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testAddAndRemoveWhitelistAddressBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddressBookWhitelistAddAndRemove())
+        let request = getWalletApprovalRequest(getAddressBookWhitelistAddAndRemove(nonceAccountAddresses: ["E7RtSB2u2sZy54FeHppaj4nYhdfvxsshAKd5u3iB71wW"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("E7RtSB2u2sZy54FeHppaj4nYhdfvxsshAKd5u3iB71wW", "B1vADBUUbPLrZGg43MUwsvoGF8nhGhMZgnG6jiz9HWfS")],
+            nonces: [StrikeApi.Nonce("B1vADBUUbPLrZGg43MUwsvoGF8nhGhMZgnG6jiz9HWfS")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -523,12 +520,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testWalletConfigPolicyUpdateApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getWalletConfigPolicyUpdate())
+        let request = getWalletApprovalRequest(getWalletConfigPolicyUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -542,7 +539,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getWalletConfigPolicyUpdate()
+        let requestType: SolanaApprovalRequestType = getWalletConfigPolicyUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "9fa146dbd7f5bdaef9b0b4c99980a0acb0bfc4b874d02c86694f1193acfbb87f".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -550,7 +547,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -563,12 +560,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testBalanceAccountSettingsUpdateApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getBalanceAccountSettingsUpdate())
+        let request = getWalletApprovalRequest(getBalanceAccountSettingsUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -582,7 +579,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getBalanceAccountSettingsUpdate()
+        let requestType: SolanaApprovalRequestType = getBalanceAccountSettingsUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "43ae13e0827d8034dbb880c3210ab7f7b7c49c5d2b3120933c184c8942110ed0".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -590,7 +587,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -603,12 +600,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testBalanceAccountPolicyUpdateApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getBalanceAccountPolicyUpdate())
+        let request = getWalletApprovalRequest(getBalanceAccountPolicyUpdate(nonceAccountAddresses: ["BzZpoiceSXQTtrrZUMU67s6pCJzqCDJAVvgJCRw64fJV"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("BzZpoiceSXQTtrrZUMU67s6pCJzqCDJAVvgJCRw64fJV", "BeAVku8zsY9b1SzKU1UPkyqr6feVtiK7FS5bGHjfFArp")],
+            nonces: [StrikeApi.Nonce("BeAVku8zsY9b1SzKU1UPkyqr6feVtiK7FS5bGHjfFArp")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -622,7 +619,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getBalanceAccountPolicyUpdate()
+        let requestType: SolanaApprovalRequestType = getBalanceAccountPolicyUpdate(nonceAccountAddresses: ["5Fx8Nk98DbUcNUe4izqJkcYwfaMGmKRbXi1A7fVPfzj7"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "370349daceb62cb1ad6f37fbaba12dc72e36367c57b2ee976527609cd8d3f63e".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -630,7 +627,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("5Fx8Nk98DbUcNUe4izqJkcYwfaMGmKRbXi1A7fVPfzj7", "DvKqKEBaJ71C5Hw8Yn45NvsYhpXfAYHybBbUa17nHcUm")],
+            nonces: [StrikeApi.Nonce("DvKqKEBaJ71C5Hw8Yn45NvsYhpXfAYHybBbUa17nHcUm")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -643,12 +640,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testBalanceAccountNameUpdateApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getBalanceAccountNameUpdate())
+        let request = getWalletApprovalRequest(getBalanceAccountNameUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -662,7 +659,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getBalanceAccountNameUpdate()
+        let requestType: SolanaApprovalRequestType = getBalanceAccountNameUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "7707e53ddb688826e19d5d1d651450222c3d6cf73680fd331430278bba237328".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -670,7 +667,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -687,7 +684,7 @@ class StrikeTests: XCTestCase {
             opAccountCreationInfo: getOpAccountCreationInfo(),
             dataAccountCreationInfo: nil
         )
-        let requestType: SolanaApprovalRequestType = getSPLTokenAccountCreation()
+        let requestType: SolanaApprovalRequestType = getSPLTokenAccountCreation(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
         let request = getWalletInitiationRequest(requestType, initiation: initiation)
         let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "affd2d3a1283a92c72347c5075126b7868a9bc17b32dbb06eaf90ec8fdb51f3e".data(using: .hexadecimal)!)
         let initiationRequest = StrikeApi.InitiationRequest(
@@ -695,7 +692,7 @@ class StrikeTests: XCTestCase {
             requestID: request.id,
             initiation: initiation,
             requestType: requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care",
             opAccountPrivateKey: pk,
             dataAccountPrivateKey: nil
@@ -708,12 +705,12 @@ class StrikeTests: XCTestCase {
     }
 
     func testSPLTokenAccountCreationApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getSPLTokenAccountCreation())
+        let request = getWalletApprovalRequest(getSPLTokenAccountCreation(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [getNonceAccountInfo("AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
+            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -728,7 +725,7 @@ class StrikeTests: XCTestCase {
             disposition: .Approve,
             requestID: request.id,
             requestType: request.requestType,
-            nonceInfos: [],
+            nonces: [],
             email: "dont care"
         )
         XCTAssertEqual(
@@ -739,11 +736,12 @@ class StrikeTests: XCTestCase {
     
     func testBuildGetMultipleAccountsRequest() throws {
     
-        let getMultipleAccountsRequest = StrikeApi.GetMultipleAccountsRequest.init(
-            accountKeys: ["GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL", "AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy"],
-            id: "B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9"
+        var getMultipleAccountsRequest = StrikeApi.GetMultipleAccountsRequest.init(
+            accountKeys: ["GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL", "AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN", "9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy"]
         )
-        
+
+        getMultipleAccountsRequest.id = "B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9"
+
         XCTAssertEqual(String(decoding: Mock.encodeJsonType(value: getMultipleAccountsRequest), as: UTF8.self), "{\"id\":\"B199C55D-F8F0-4AF0-8D4B-B6AF6A3DA0B9\",\"method\":\"getMultipleAccounts\",\"jsonrpc\":\"2.0\",\"params\":[[\"GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL\",\"AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN\",\"9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy\"],{\"encoding\":\"base64\",\"commitment\":\"finalized\"}]}")
        
     }
@@ -752,7 +750,13 @@ class StrikeTests: XCTestCase {
         
         let response = "{\"jsonrpc\":\"2.0\",\"result\":{\"context\":{\"slot\":402},\"value\":[{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNCdJE0k9Ajpn/cEy3TSbbYl5dgEsceAKtAIKa1nvxf6QiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNPowQba3TsNG8RNMBrZK/RZighANP8iUyL4yx85rzJDLiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},{\"data\":[\"AAAAAAEAAADVJZp1iY5cFvGwZ1xJap+O503XaH8jS6k8D/Cd/uivNIQJ8qqFaevM1IJGpCc4YNY67rnrwwyslHS6t+htayrBiBMAAAAAAAA=\",\"base64\"],\"executable\":false,\"lamports\":1447680,\"owner\":\"11111111111111111111111111111111\",\"rentEpoch\":0},]},\"id\":\"5c0c319a-4482-45c3-b9b9-d54975c1c4eb\"}"
         let getAccountInfoResponse: StrikeApi.GetMultipleAccountsResponse = Mock.decodeJsonType(data: response.data(using: .utf8)!)
-        XCTAssertEqual(["3eMXeaEkwY5C6UxB6jsMjRGAsDcozgMCdjbZoowSTXZy", "HqdbyB576ggyavQPaodKiS8XNPHBoo95rb75Le7XzXrr", "9tRccoR8XEVfP32LEZYtZuR8YFYFbPg9kCKnBicdPQHN"], getAccountInfoResponse.nonces)
+        XCTAssertEqual(
+            [
+                StrikeApi.Nonce("3eMXeaEkwY5C6UxB6jsMjRGAsDcozgMCdjbZoowSTXZy"),
+                StrikeApi.Nonce("HqdbyB576ggyavQPaodKiS8XNPHBoo95rb75Le7XzXrr"),
+                StrikeApi.Nonce("9tRccoR8XEVfP32LEZYtZuR8YFYFbPg9kCKnBicdPQHN")
+            ],
+            getAccountInfoResponse.nonces
+        )
     }
-
 }

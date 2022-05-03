@@ -155,34 +155,22 @@ extension Keychain {
 
 extension Keychain {
     static func signature(for signable: SolanaSignable, email: String) throws -> String {
-        let keyInfo = try getKeyInfoForEmail(email: email)
+        let keyInfo = try keyInfoForEmail(email: email)
         let signData = try signable.signableData(approverPublicKey: keyInfo.encodedPublicKey)
         let signature = try keyInfo.privateKey.signature(for: signData)
 
         return signature.base64EncodedString()
     }
     
-    static func signaturesForSupplyInstructions(for signable: SolanaSignableSupplyInstructions, nonceInfos: [StrikeApi.NonceInfo], email: String) throws -> [StrikeApi.SupplyDappInstructionsTxSignature] {
-        let keyInfo = try getKeyInfoForEmail(email: email)
-        return try signable.signableSupplyInstructions(approverPublicKey: keyInfo.encodedPublicKey, nonceInfos: nonceInfos).map {
-            let signature = try keyInfo.privateKey.signature(for: $0.data)
-            return StrikeApi.SupplyDappInstructionsTxSignature(
-                nonce: $0.nonce,
-                nonceAccountAddress: $0.nonceAccountAddress,
-                signature: signature.base64EncodedString()
-            )
-        }
-    }
-    
     static func signatureForKey(for signable: SolanaSignable, email: String, ephemeralPrivateKey: Curve25519.Signing.PrivateKey) throws -> String {
-        let keyInfo = try getKeyInfoForEmail(email: email)
+        let keyInfo = try keyInfoForEmail(email: email)
         let signData = try signable.signableData(approverPublicKey: keyInfo.encodedPublicKey)
         let signature = try ephemeralPrivateKey.signature(for: signData)
 
         return signature.base64EncodedString()
     }
     
-    private static func getKeyInfoForEmail(email: String) throws -> (privateKey: Curve25519.Signing.PrivateKey, encodedPublicKey: String) {
+    private static func keyInfoForEmail(email: String) throws -> (privateKey: Curve25519.Signing.PrivateKey, encodedPublicKey: String) {
         guard let privateKeyData = load(account: email, service: privateKeyService) else {
             throw KeyError.noPrivateKey
         }

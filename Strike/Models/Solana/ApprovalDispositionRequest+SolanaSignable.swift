@@ -196,15 +196,16 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
         case .loginApproval(let request):
             return request.jwtToken.data(using: .utf8)!
         default:
-            if nonceInfos.count == 0 {
+            guard let nonce = nonces.first, let nonceAccountAddress = requestType.nonceAccountAddresses.first else {
                 throw SolanaError.invalidRequest(reason: "Not enough nonce accounts")
             }
+
             return try Transaction.compileMessage(
                 feePayer: try PublicKey(string: signingData.feePayer),
-                recentBlockhash: nonceInfos[0].nonce,
+                recentBlockhash: nonce.value,
                 instructions: [
                     try TransactionInstruction.createAdvanceNonceInstruction(
-                        nonceAccountAddress: nonceInfos[0].nonceAccountAddress,
+                        nonceAccountAddress: nonceAccountAddress,
                         feePayer: signingData.feePayer),
                     TransactionInstruction(
                         keys: [
@@ -263,29 +264,27 @@ extension SlotDestinationInfo {
 
 extension ApprovalPolicy {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             [approvalsRequired] +
             approvalTimeout.convertToSeconds.bytes +
             ([UInt8(approvers.count)] as [UInt8]) +
-            (approvers.flatMap({ $0.slotId }) as [UInt8]) +
+            (approvers.map({ $0.slotId }) as [UInt8]) +
             Data(approvers.flatMap({ $0.value.publicKey.base58Bytes })).sha256HashBytes
-        ))
     }
 }
 
 extension WhitelistUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             account.identifier.sha256HashBytes +
             ([UInt8(destinationsToAdd.count)] as [UInt8]) +
-            (destinationsToAdd.flatMap({ $0.slotId }) as [UInt8]) +
+            (destinationsToAdd.map({ $0.slotId }) as [UInt8]) +
             ([UInt8(destinationsToRemove.count)] as [UInt8]) +
-            (destinationsToRemove.flatMap({ $0.slotId }) as [UInt8]) +
+            (destinationsToRemove.map({ $0.slotId }) as [UInt8]) +
             Data(destinationsToAdd.flatMap({ $0.value.name.sha256HashBytes }) +
                  [UInt8(1)] +
                  destinationsToRemove.flatMap({ $0.value.name.sha256HashBytes })
             ).sha256HashBytes
-        ))
     }
 }
 
@@ -349,80 +348,73 @@ enum SolanaError: Error, Equatable {
 
 extension AddressBookUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             ([UInt8(entriesToAdd.count)] as [UInt8]) +
             (entriesToAdd.flatMap(\.combinedBytes) as [UInt8]) +
             ([UInt8(entriesToRemove.count)] as [UInt8]) +
             (entriesToRemove.flatMap(\.combinedBytes) as [UInt8]) +
             ([UInt8(whitelistUpdates.count)] as [UInt8]) +
             (whitelistUpdates.flatMap(\.combinedBytes) as [UInt8])
-        ))
     }
 }
 
 extension DAppBookUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             ([UInt8(entriesToAdd.count)] as [UInt8]) +
             (entriesToAdd.flatMap(\.combinedBytes) as [UInt8]) +
             ([UInt8(entriesToRemove.count)] as [UInt8]) +
             (entriesToRemove.flatMap(\.combinedBytes) as [UInt8])
-        ))
     }
 }
 
 extension BalanceAccountCreation {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             accountInfo.identifier.sha256HashBytes +
-            [accountSlot] +
+            [accountSlot] as [UInt8] +
             accountInfo.name.sha256HashBytes +
-            approvalPolicy.combinedBytes + 
+            approvalPolicy.combinedBytes +
             ([whitelistEnabled.toSolanaProgramValue()] as [UInt8]) +
             ([dappsEnabled.toSolanaProgramValue()] as [UInt8]) +
             ([addressBookSlot] as [UInt8])
-        ))
     }
 }
 
 extension BalanceAccountNameUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             accountInfo.identifier.sha256HashBytes +
             newAccountName.sha256HashBytes
-        ))
     }
 }
 
 extension BalanceAccountPolicyUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             accountInfo.identifier.sha256HashBytes +
             approvalPolicy.combinedBytes
-        ))
     }
 }
 
 extension BalanceAccountSettingsUpdate {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             accountInfo.identifier.sha256HashBytes +
             ([UInt8(whitelistEnabled != nil ? 1 : 0)] as [UInt8]) +
             ([whitelistEnabled != nil ? whitelistEnabled!.toSolanaProgramValue() : UInt8(0)] as [UInt8]) +
             ([UInt8(dappsEnabled != nil ? 1 : 0)] as [UInt8]) +
             ([dappsEnabled != nil ? dappsEnabled!.toSolanaProgramValue() : UInt8(0)] as [UInt8])
-        ))
     }
 }
 
 extension SPLTokenAccountCreation {
     var combinedBytes: [UInt8] {
-        return [UInt8](Data(
+        return
             payerBalanceAccount.identifier.sha256HashBytes +
             ([UInt8(balanceAccounts.count)] as [UInt8]) +
             (balanceAccounts.flatMap({$0.identifier.sha256HashBytes}) as [UInt8]) +
             tokenSymbolInfo.tokenMintAddress.base58Bytes
-        ))
     }
 }
 

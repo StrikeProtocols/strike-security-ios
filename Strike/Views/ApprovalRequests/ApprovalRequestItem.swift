@@ -50,19 +50,19 @@ struct ApprovalRequestItem: View {
             } detail: {
                 DAppTransactionDetails(request: request, transactionRequest: dAppTransactionRequest)
             }
-        case .balanceAccountNameUpdate(let balanceAccountNameUpdate):
+        case .balanceAccountNameUpdate(let balanceAccountNameUpdate): // 3
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate):
+        case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate): // 2
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
+        case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate): // 5
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .addressBookUpdate(let addressBookUpdate):
+        case .addressBookUpdate(let addressBookUpdate): // 4 - remove whitelist
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .dAppBookUpdate(let dAppBookUpdate):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate):
+        case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate): // 1
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
-        case .splTokenAccountCreation(let splTokenAccountCreation):
+        case .splTokenAccountCreation(let splTokenAccountCreation): // 6
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .wrapConversionRequest(let wrapConversionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)

@@ -101,7 +101,9 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
     private func approve() {
         action = .approving
 
-        strikeApi.provider.requestWithRecentBlockhash { blockhash in
+        strikeApi.provider.requestWithNonces(
+            accountAddresses: request.requestType.nonceAccountAddresses
+        ) { nonces in
             switch request.details {
             case .approval(let requestType):
                 return .registerApprovalDisposition(
@@ -109,7 +111,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         disposition: .Approve,
                         requestID: request.id,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName
                     )
                 )
@@ -120,7 +122,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()
@@ -143,26 +145,28 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
     private func ignore() {
         action = .ignoring
 
-        strikeApi.provider.requestWithRecentBlockhash { blockhash in
+        strikeApi.provider.requestWithNonces(
+            accountAddresses: request.requestType.nonceAccountAddresses
+        ) { nonces in
             switch request.details {
             case .approval(let requestType):
                 return .registerApprovalDisposition(
                     StrikeApi.ApprovalDispositionRequest(
-                        disposition: .Deny,
+                        disposition: .Approve,
                         requestID: request.id,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName
                     )
                 )
             case .multisigOpInitiation(let initiation, let requestType):
                 return .initiateRequest(
                     StrikeApi.InitiationRequest(
-                        disposition: .Deny,
+                        disposition: .Approve,
                         requestID: request.id,
                         initiation: initiation,
                         requestType: requestType,
-                        nonceInfos: [],
+                        nonces: nonces,
                         email: user.loginName,
                         opAccountPrivateKey: Curve25519.Signing.PrivateKey(),
                         dataAccountPrivateKey: Curve25519.Signing.PrivateKey()

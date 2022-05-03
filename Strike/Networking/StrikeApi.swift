@@ -19,7 +19,7 @@ struct StrikeApi {
         case addWalletSigner(WalletSigner)
         case walletApprovals
         case registerApprovalDisposition(ApprovalDispositionRequest)
-        case recentBlockHash
+        case multipleAccountNonce(GetMultipleAccountsRequest)
         case initiateRequest(InitiationRequest)
 
         case registerPushToken(String, deviceIdentifier: String)
@@ -160,55 +160,63 @@ extension StrikeApi {
 
         let errors: [Description]
     }
-    
-    struct Params: Codable {
-        var commitment = Configuration.solanaCommitment
-        var encoding = "base64"
-    }
-    
-    enum ParamItem: Encodable {
-        case stringList([String])
-        case params(Params)
 
-        func encode(to encoder: Encoder) throws {
-            switch self {
-            case .stringList(let value):
-                var container = encoder.singleValueContainer()
-                try container.encode(value)
-            case .params(let value):
-                try value.encode(to: encoder)
+    struct GetMultipleAccountsRequest: Encodable {
+        struct Params: Codable {
+            var commitment = Configuration.solanaCommitment
+            var encoding = "base64"
+        }
+
+        enum ParamItem: Encodable {
+            case stringList([String])
+            case params(Params)
+
+            func encode(to encoder: Encoder) throws {
+                switch self {
+                case .stringList(let value):
+                    try value.encode(to: encoder)
+                case .params(let value):
+                    try value.encode(to: encoder)
+                }
+            }
+        }
+
+        var id = UUID().uuidString
+        var method = "getMultipleAccounts"
+        var jsonrpc = "2.0"
+        var params: [ParamItem]
+
+        init(accountKeys: [String]) {
+            self.params = [
+                .stringList(accountKeys),
+                .params(Params())
+            ]
+        }
+    }
+
+    struct Nonce: Decodable, Equatable {
+        var value: String
+
+        init(_ value: String) {
+            self.value = value
+        }
+
+        init(from decoder: Decoder) throws {
+            var container = try decoder.unkeyedContainer()
+            let stringValue = try container.decode(String.self)
+
+            if let value = Data(base64Encoded: stringValue)?.subdata(in: 40 ..< 72).base58String {
+                self.value = value
+            } else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid Nonce")
             }
         }
     }
-    
-    struct GetMultipleAccountsRequest: Encodable {
-        let accountKeys: [String]
-        let id: String
-        
-        enum CodingKeys: String, CodingKey {
-            case id
-            case method
-            case jsonrpc
-            case params
-        }
 
-        func encode(to encoder: Encoder) throws {
-            var params = [ParamItem]()
-            params.append(.stringList(accountKeys))
-            params.append(.params(Params()))
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(id, forKey: .id)
-            try container.encode("getMultipleAccounts", forKey: .method)
-            try container.encode("2.0", forKey: .jsonrpc)
-            try container.encode(params, forKey: .params)
-        }
-
-    }
-    
-    struct GetMultipleAccountsResponse: Codable {
-        struct Result: Codable {
-            struct AccountData: Codable {
-                let data: [String]
+    struct GetMultipleAccountsResponse: Decodable {
+        struct Result: Decodable {
+            struct AccountData: Decodable {
+                let data: Nonce
             }
 
             let value: [AccountData]
@@ -217,37 +225,8 @@ extension StrikeApi {
         let id: String
         let result: Result
 
-        
-        var nonces: [String] {
-            result.value.map({ Data(base64Encoded: $0.data[0])!.subdata(in: 40 ..< 72).base58String })
-        }
-    }
-
-    fileprivate struct RecentBlockhashRequest: Codable {
-        struct Params: Codable {
-            var commitment = Configuration.solanaCommitment
-        }
-
-        var id = UUID().uuidString
-        var method = "getRecentBlockhash"
-        var jsonrpc = "2.0"
-        var params = [Params()]
-    }
-
-    struct Blockhash: Codable {
-        struct Result: Codable {
-            struct BlockhashData: Codable {
-                let blockhash: String
-            }
-
-            let value: BlockhashData
-        }
-
-        let id: String
-        let result: Result
-
-        var value: String {
-            result.value.blockhash
+        var nonces: [Nonce] {
+            result.value.map(\.data)
         }
     }
 
@@ -255,7 +234,7 @@ extension StrikeApi {
         let disposition: ApprovalDisposition
         let requestID: String
         let requestType: SolanaApprovalRequestType
-        let nonceInfos: [NonceInfo]
+        let nonces: [Nonce]
         let email: String
 
         enum CodingKeys: String, CodingKey {
@@ -267,10 +246,12 @@ extension StrikeApi {
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            if nonceInfos.count > 0 {
-                try container.encode(nonceInfos[0].nonce, forKey: .nonce)
-                try container.encode(nonceInfos[0].nonceAccountAddress, forKey: .nonceAccountAddress)
+
+            if let nonce = nonces.first, let nonceAccountAddress = requestType.nonceAccountAddresses.first {
+                try container.encode(nonce.value, forKey: .nonce)
+                try container.encode(nonceAccountAddress, forKey: .nonceAccountAddress)
             }
+
             try container.encode(disposition.rawValue, forKey: .approvalDisposition)
 
             let signature = try Keychain.signature(for: self, email: email)
@@ -278,35 +259,12 @@ extension StrikeApi {
         }
     }
     
-    struct SupplyDappInstructionsTxData: Encodable {
-        let nonce: String
-        let nonceAccountAddress: String
-        let data: Data
-    }
-    
-    struct SupplyDappInstructionsTxSignature: Encodable {
-        let nonce: String
-        let nonceAccountAddress: String
-        let signature: String
-    }
-    
-    struct SupplyDAppInstructions: Encodable {
-        let dataAccountAddress: String
-        let dataAccountSignature: String
-        let supplyInstructionInitiatorSignatures: [SupplyDappInstructionsTxSignature]
-    }
-    
-    struct NonceInfo {
-        let nonceAccountAddress: String
-        let nonce: String
-    }
-    
     struct InitiationRequest: Encodable {
         let disposition: ApprovalDisposition
         let requestID: String
         let initiation: MultisigOpInitiation
         let requestType: SolanaApprovalRequestType
-        let nonceInfos: [NonceInfo]
+        let nonces: [Nonce]
         let email: String
         let opAccountPrivateKey: Curve25519.Signing.PrivateKey
         let dataAccountPrivateKey: Curve25519.Signing.PrivateKey?
@@ -321,24 +279,46 @@ extension StrikeApi {
             case supplyDappInstructions
         }
 
+        private struct SupplyDappInstructionsTxSignature: Encodable {
+            let nonce: String
+            let nonceAccountAddress: String
+            let signature: String
+        }
+
+        private struct SupplyDAppInstructions: Encodable {
+            let dataAccountAddress: String
+            let dataAccountSignature: String
+            let supplyInstructionInitiatorSignatures: [SupplyDappInstructionsTxSignature]
+        }
+
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(nonceInfos[0].nonce, forKey: .nonce)
-            try container.encode(nonceInfos[0].nonceAccountAddress, forKey: .nonceAccountAddress)
+
+            if let nonce = nonces.first, let nonceAccountAddress = requestType.nonceAccountAddresses.first {
+                try container.encode(nonce.value, forKey: .nonce)
+                try container.encode(nonceAccountAddress, forKey: .nonceAccountAddress)
+            }
+
             try container.encode(disposition.rawValue, forKey: .approvalDisposition)
 
             let initiatorSignature = try Keychain.signature(for: self, email: email)
             try container.encode(initiatorSignature, forKey: .initiatorSignature)
             try container.encode(try self.opAccountPublicKey.base58EncodedString, forKey: .opAccountAddress)
             try container.encode(try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.opAccountPrivateKey), forKey: .opAccountSignature)
-            
-            
-            if self.initiation.dataAccountCreationInfo != nil && self.dataAccountPrivateKey != nil {
+
+            if let dataAccountPrivateKey = dataAccountPrivateKey, initiation.dataAccountCreationInfo != nil {
                 let supplyDappInstructions = SupplyDAppInstructions(
                     dataAccountAddress: try self.dataAccountPublicKey.base58EncodedString,
-                    dataAccountSignature: try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: self.dataAccountPrivateKey!),
-                    supplyInstructionInitiatorSignatures: try Keychain.signaturesForSupplyInstructions(for: self, nonceInfos: Array(nonceInfos.dropFirst()), email: email)
+                    dataAccountSignature: try Keychain.signatureForKey(for: self, email: email, ephemeralPrivateKey: dataAccountPrivateKey),
+                    supplyInstructionInitiatorSignatures: try supplyInstructions.map({ instruction in
+                        SupplyDappInstructionsTxSignature(
+                            nonce: instruction.nonce.value,
+                            nonceAccountAddress: instruction.nonceAccountAddress,
+                            signature: try Keychain.signature(for: instruction, email: email)
+                        )
+                    })
                 )
+                
                 try container.encode(supplyDappInstructions, forKey: .supplyDappInstructions)
             }
         }
@@ -388,7 +368,7 @@ extension String: SolanaSignable {
 extension StrikeApi.Target: Moya.TargetType {
     var baseURL: URL {
         switch self {
-        case .recentBlockHash:
+        case .multipleAccountNonce:
             return Configuration.solanaRpcURL
         default:
             return Configuration.apiBaseURL
@@ -412,7 +392,7 @@ extension StrikeApi.Target: Moya.TargetType {
             return "v1/wallet-connect"
         case .registerApprovalDisposition(let request):
             return "v1/wallet-approvals/\(request.requestID)/dispositions"
-        case .recentBlockHash:
+        case .multipleAccountNonce:
             return ""
         case .initiateRequest(let request):
             return "v1/wallet-approvals/\(request.requestID)/initiations"
@@ -427,7 +407,7 @@ extension StrikeApi.Target: Moya.TargetType {
             return .get
         case .connectDApp,
              .addWalletSigner,
-             .recentBlockHash,
+             .multipleAccountNonce,
              .registerApprovalDisposition,
              .initiateRequest:
             return .post
@@ -468,8 +448,8 @@ extension StrikeApi.Target: Moya.TargetType {
             ])
         case .registerApprovalDisposition(let request):
             return .requestJSONEncodable(request)
-        case .recentBlockHash:
-            return .requestJSONEncodable(StrikeApi.RecentBlockhashRequest())
+        case .multipleAccountNonce(let request):
+            return .requestJSONEncodable(request)
         case .initiateRequest(let request):
             return .requestJSONEncodable(request)
         }
@@ -486,7 +466,7 @@ extension StrikeApi.Target: Moya.TargetType {
     
     var headers: [String: String]? {
         switch self {
-        case .recentBlockHash:
+        case .multipleAccountNonce:
             return [:]
         default:
             return [

@@ -18,7 +18,7 @@
 		3D1C762027D871D80016BB32 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C761F27D871D80016BB32 /* Message.swift */; };
 		3D1C762227DA850A0016BB32 /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C762127DA850A0016BB32 /* Base58.swift */; };
 		3D1C762427DA861F0016BB32 /* ApprovalDispositionRequest+SolanaSignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C762327DA861F0016BB32 /* ApprovalDispositionRequest+SolanaSignable.swift */; };
-		3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift */; };
+		3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift */; };
 		3D2BCA08264D7A79000A6D56 /* ChangeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2BCA07264D7A79000A6D56 /* ChangeDetails.swift */; };
 		3D2CE49925F8423800137E05 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2CE49625F8423800137E05 /* SignInView.swift */; };
 		3D2CE49A25F8423800137E05 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2CE49825F8423800137E05 /* RootView.swift */; };
@@ -131,7 +131,7 @@
 		3D1C761F27D871D80016BB32 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3D1C762127DA850A0016BB32 /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		3D1C762327DA861F0016BB32 /* ApprovalDispositionRequest+SolanaSignable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApprovalDispositionRequest+SolanaSignable.swift"; sourceTree = "<group>"; };
-		3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrikeApi+AuthenticatedBlockhash.swift"; sourceTree = "<group>"; };
+		3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StrikeApi+AuthenticatedNonces.swift"; sourceTree = "<group>"; };
 		3D2BCA07264D7A79000A6D56 /* ChangeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDetails.swift; sourceTree = "<group>"; };
 		3D2CE49625F8423800137E05 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		3D2CE49825F8423800137E05 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -472,7 +472,7 @@
 				3D311D53260A3A1A007A0B98 /* Auth */,
 				3DD9568125EF561F003F9ECF /* Moya+StrikeClient.swift */,
 				4006422E259A422400A8D8D3 /* StrikeApi.swift */,
-				3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift */,
+				3D1C762527DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -760,7 +760,7 @@
 				3D7FFFED27FA0F7D003B3F48 /* DAppTransactionRow.swift in Sources */,
 				3D311D45260A336A007A0B98 /* HelpButton.swift in Sources */,
 				3DA133A526B1AEB300BB4AF4 /* Profile.swift in Sources */,
-				3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedBlockhash.swift in Sources */,
+				3D1C762627DA89690016BB32 /* StrikeApi+AuthenticatedNonces.swift in Sources */,
 				40A9AF0425DF32B9004320EF /* FactList.swift in Sources */,
 				3D3D6D122616447200FEEE0B /* LoadingModifier.swift in Sources */,
 				3D2CE49925F8423800137E05 /* SignInView.swift in Sources */,
@@ -875,6 +875,7 @@
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -999,6 +1000,7 @@
 				OKTA_CLIENT_ID = 0oa7ajsmclS0GyzMw357;
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
@@ -1131,6 +1133,7 @@
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus783fl9oAoVKJv7357";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = L9T2bPaEjr3Lede3SNpFJw;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -1253,6 +1256,7 @@
 				OKTA_CLIENT_ID = 0oa73mddnlx5MMo7j357;
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus783fl9oAoVKJv7357";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = L9T2bPaEjr3Lede3SNpFJw;
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
@@ -1383,6 +1387,7 @@
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -1505,6 +1510,7 @@
 				OKTA_CLIENT_ID = 0oa7ajsmclS0GyzMw357;
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = CtOnGQjIo1U8dELkoUf0iw;
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
@@ -1635,6 +1641,7 @@
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = vuxX53AURVfZS87D1WPqeg;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -1762,6 +1769,7 @@
 				OKTA_CLIENT_ID = 0oa7ajzug1y8O0CPe357;
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = vuxX53AURVfZS87D1WPqeg;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -1894,6 +1902,7 @@
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = vuxX53AURVfZS87D1WPqeg;
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
@@ -1959,6 +1968,7 @@
 				OKTA_CLIENT_ID = 0oa7ajzug1y8O0CPe357;
 				OKTA_DOMAIN = "https://strike-prime.okta.com";
 				OKTA_ISSUER = "https://login.strikeprotocols.com/oauth2/aus7834x2w3eqeZSr357";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				RAYGUN_API_KEY = vuxX53AURVfZS87D1WPqeg;
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
