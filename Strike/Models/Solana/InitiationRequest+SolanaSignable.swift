@@ -38,6 +38,8 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
             return 26
         case .splTokenAccountCreation:
             return 29
+        case .balanceAccountAddressWhitelistUpdate:
+            return 33
         default:
             return 0
         }
@@ -189,6 +191,11 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                     [opCode] +
                     request.combinedBytes
                 )
+            case .balanceAccountAddressWhitelistUpdate(let request):
+                return Data(
+                    [opCode] +
+                    request.combinedBytes
+                )
             case .walletConfigPolicyUpdate(let request):
                 return Data(
                     [opCode] +
@@ -257,6 +264,8 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
             case .balanceAccountPolicyUpdate(let request):
                 return request.signingData
             case .balanceAccountSettingsUpdate(let request):
+                return request.signingData
+            case .balanceAccountAddressWhitelistUpdate(let request):
                 return request.signingData
             case .addressBookUpdate(let request):
                 return request.signingData

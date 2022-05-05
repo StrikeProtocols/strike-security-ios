@@ -193,6 +193,8 @@ extension SolanaApprovalRequestType {
             return "Wallet Policy Update"
         case .balanceAccountSettingsUpdate:
             return "Wallet Settings Update"
+        case .balanceAccountAddressWhitelistUpdate:
+            return "Replace Transfer Whitelist"
         case .addressBookUpdate:
             return "Address Book Update"
         case .dAppBookUpdate:
@@ -228,6 +230,8 @@ extension SolanaApprovalRequestType {
             return "policy update for \(balanceAccountPolicyUpdate.accountInfo.name)"
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
             return "settings update for \(balanceAccountSettingsUpdate.account.name)"
+        case .balanceAccountAddressWhitelistUpdate(let balanceAccountSettingsUpdate):
+            return "transfer whitelist update for \(balanceAccountSettingsUpdate.account.name)"
         case .addressBookUpdate:
             return "address book update"
         case .dAppBookUpdate:
@@ -264,6 +268,8 @@ extension SolanaApprovalRequestType {
         case .balanceAccountPolicyUpdate:
             return Image("policy")
         case .balanceAccountSettingsUpdate:
+            return Image("policy")
+        case .balanceAccountAddressWhitelistUpdate:
             return Image("policy")
         case .addressBookUpdate:
             return Image("policy")

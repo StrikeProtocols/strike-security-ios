@@ -91,6 +91,8 @@ struct ApprovalRequestItem: View {
             }
         case .wrapConversionRequest(let wrapConversionRequest):
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
+        case .balanceAccountAddressWhitelistUpdate(let balanceAccountAddressWhitelistUpdate):
+            UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .loginApproval:
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
                 LoginRow()

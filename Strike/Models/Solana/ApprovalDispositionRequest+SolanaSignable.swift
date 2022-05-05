@@ -39,6 +39,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 12
         case .splTokenAccountCreation:
             return 13
+        case .balanceAccountAddressWhitelistUpdate:
+            return 14
         case .dAppTransactionRequest, .loginApproval, .unknown:
             return 0
         }
@@ -75,6 +77,12 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     request.combinedBytes
                 )
             case .balanceAccountPolicyUpdate(let request):
+                return try Data(
+                    [opCode] +
+                    signingData.walletAddress.base58Bytes +
+                    request.combinedBytes
+                )
+            case .balanceAccountAddressWhitelistUpdate(let request):
                 return try Data(
                     [opCode] +
                     signingData.walletAddress.base58Bytes +
@@ -155,6 +163,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             case .balanceAccountPolicyUpdate(let request):
                 return request.signingData
             case .balanceAccountSettingsUpdate(let request):
+                return request.signingData
+            case .balanceAccountAddressWhitelistUpdate(let request):
                 return request.signingData
             case .addressBookUpdate(let request):
                 return request.signingData
@@ -420,6 +430,17 @@ extension BalanceAccountSettingsUpdate {
                 ([value ? BooleanSetting.On.toSolanaProgramValue() : BooleanSetting.Off.toSolanaProgramValue()] as [UInt8]) +
                 ([UInt8(0)] as [UInt8])
         }
+    }
+}
+
+extension BalanceAccountAddressWhitelistUpdate {
+    var combinedBytes: [UInt8] {
+        return
+            accountInfo.identifier.sha256HashBytes +
+            ([UInt8(destinations.count)] as [UInt8]) +
+            (destinations.map({ $0.slotId }) as [UInt8]) +
+            Data(destinations.flatMap({ $0.value.name.sha256HashBytes }) 
+            ).sha256HashBytes
     }
 }
 

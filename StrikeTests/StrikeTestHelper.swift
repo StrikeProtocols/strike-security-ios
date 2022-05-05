@@ -518,6 +518,35 @@ extension StrikeTests {
         )
     }
     
+    func getBalanceAccountAddressWhitelistUpdate(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
+        return .balanceAccountAddressWhitelistUpdate(
+            BalanceAccountAddressWhitelistUpdate(
+                accountInfo: AccountInfo(
+                    name: "Account 1",
+                    identifier: "4d2eecc1-cbe1-4c36-a4ae-1f777a739eb3",
+                    accountType: AccountType.BalanceAccount,
+                    address: "HvZFxso1tq9FLD1Gh2ACGNsR5pQBgjVC8uo21Cc9ytzg"
+                ),
+                destinations: [
+                    SlotDestinationInfo(
+                        slotId: 1,
+                        value: DestinationAddress(name: "My External Sol address 1", subName: nil, address: "AXX2TNxGhW2M3GpQPuWVuqmyAvQFVpyZD2dvR9gRiMRQ", tag: nil)
+                    ),
+                    SlotDestinationInfo(
+                        slotId: 2,
+                        value: DestinationAddress(name: "My External Sol address 2", subName: nil, address: "2db8ovVF6iXTaPQAhJe3frG46iNLF5Ny7ZipGKDomiTh", tag: nil)
+                    )
+                ],
+                signingData: SolanaSigningData(
+                    feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
+                    walletProgramId: "9LM4sYmMHk1VDcFpA8ezPeL8GtEVR5T51Qxcksrf4VX2",
+                    multisigOpAccountAddress: "71S5qEAD3DMn7QY9fdb2uR1TV7kiAfcAqNHfQfyFUSME",
+                    walletAddress: "AoEAvW2TvZYmy2WbmqN4nXdJT8o21RbJP6xNK2yR4of",
+                    nonceAccountAddresses: nonceAccountAddresses
+                ))
+        )
+    }
+    
     func getSPLTokenAccountCreation(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
         return .splTokenAccountCreation(
             SPLTokenAccountCreation(

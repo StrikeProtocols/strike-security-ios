@@ -92,6 +92,7 @@ enum SolanaApprovalRequestType: Codable, Equatable {
     case balanceAccountNameUpdate(BalanceAccountNameUpdate)
     case balanceAccountPolicyUpdate(BalanceAccountPolicyUpdate)
     case balanceAccountSettingsUpdate(BalanceAccountSettingsUpdate)
+    case balanceAccountAddressWhitelistUpdate(BalanceAccountAddressWhitelistUpdate)
     case addressBookUpdate(AddressBookUpdate)
     case dAppBookUpdate(DAppBookUpdate)
     case walletConfigPolicyUpdate(WalletConfigPolicyUpdate)
@@ -124,6 +125,8 @@ enum SolanaApprovalRequestType: Codable, Equatable {
             self = .balanceAccountPolicyUpdate(try BalanceAccountPolicyUpdate(from: decoder))
         case "BalanceAccountSettingsUpdate":
             self = .balanceAccountSettingsUpdate(try BalanceAccountSettingsUpdate(from: decoder))
+        case "BalanceAccountAddressWhitelistUpdate":
+            self = .balanceAccountAddressWhitelistUpdate(try BalanceAccountAddressWhitelistUpdate(from: decoder))
         case "AddressBookUpdate":
             self = .addressBookUpdate(try AddressBookUpdate(from: decoder))
         case "DAppBookUpdate":
@@ -168,6 +171,9 @@ enum SolanaApprovalRequestType: Codable, Equatable {
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
             try container.encode("BalanceAccountSettingsUpdate", forKey: .type)
             try balanceAccountSettingsUpdate.encode(to: encoder)
+        case .balanceAccountAddressWhitelistUpdate(let balanceAccountAddressWhitelistUpdate):
+            try container.encode("BalanceAccountAddressWhitelistUpdate", forKey: .type)
+            try balanceAccountAddressWhitelistUpdate.encode(to: encoder)
         case .addressBookUpdate(let addressBookUpdate):
             try container.encode("AddressBookUpdate", forKey: .type)
             try addressBookUpdate.encode(to: encoder)
@@ -446,6 +452,12 @@ struct BalanceAccountSettingsUpdate: Codable, Equatable  {
     }
 }
 
+struct BalanceAccountAddressWhitelistUpdate: Codable, Equatable  {
+    var accountInfo: AccountInfo
+    var destinations: [SlotDestinationInfo]
+    var signingData: SolanaSigningData
+}
+
 struct AddressBookUpdate: Codable, Equatable  {
     enum Change {
         case add
@@ -562,6 +574,8 @@ extension SolanaApprovalRequestType {
         case .balanceAccountPolicyUpdate(let request):
             return request.signingData.nonceAccountAddresses
         case .balanceAccountSettingsUpdate(let request):
+            return request.signingData.nonceAccountAddresses
+        case .balanceAccountAddressWhitelistUpdate(let request):
             return request.signingData.nonceAccountAddresses
         case .conversionRequest(let request):
             return request.signingData.nonceAccountAddresses

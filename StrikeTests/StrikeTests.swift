@@ -638,6 +638,46 @@ class StrikeTests: XCTestCase {
             "03010409d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34bb2b351f441f46df2039f49e8cd3f01079a908cad599a84079cb8189b218f57838e70bc45546b0d63742dee544ecc6870f66da475c800d2d793c766b03266cca3f4336251703628ce12796daa20166a1f0da8a9a972775f9f04a256482e2bedec43a8066d7b0612d9abc74bf23e9bc1230258306dcb561755b8d71c5ad38d5f406a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000074252b614aa502d0fa9eb2aef6eb7b43c25b6db7a61b70ae56b0cde9770fe09bbff5520f20afb88a51a9a0630fb5bc2738f26b68af438c6a1750a68a4c2fc3c6030703030500040400000007020001340000000000a7670000000000500300000000000074252b614aa502d0fa9eb2aef6eb7b43c25b6db7a61b70ae56b0cde9770fe09b0804010402064d1a46834450499b8d2edd17b54df5b3cd21a7e40369f8e3f8f072470cac3a271a7402100e0000000000000200011618435becfcd77198205d44019be2254d324294b97ef819e0c77d3af8b0e446"
         )
     }
+    
+    func testBalanceAccountAddressWhitelistUpdateApprovalRequest() throws {
+        let request = getWalletApprovalRequest(getBalanceAccountAddressWhitelistUpdate(nonceAccountAddresses: ["481dDMZGAiATXnLkBw1mEMdsJSwWWg3F2zHEsciaXZ98"]))
+        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
+            disposition: .Approve,
+            requestID: request.id,
+            requestType: request.requestType,
+            nonces: [StrikeApi.Nonce("5XUBQaLXvXGvFArDtYpj3FW1TbNtZ3hP8fkrbzzY3VZJ")],
+            email: "dont care"
+        )
+        XCTAssertEqual(
+            try approvalRequest.signableData(approverPublicKey: "FuneCbHNcAmaG9gEyisDYiZFLiYTGsuVsFMArXJDR3np").toHexString(),
+            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34dd896d086f2c63e124ed47d94ee7b4932644e826e8280cb345893312aa199bc92e5ed518e5ea088f46ae95e2cb452fc7be22322d0a63e0ef7a820e8aa2593d7759427bbc05d796626ca3c12d0b3553f51e4a0a0582be08acfed19d4d8fa6ca3106a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000007bd238678c7de6666b1fa72f0423be16b875681575a02d9bfb142bed5c64ea35433ce76291f054c3712f68b3fc11a56a6a3f2e5447b3eb7d387ddc739ce41961020603020400040400000007030301052209018dea73bf1bb3c32d97ec901ae9e136e17dfc042025d048361cb82981ddbc7e5b"
+        )
+    }
+
+    func testBalanceAccountAddressWhitelistUpdateInitiationRequest() throws {
+        let initiation = MultisigOpInitiation(
+            opAccountCreationInfo: getOpAccountCreationInfo(),
+            dataAccountCreationInfo: nil
+        )
+        let requestType: SolanaApprovalRequestType = getBalanceAccountAddressWhitelistUpdate(nonceAccountAddresses: ["9LGMMPep1WKdiNNwicDvx8JiwgtBKPWhidaSv3rVUNz"])
+        let request = getWalletInitiationRequest(requestType, initiation: initiation)
+        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "a9989f27d789b3c2266db5dbd1420e2831cacbb161d6e95bd48323911560fd11".data(using: .hexadecimal)!)
+        let initiationRequest = StrikeApi.InitiationRequest(
+            disposition: .Approve,
+            requestID: request.id,
+            initiation: initiation,
+            requestType: requestType,
+            nonces: [StrikeApi.Nonce("Bb2XveQNyXVBJvJUPnsbhRtYqePUi8xbvBaJxk96BKDG")],
+            email: "dont care",
+            opAccountPrivateKey: pk,
+            dataAccountPrivateKey: nil
+        )
+
+        XCTAssertEqual(
+            try initiationRequest.signableData(approverPublicKey: "4AuJTW9fTnbPUq3LDAehK1CHsENF3x8X9vKnDwCUbTpk").toHexString(),
+            "03010509d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af3459427bbc05d796626ca3c12d0b3553f51e4a0a0582be08acfed19d4d8fa6ca312f1c6ccaca0b0a0d12b938444f2ec6a9ec82b810394c64237a4651c5a41d4cd902226dd9d2e98d75fab1c2b62b8b007bab361b66ddffaa2362d30e8d8b915e3706a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000002827f15215947e7af780bb61613d832c508101f217f8c259828ffc4680fbcde06a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000007bd238678c7de6666b1fa72f0423be16b875681575a02d9bfb142bed5c64ea359d4c59b0c3139035ef4ad8c1c52ed58a7daf2db23646c0704575e009c35fac6f030703030400040400000007020001340000000000a767000000000050030000000000007bd238678c7de6666b1fa72f0423be16b875681575a02d9bfb142bed5c64ea3508040105020644215560c327edbddd0faa5fe1ed8ff2e8da684374eb45e2cdd67cba4f3bb258fbd50201021b642a192de6a4165d92cf0e3d0c00e6ec86f02d6c71c537a879749da2200b91"
+        )
+    }
 
     func testBalanceAccountNameUpdateApprovalRequest() throws {
         let request = getWalletApprovalRequest(getBalanceAccountNameUpdate(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
