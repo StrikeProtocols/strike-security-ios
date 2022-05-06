@@ -54,10 +54,8 @@ struct RemoteResult<Value>: DynamicProperty {
             switch result {
             case .success(let value):
                 self.content = .success(value)
-            case .failure(let error) where shouldChangeState:
+            case .failure(let error):
                 self.content = .failure(error)
-            case .failure:
-                break
             }
 
             completion?()

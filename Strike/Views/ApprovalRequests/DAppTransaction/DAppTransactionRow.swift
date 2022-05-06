@@ -13,7 +13,7 @@ struct DAppTransactionRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text(transactionRequest.dappInfo.name)
+            Text("Execute dApp Transaction")
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)

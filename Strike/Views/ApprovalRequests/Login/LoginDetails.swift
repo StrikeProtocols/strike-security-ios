@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginDetails: View {
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Login Attempt")
+            Text("Log in")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -19,6 +19,5 @@ struct LoginDetails: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 20, trailing: 10))
         }
-        .navigationTitle("Authentication")
     }
 }

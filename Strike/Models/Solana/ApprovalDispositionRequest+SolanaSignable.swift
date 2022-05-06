@@ -348,13 +348,20 @@ enum SolanaError: Error, Equatable {
 
 extension AddressBookUpdate {
     var combinedBytes: [UInt8] {
-        return
-            ([UInt8(entriesToAdd.count)] as [UInt8]) +
-            (entriesToAdd.flatMap(\.combinedBytes) as [UInt8]) +
-            ([UInt8(entriesToRemove.count)] as [UInt8]) +
-            (entriesToRemove.flatMap(\.combinedBytes) as [UInt8]) +
-            ([UInt8(whitelistUpdates.count)] as [UInt8]) +
-            (whitelistUpdates.flatMap(\.combinedBytes) as [UInt8])
+        switch change {
+        case .add:
+            return
+                ([UInt8(1)] as [UInt8]) +
+                (entry.combinedBytes as [UInt8]) +
+                ([UInt8(0)] as [UInt8]) +
+                ([UInt8(0)] as [UInt8])
+        case .remove:
+            return
+                ([UInt8(0)] as [UInt8]) +
+                ([UInt8(1)] as [UInt8]) +
+                (entry.combinedBytes as [UInt8]) +
+                ([UInt8(0)] as [UInt8])
+        }
     }
 }
 
@@ -399,12 +406,20 @@ extension BalanceAccountPolicyUpdate {
 
 extension BalanceAccountSettingsUpdate {
     var combinedBytes: [UInt8] {
-        return
-            accountInfo.identifier.sha256HashBytes +
-            ([UInt8(whitelistEnabled != nil ? 1 : 0)] as [UInt8]) +
-            ([whitelistEnabled != nil ? whitelistEnabled!.toSolanaProgramValue() : UInt8(0)] as [UInt8]) +
-            ([UInt8(dappsEnabled != nil ? 1 : 0)] as [UInt8]) +
-            ([dappsEnabled != nil ? dappsEnabled!.toSolanaProgramValue() : UInt8(0)] as [UInt8])
+        switch change {
+        case .dappsEnabled(let value):
+            return
+                account.identifier.sha256HashBytes +
+                ([UInt8(0)] as [UInt8]) +
+                ([UInt8(1)] as [UInt8]) +
+                ([value ? BooleanSetting.On.toSolanaProgramValue() : BooleanSetting.Off.toSolanaProgramValue()] as [UInt8])
+        case .whitelistEnabled(let value):
+            return
+                account.identifier.sha256HashBytes +
+                ([UInt8(1)] as [UInt8]) +
+                ([value ? BooleanSetting.On.toSolanaProgramValue() : BooleanSetting.Off.toSolanaProgramValue()] as [UInt8]) +
+                ([UInt8(0)] as [UInt8])
+        }
     }
 }
 

@@ -14,7 +14,7 @@ struct AddressBookUpdateDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Destination Change")
+            Text(update.change.title)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -23,25 +23,13 @@ struct AddressBookUpdateDetails: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
 
-            ApprovalsNeeded(request: request)
-
             Spacer()
                 .frame(height: 10)
 
             FactList {
-                Fact("Requested By", request.submitterEmail)
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-
-                for newDestination in update.entriesToAdd {
-                    Fact(newDestination.value.name, newDestination.value.address.masked(), style: .new)
-                }
-
-                for removedDestination in update.entriesToAdd {
-                    Fact(removedDestination.value.name, removedDestination.value.address.masked(), style: .deleted)
-                }
+                Fact(update.entry.value.name, update.entry.value.address.masked())
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 

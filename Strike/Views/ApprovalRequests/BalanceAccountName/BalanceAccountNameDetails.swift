@@ -14,7 +14,7 @@ struct BalanceAccountNameDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
-            Text("Wallet Name Change")
+            Text("Rename Wallet")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -55,18 +55,10 @@ struct BalanceAccountNameDetails: View {
             .frame(maxWidth: .infinity)
             .padding([.leading, .trailing])
 
-            ApprovalsNeeded(request: request)
-
             Spacer()
                 .frame(height: 10)
 
-            FactList {
-                Fact("Requested By", request.submitterEmail)
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-            }
-
         }
-        .navigationTitle("Change Details")
     }
 }
 

@@ -15,7 +15,7 @@ struct BalanceAccountPolicyDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Wallet Policy Change")
+            Text("Replace Wallet Policy")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -29,8 +29,6 @@ struct BalanceAccountPolicyDetails: View {
                 .frame(maxHeight: 60)
                 .background(Color.Strike.thirdBackground /**/)
                 .cornerRadius(8)
-
-            ApprovalsNeeded(request: request)
 
             Spacer()
                 .frame(height: 10)
@@ -54,15 +52,8 @@ struct BalanceAccountPolicyDetails: View {
                 FactsSection(title: "Approval timeout") {
                     Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
                 }
-
-                FactList {
-                    Fact("Requested By", request.submitterEmail)
-                    Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                }
-
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 

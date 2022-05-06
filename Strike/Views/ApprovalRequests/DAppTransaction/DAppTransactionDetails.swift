@@ -14,7 +14,7 @@ struct DAppTransactionDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("DApp Transaction")
+            Text("Execute dApp Transaction")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -22,8 +22,6 @@ struct DAppTransactionDetails: View {
                 .minimumScaleFactor(0.25)
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            ApprovalsNeeded(request: request)
 
             Spacer()
                 .frame(height: 10)
@@ -73,14 +71,7 @@ struct DAppTransactionDetails: View {
                 }
             }
             .padding([.bottom], 20)
-
-            FactList {
-                Fact("Requested By", request.submitterEmail)
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-            }
-
         }
-        .navigationTitle("Change Details")
     }
 }
 

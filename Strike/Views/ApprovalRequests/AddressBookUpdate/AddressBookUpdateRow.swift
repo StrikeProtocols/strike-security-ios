@@ -14,7 +14,7 @@ struct AddressBookUpdateRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Destination Change")
+            Text(update.change.title)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -24,27 +24,22 @@ struct AddressBookUpdateRow: View {
                 .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
 
             VStack(spacing: 6) {
-                if update.entriesToAdd.count > 0 {
-                    Text("\(update.entriesToAdd.count.destinationsCaption) added".capitalized)
-                }
-
-                if update.entriesToRemove.count > 0 {
-                    Text("\(update.entriesToRemove.count.destinationsCaption) removed".capitalized)
-                }
+                Text(update.entry.value.name)
             }
             .font(.caption)
             .foregroundColor(Color.white.opacity(0.5))
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }
 
-extension Int {
-    var destinationsCaption: String {
-        if self == 1 {
-            return "\(self) destination"
-        } else {
-            return "\(self) destinations"
+extension AddressBookUpdate.Change {
+    var title: String {
+        switch self {
+        case .add:
+            return "Add Address Book Entry"
+        case .remove:
+            return "Remove Address Book Entry"
         }
     }
 }
@@ -58,7 +53,7 @@ struct AddressBookUpdateRow_Previews: PreviewProvider {
 
 extension AddressBookUpdate {
     static var sample: Self {
-        AddressBookUpdate(entriesToAdd: [.sample], entriesToRemove: [.sample2], whitelistUpdates: [], signingData: .sample)
+        AddressBookUpdate(change: .add, entry: .sample, signingData: .sample)
     }
 }
 

@@ -13,7 +13,7 @@ struct SignerUpdateRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("\(signersUpdate.slotUpdateType == .Clear ? "Removed" : "New") Signer")
+            Text("\(signersUpdate.slotUpdateType == .Clear ? "Remove" : "Add") Signer")
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)

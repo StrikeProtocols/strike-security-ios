@@ -14,7 +14,7 @@ struct SignerUpdateDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("\(signersUpdate.slotUpdateType == .Clear ? "Removed" : "New") Signer")
+            Text("\(signersUpdate.slotUpdateType == .Clear ? "Remove" : "Add") Signer")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -29,15 +29,10 @@ struct SignerUpdateDetails: View {
                 .background(Color.Strike.thirdBackground)
                 .cornerRadius(8)
 
-            ApprovalsNeeded(request: request)
-
             FactList {
                 Fact("Public Key", signersUpdate.signer.value.publicKey.masked())
-                Fact("Requested By", request.submitterEmail)
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 

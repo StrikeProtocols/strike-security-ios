@@ -8,19 +8,16 @@
 import Foundation
 import SwiftUI
 
-
 struct ConversionDetails: View {
     var request: WalletApprovalRequest
     var conversion: ConversionRequest
-
-    @State private var isComposingMail = false
 
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
             HStack {
                 VStack(alignment: .center, spacing: 0) {
 
-                    Text("\(conversion.symbolAndAmountInfo.formattedAmount) \(conversion.symbolAndAmountInfo.symbolInfo.symbol)")
+                    Text("Convert \(conversion.symbolAndAmountInfo.formattedAmount) \(conversion.symbolAndAmountInfo.symbolInfo.symbol)")
                         .font(.title)
                         .bold()
                         .lineLimit(1)
@@ -73,25 +70,11 @@ struct ConversionDetails: View {
 
             ApprovalsNeeded(request: request)
 
-            FactList {
-                Fact("Requested By", request.submitterEmail) {
-                    isComposingMail = true
-                }
-
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-
-                if let memo = conversion.destination.tag {
+            if let memo = conversion.destination.tag {
+                FactList {
                     Fact("Memo", memo)
                 }
             }
-        }
-        .navigationTitle("Conversion Details")
-        .sheet(isPresented: $isComposingMail) {
-            ComposeMail(
-                subject: "Strike Approval Request: \(conversion.account.name) → \(conversion.destination.name) on \(request.submitDate)",
-                toRecipients: [request.submitterEmail],
-                completion: nil
-            )
         }
     }
 }

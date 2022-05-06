@@ -13,7 +13,7 @@ struct AccountCreationRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("New \(accountCreation.accountInfo.accountType.description) Account")
+            Text("Add Wallet")
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)

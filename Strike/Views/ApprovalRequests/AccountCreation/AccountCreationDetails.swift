@@ -14,7 +14,7 @@ struct AccountCreationDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("New Wallet")
+            Text("Add Wallet")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -28,8 +28,6 @@ struct AccountCreationDetails: View {
                 .frame(maxHeight: 60)
                 .background(Color.Strike.thirdBackground)
                 .cornerRadius(8)
-
-            ApprovalsNeeded(request: request)
 
             Spacer()
                 .frame(height: 10)
@@ -60,15 +58,8 @@ struct AccountCreationDetails: View {
                 FactsSection(title: "Supports DApps") {
                     Fact(accountCreation.dappsEnabled == .On ? "Yes" : "No", "")
                 }
-
-                FactList {
-                    Fact("Requested By", request.submitterEmail)
-                    Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                }
-
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 

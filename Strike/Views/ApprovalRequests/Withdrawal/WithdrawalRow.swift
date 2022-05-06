@@ -14,7 +14,7 @@ struct WithdrawalRow: View {
 
     var body: some View {
         VStack {
-            Text("\(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol)")
+            Text("Send \(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol)")
                 .font(.title2)
                 .bold()
                 .lineLimit(1)

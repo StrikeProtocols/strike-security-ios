@@ -13,7 +13,7 @@ struct SPLTokenAccountCreationRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("New Token Account")
+            Text("Enable SPL Token")
                 .font(.title2)
                 .bold()
                 .lineLimit(1)

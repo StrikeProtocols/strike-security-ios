@@ -14,7 +14,7 @@ struct WalletConfigPolicyDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Vault Policy Change")
+            Text("Replace Vault Policy")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -22,8 +22,6 @@ struct WalletConfigPolicyDetails: View {
                 .minimumScaleFactor(0.25)
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            ApprovalsNeeded(request: request)
 
             Spacer()
                 .frame(height: 10)
@@ -46,14 +44,8 @@ struct WalletConfigPolicyDetails: View {
                 FactsSection(title: "Approval timeout") {
                     Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
                 }
-
-                FactList {
-                    Fact("Requested By", request.submitterEmail)
-                    Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                }
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 

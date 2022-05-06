@@ -14,7 +14,7 @@ struct ConversionRow: View {
 
     var body: some View {
         VStack {
-            Text("\(conversion.symbolAndAmountInfo.formattedAmount) \(conversion.symbolAndAmountInfo.symbolInfo.symbol)")
+            Text("Convert \(conversion.symbolAndAmountInfo.formattedAmount) \(conversion.symbolAndAmountInfo.symbolInfo.symbol)")
                 .font(.title2)
                 .bold()
                 .lineLimit(1)

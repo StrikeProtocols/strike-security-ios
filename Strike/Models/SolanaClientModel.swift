@@ -393,17 +393,112 @@ struct BalanceAccountPolicyUpdate: Codable, Equatable  {
 }
 
 struct BalanceAccountSettingsUpdate: Codable, Equatable  {
-    var accountInfo: AccountInfo
-    var whitelistEnabled: BooleanSetting?
-    var dappsEnabled: BooleanSetting?
+    enum Change: Equatable {
+        case whitelistEnabled(Bool)
+        case dappsEnabled(Bool)
+    }
+
+    var account: AccountInfo
+    var change: Change
     var signingData: SolanaSigningData
+
+    enum CodingKeys: String, CodingKey {
+        case account
+        case whitelistEnabled
+        case dappsEnabled
+        case signingData
+    }
+
+    init(account: AccountInfo, change: Change, signingData: SolanaSigningData) {
+        self.account = account
+        self.change = change
+        self.signingData = signingData
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.account = try container.decode(AccountInfo.self, forKey: .account)
+        self.signingData = try container.decode(SolanaSigningData.self, forKey: .signingData)
+
+        let whitelistEnabled = try container.decode(BooleanSetting?.self, forKey: .whitelistEnabled)
+        let dappsEnabled = try container.decode(BooleanSetting?.self, forKey: .dappsEnabled)
+
+        if let whitelistEnabled = whitelistEnabled, dappsEnabled == nil {
+            self.change = .whitelistEnabled(whitelistEnabled == .On)
+        } else if let dappsEnabled = dappsEnabled, whitelistEnabled == nil {
+            self.change = .dappsEnabled(dappsEnabled == .On)
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .whitelistEnabled, in: container, debugDescription: "Only one setting should be changed")
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(account, forKey: .account)
+        try container.encode(signingData, forKey: .signingData)
+
+        switch change {
+        case .whitelistEnabled(let bool):
+            try container.encode(bool ? BooleanSetting.On : .Off, forKey: .whitelistEnabled)
+        case .dappsEnabled(let bool):
+            try container.encode(bool ? BooleanSetting.On : .Off, forKey: .dappsEnabled)
+        }
+    }
 }
 
 struct AddressBookUpdate: Codable, Equatable  {
-    var entriesToAdd: [SlotDestinationInfo]
-    var entriesToRemove: [SlotDestinationInfo]
-    var whitelistUpdates: [WhitelistUpdate]
+    enum Change {
+        case add
+        case remove
+    }
+
+    var change: Change
+    var entry: SlotDestinationInfo
     var signingData: SolanaSigningData
+
+    init(change: Change, entry: SlotDestinationInfo, signingData: SolanaSigningData) {
+        self.change = change
+        self.entry = entry
+        self.signingData = signingData
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case entriesToAdd
+        case entriesToRemove
+        case signingData
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let entriesToAdd = try container.decode([SlotDestinationInfo].self, forKey: .entriesToAdd)
+        let entriesToRemove = try container.decode([SlotDestinationInfo].self, forKey: .entriesToRemove)
+
+        if entriesToAdd.count == 1 && entriesToRemove.count == 0 {
+            self.change = .add
+            self.entry = entriesToAdd[0]
+        } else if entriesToAdd.count == 0 && entriesToRemove.count == 1 {
+            self.change = .remove
+            self.entry = entriesToRemove[0]
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .entriesToAdd, in: container, debugDescription: "Only 1 entry is accepted for either added or removed")
+        }
+
+        self.signingData = try container.decode(SolanaSigningData.self, forKey: .signingData)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(signingData, forKey: .signingData)
+
+        switch change {
+        case .add:
+            try container.encode([SlotDestinationInfo](), forKey: .entriesToRemove)
+            try container.encode([entry], forKey: .entriesToAdd)
+        case .remove:
+            try container.encode([entry], forKey: .entriesToRemove)
+            try container.encode([SlotDestinationInfo](), forKey: .entriesToAdd)
+        }
+    }
 }
 
 struct DAppBookUpdate: Codable, Equatable  {

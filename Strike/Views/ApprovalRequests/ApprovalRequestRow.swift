@@ -227,7 +227,7 @@ extension SolanaApprovalRequestType {
         case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate):
             return "policy update for \(balanceAccountPolicyUpdate.accountInfo.name)"
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
-            return "settings update for \(balanceAccountSettingsUpdate.accountInfo.name)"
+            return "settings update for \(balanceAccountSettingsUpdate.account.name)"
         case .addressBookUpdate:
             return "address book update"
         case .dAppBookUpdate:

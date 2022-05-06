@@ -14,7 +14,7 @@ struct WalletConfigPolicyRow: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Vault Policy Change")
+            Text("Replace Vault Policy")
                 .font(.title2)
                 .bold()
                 .lineLimit(1)

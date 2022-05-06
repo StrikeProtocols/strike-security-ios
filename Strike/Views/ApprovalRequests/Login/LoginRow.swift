@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginRow: View {
     var body: some View {
         VStack(spacing: 8) {
-            Text("Login Attempt")
+            Text("Log in")
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)

@@ -13,18 +13,17 @@ struct WithdrawalDetails: View {
     var request: WalletApprovalRequest
     var withdrawal: WithdrawalRequest
 
-    @State private var isComposingMail = false
-
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
             HStack {
                 VStack(alignment: .center, spacing: 0) {
 
-                    Text("\(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol)")
+                    Text("Send \(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol)")
                         .font(.title)
                         .bold()
                         .lineLimit(1)
                         .allowsTightening(true)
+                        .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.25)
                         .foregroundColor(Color.white)
                         .padding(0)
@@ -71,14 +70,7 @@ struct WithdrawalDetails: View {
             .frame(maxWidth: .infinity)
             .padding([.leading, .trailing])
 
-            ApprovalsNeeded(request: request)
-
             FactList {
-                Fact("Requested By", request.submitterEmail) {
-                    isComposingMail = true
-                }
-
-                Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
                 Fact("Address", withdrawal.destination.address.masked())
 
                 if let memo = withdrawal.destination.tag {
@@ -86,14 +78,12 @@ struct WithdrawalDetails: View {
                 }
             }
         }
-        .navigationTitle("Transfer Details")
-        .sheet(isPresented: $isComposingMail) {
-            ComposeMail(
-                subject: "Strike Approval Request: \(withdrawal.account.name) → \(withdrawal.destination.name) on \(request.submitDate)",
-                toRecipients: [request.submitterEmail],
-                completion: nil
-            )
-        }
+    }
+}
+
+extension WalletApprovalRequest {
+    var numberOfApprovalsNeeded: Int {
+        numberOfDispositionsRequired - numberOfApprovalsReceived
     }
 }
 
@@ -110,7 +100,13 @@ extension DateFormatter {
 struct WithdrawalDetails_Previews: PreviewProvider {
     static var previews: some View {
         WithdrawalDetails(request: .sample, withdrawal: .sample)
-            .background(Color.Strike.secondaryBackground.ignoresSafeArea())
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                WithdrawalDetails(request: .sample, withdrawal: .sample)
+            }
+        }
     }
 }
 #endif

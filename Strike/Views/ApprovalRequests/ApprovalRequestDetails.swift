@@ -15,6 +15,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
 
     @State private var action: Action = .none
     @State private var alert: AlertType? = nil
+    @State private var isComposingMail = false
 
     var user: StrikeApi.User
     var request: WalletApprovalRequest
@@ -31,7 +32,19 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                 .background(request.expireDate <= Date() ? Color.Strike.red : Color.white.opacity(0.05))
 
             ScrollView(.vertical) {
-                content()
+                VStack(alignment: .center, spacing: 15) {
+                    content()
+
+                    FactList {
+                        Fact("Approvals Needed", "\(request.numberOfApprovalsNeeded)")
+
+                        Fact("Requested By", request.submitterEmail) {
+                            isComposingMail = true
+                        }
+
+                        Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
+                    }
+                }
 
                 VStack(alignment: .center, spacing: 15) {
                     Button {
@@ -77,6 +90,14 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
             case .approveError(let error):
                 return Alert.withDismissButton(title: Text("Error"), message: Text(ignoreMessage(for: error)))
             }
+        }
+        .navigationTitle("Details")
+        .sheet(isPresented: $isComposingMail) {
+            ComposeMail(
+                subject: "Strike Approval Request: \(request.id) on \(request.submitDate)",
+                toRecipients: [request.submitterEmail],
+                completion: nil
+            )
         }
     }
 

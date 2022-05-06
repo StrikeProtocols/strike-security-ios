@@ -15,7 +15,7 @@ struct SPLTokenAccountCreationDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("New Token Account")
+            Text("Enable SPL Token")
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -30,30 +30,20 @@ struct SPLTokenAccountCreationDetails: View {
                 .background(Color.Strike.thirdBackground)
                 .cornerRadius(8)
 
-            ApprovalsNeeded(request: request)
-
             Spacer()
                 .frame(height: 10)
 
-            VStack(spacing: 20) {
-
-                FactList {
-                    Fact("Symbol", creation.tokenSymbolInfo.symbol)
-
-                    Fact("Requested By", request.submitterEmail)
-                    Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                }
-
+            FactList {
+                Fact("Symbol", creation.tokenSymbolInfo.symbol)
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 
 #if DEBUG
 struct SPLTokenAccountCreationDetails_Previews: PreviewProvider {
     static var previews: some View {
-        SPLTokenAccountCreationDetails(request: .sample, creation: .sample)
+        SPLTokenAccountCreationDetails(request: .sample, creation: .sample, user: .sample)
     }
 }
 #endif

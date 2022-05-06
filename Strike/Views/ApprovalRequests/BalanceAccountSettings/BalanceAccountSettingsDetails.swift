@@ -15,7 +15,7 @@ struct BalanceAccountSettingsDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Wallet Setting Change")
+            Text(update.title)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -24,39 +24,29 @@ struct BalanceAccountSettingsDetails: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
 
-            AccountDetail(name: update.accountInfo.name, subname: user.organization.name)
+            AccountDetail(name: update.account.name, subname: user.organization.name)
                 .padding(EdgeInsets(top: 12, leading: 24, bottom: 12, trailing: 24))
                 .frame(maxHeight: 60)
                 .background(Color.Strike.thirdBackground /**/)
                 .cornerRadius(8)
-
-            ApprovalsNeeded(request: request)
 
             Spacer()
                 .frame(height: 10)
 
             VStack(spacing: 20) {
 
-                if let whitelistEnabled = update.whitelistEnabled {
+                switch update.change {
+                case .whitelistEnabled(let value):
                     FactsSection(title: "Whitelisting Enabled") {
-                        Fact(whitelistEnabled == .On ? "Yes" : "No", "")
+                        Fact(value ? "Yes" : "No", "")
                     }
-                }
-
-                if let dappsEnabled = update.dappsEnabled {
+                case .dappsEnabled(let value):
                     FactsSection(title: "Supports DApps") {
-                        Fact(dappsEnabled == .On ? "Yes" : "No", "")
+                        Fact(value ? "Yes" : "No", "")
                     }
                 }
-
-                FactList {
-                    Fact("Requested By", request.submitterEmail)
-                    Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                }
-
             }
         }
-        .navigationTitle("Change Details")
     }
 }
 
