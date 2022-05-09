@@ -266,108 +266,15 @@ extension StrikeTests {
     func getAddAddressBookEntry(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
         return .addressBookUpdate(
             AddressBookUpdate(
-                entriesToAdd: [
-                    SlotDestinationInfo(
-                        slotId: 1,
-                        value: DestinationAddress(name: "My External Sol address 1", subName: nil, address: "6RsFJRJb2RxZG7kKFbnnKdei4bUmC51wBbEpZtm9AuzV", tag: nil)
-                    ),
-                    SlotDestinationInfo(
-                        slotId: 2,
-                        value: DestinationAddress(name: "My External Sol address 2", subName: nil, address: "CCusVse2bbV3KW6qDRuyLHGAp1i3mX4KvmQEd2urfotW", tag: nil)
-                    ),
-                    SlotDestinationInfo(
-                        slotId: 3,
-                        value: DestinationAddress(name: "My External Sol address 3", subName: nil, address: "BxrwUskF8LwKPy6KhddVPEDKPCPeQvEPcpkqy8RWqjgD", tag: nil)
-                    ),
-                    SlotDestinationInfo(
-                        slotId: 4,
-                        value: DestinationAddress(name: "My External Sol address 4", subName: nil, address: "9uknge22ixEFjGdVUESUGhskQBVv4TiAiLtyxzdKA7E1", tag: nil)
-                    )
-                ],
-                entriesToRemove: [],
-                whitelistUpdates: [],
+                change: .add,
+                entry: SlotDestinationInfo(
+                    slotId: 1,
+                    value: DestinationAddress(name: "My External Sol address 1", subName: nil, address: "6RsFJRJb2RxZG7kKFbnnKdei4bUmC51wBbEpZtm9AuzV", tag: nil)
+                ),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
                     walletProgramId: "A2iHua5UQd6RWb6C3ZctQcfVZDoeG5pUvBtRQfWSxSqb",
                     multisigOpAccountAddress: "2Qr2bq8KpyAho1rSnE7TUwXgHW3UpM7KwYEijF11JF2d",
-                    walletAddress: "FpyUo7gVxzB3mPVSkcHNdzdo1T6tNHvkzUvFajw2PwkG",
-                    nonceAccountAddresses: nonceAccountAddresses
-                ))
-        )
-    }
-    
-    func getAddressBookWhitelistUpdate(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
-        return .addressBookUpdate(
-            AddressBookUpdate(
-                entriesToAdd: [],
-                entriesToRemove: [],
-                whitelistUpdates: [ WhitelistUpdate(
-                    account: AccountInfo(
-                        name: "Account 1",
-                        identifier: "a0c606ae-e1cc-4d1f-bed1-26c8a3fb61de",
-                        accountType: AccountType.BalanceAccount,
-                        address: "HphKLiDz5m6HGDov5tvKewBXawQwkVKQQWyreG7MJPNh"
-                    ),
-                    destinationsToAdd: [
-                        SlotDestinationInfo(
-                            slotId: 1,
-                            value: DestinationAddress(name: "My External Sol address 1", subName: nil, address: "6RsFJRJb2RxZG7kKFbnnKdei4bUmC51wBbEpZtm9AuzV", tag: nil)
-                        ),
-                        SlotDestinationInfo(
-                            slotId: 2,
-                            value: DestinationAddress(name: "My External Sol address 2", subName: nil, address: "CCusVse2bbV3KW6qDRuyLHGAp1i3mX4KvmQEd2urfotW", tag: nil)
-                        )
-                    ],
-                    destinationsToRemove: [])
-                ],
-                signingData: SolanaSigningData(
-                    feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
-                    walletProgramId: "A2iHua5UQd6RWb6C3ZctQcfVZDoeG5pUvBtRQfWSxSqb",
-                    multisigOpAccountAddress: "5NXoY3tbZGY2FMkF3W2tsEMn6Qdko5eViPThb4rvV3y1",
-                    walletAddress: "FpyUo7gVxzB3mPVSkcHNdzdo1T6tNHvkzUvFajw2PwkG",
-                    nonceAccountAddresses: nonceAccountAddresses
-                ))
-        )
-    }
-    
-    
-    func getAddressBookWhitelistAddAndRemove(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
-        return .addressBookUpdate(
-            AddressBookUpdate(
-                entriesToAdd: [],
-                entriesToRemove: [],
-                whitelistUpdates: [ WhitelistUpdate(
-                    account: AccountInfo(
-                        name: "Account 1",
-                        identifier: "a0c606ae-e1cc-4d1f-bed1-26c8a3fb61de",
-                        accountType: AccountType.BalanceAccount,
-                        address: "HphKLiDz5m6HGDov5tvKewBXawQwkVKQQWyreG7MJPNh"
-                    ),
-                    destinationsToAdd: [
-                        SlotDestinationInfo(
-                            slotId: 3,
-                            value: DestinationAddress(name: "My External Sol address 3", subName: nil, address: "BxrwUskF8LwKPy6KhddVPEDKPCPeQvEPcpkqy8RWqjgD", tag: nil)
-                        ),
-                        SlotDestinationInfo(
-                            slotId: 4,
-                            value: DestinationAddress(name: "My External Sol address 4", subName: nil, address: "9uknge22ixEFjGdVUESUGhskQBVv4TiAiLtyxzdKA7E1", tag: nil)
-                        )
-                    ],
-                    destinationsToRemove: [
-                        SlotDestinationInfo(
-                            slotId: 1,
-                            value: DestinationAddress(name: "My External Sol address 1", subName: nil, address: "6RsFJRJb2RxZG7kKFbnnKdei4bUmC51wBbEpZtm9AuzV", tag: nil)
-                        ),
-                        SlotDestinationInfo(
-                            slotId: 2,
-                            value: DestinationAddress(name: "My External Sol address 2", subName: nil, address: "CCusVse2bbV3KW6qDRuyLHGAp1i3mX4KvmQEd2urfotW", tag: nil)
-                        )
-                    ])
-                ],
-                signingData: SolanaSigningData(
-                    feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
-                    walletProgramId: "A2iHua5UQd6RWb6C3ZctQcfVZDoeG5pUvBtRQfWSxSqb",
-                    multisigOpAccountAddress: "4mf7Eo633trwbtrMZu7NTjvYaQZdAiVPUj8HyCdkGQ7u",
                     walletAddress: "FpyUo7gVxzB3mPVSkcHNdzdo1T6tNHvkzUvFajw2PwkG",
                     nonceAccountAddresses: nonceAccountAddresses
                 ))
@@ -397,14 +304,13 @@ extension StrikeTests {
     func getBalanceAccountSettingsUpdate(nonceAccountAddresses: [String]) -> SolanaApprovalRequestType {
         return .balanceAccountSettingsUpdate(
             BalanceAccountSettingsUpdate(
-                accountInfo: AccountInfo(
+                account: AccountInfo(
                     name: "Account 1",
                     identifier: "b645a5d9-227f-4a9f-9331-52af64bf1989",
                     accountType: AccountType.BalanceAccount,
                     address: "DcvZ2k6ygvvu2Z5ihrSxRZL7bHJ38gPRgpCie8GzztTP"
                 ),
-                whitelistEnabled: BooleanSetting.On,
-                dappsEnabled: nil,
+                change: .whitelistEnabled(true),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
                     walletProgramId: "7kNPVcK2cpyaZsLsqmhZbjcbt433vYUckH1PM5gZeJ1L",

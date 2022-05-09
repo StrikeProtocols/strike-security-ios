@@ -420,7 +420,7 @@ class StrikeTests: XCTestCase {
 
         XCTAssertEqual(
             try initiationRequest.signableData(approverPublicKey: "77A6RbdEjz8JQFFfXBepk7ssX5QUxunQ3TTJdayjkqw5").toHexString(),
-            "03010509d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af3414f77b30cf799b059605b79ab2be10641f9c65a9bc4f226e8c8b290557ed0c7e5ab9e373e1af4f5248eaefd355eb8e6d5853f11bdc95fcf3fdd0a85add6eac98898534f677e9f6b843ebcf3e53c93f9382e9e02287d16066540638f00fa2718606a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000dc4dc6b8f1d08cfa8efcce33cd97d55a46422050a94f87ca154768f0676220a506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ced05c6308b8f9874498edf6cfda59d7a1ee89e5661d4196385d502db9a16c5cca030703030400040400000007020001340000000000a767000000000050030000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce080401050206880216040150a93021a0aaaba0128166790f8450472dccded2f9d9809f4e89ccad52e80b7e3c788df5ccf194a18ab2990c7e57f4b837320f003b6d726d14c04bbe6dc3714302a67db9e36bc38212d9422dd0d8868e392c4094cea41b8255945935213f3bc9e305e3ff86ee538ceb42fa3281c4f2333126567b733b1b9806001f23f8fbc2d68a03a2e447c3e0d4793616b5ae546c20f611ffb8eb6b4dbb479d4eba6cf853b093dadbee0f3f1f7b06ea8c55dafeba11a7e0fa28652a97139f10d252e62b8a4b8d0f04846135552cd5ce2088bb9c41de367a0d1d77ce1b0aab33b4e2ed1edecb29429252424a0fea7a7b1d89b581700670463854377ef7181e7a2a740d22ea7f3703bc0000"
+            "03010509d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af3414f77b30cf799b059605b79ab2be10641f9c65a9bc4f226e8c8b290557ed0c7e5ab9e373e1af4f5248eaefd355eb8e6d5853f11bdc95fcf3fdd0a85add6eac98898534f677e9f6b843ebcf3e53c93f9382e9e02287d16066540638f00fa2718606a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000dc4dc6b8f1d08cfa8efcce33cd97d55a46422050a94f87ca154768f0676220a506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ced05c6308b8f9874498edf6cfda59d7a1ee89e5661d4196385d502db9a16c5cca030703030400040400000007020001340000000000a767000000000050030000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce0804010502064516010150a93021a0aaaba0128166790f8450472dccded2f9d9809f4e89ccad52e80b7e3c788df5ccf194a18ab2990c7e57f4b837320f003b6d726d14c04bbe6dc371430000"
         )
     }
 
@@ -435,87 +435,7 @@ class StrikeTests: XCTestCase {
         )
         XCTAssertEqual(
             try approvalRequest.signableData(approverPublicKey: "8u1nbZ2Zv42ouiCVcJPqKQa7VZRoFSQhH6q7Ghkiurkb").toHexString(),
-            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af347554e641b3f3724c0660945d56ca6c51979b4f8f8dfdb8969bb4f1633a8f88d4f6f848968b4992558e8a75c9f6dcffe090932a702d806fece59c015babc5391014f77b30cf799b059605b79ab2be10641f9c65a9bc4f226e8c8b290557ed0c7e06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ced05c6308b8f9874498edf6cfda59d7a1ee89e5661d4196385d502db9a16c5cca020603020400040400000007030301052209019a7410636292e6fe6a79c43d9986fd2ac850746a8b60cc37d96797c0cd847385"
-        )
-    }
-
-    func testWhitelistAddressBookEntryInitiationRequest() throws {
-        let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: getOpAccountCreationInfo(),
-            dataAccountCreationInfo: nil
-        )
-        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistUpdate(nonceAccountAddresses: ["DcQPFjFjaTWCSvCNDu3fMzHjJJZggtgM69qasNGiKp7J"])
-        let request = getWalletInitiationRequest(requestType, initiation: initiation)
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "d289ad6ec351ed2fa1dca209ac8e3bbdd19f3a7d5444e6583187631e0044022b".data(using: .hexadecimal)!)
-        let initiationRequest = StrikeApi.InitiationRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            initiation: initiation,
-            requestType: requestType,
-            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
-            email: "dont care",
-            opAccountPrivateKey: pk,
-            dataAccountPrivateKey: nil
-        )
-
-        XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "77A6RbdEjz8JQFFfXBepk7ssX5QUxunQ3TTJdayjkqw5").toHexString(),
-            "03010509d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af3440f2c5e3aff76fd4158bf8e53d852839783967ffa057e0989a18233b3de59f085ab9e373e1af4f5248eaefd355eb8e6d5853f11bdc95fcf3fdd0a85add6eac98bb5e02eeb4d3329a986b4f3fa26c0b6edd33bb9ac40a66ad9fce8e55f948b70906a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000dc4dc6b8f1d08cfa8efcce33cd97d55a46422050a94f87ca154768f0676220a506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce796b09ffac78f0a42d65d5745216350086645772730cd520a9faf9e91700a55e030703030400040400000007020001340000000000a767000000000050030000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce08040105020648160000011c39ffbe2869723a3485c86d0ce1a0d00ee545abba4e1bad3de637f8b4aa46010201020033fa9b2a9a24f8261fb4d3cff40006a665314331e184bc66560bf63344f91337"
-        )
-    }
-
-    func testWhitelistAddressBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddressBookWhitelistUpdate(nonceAccountAddresses: ["CDXW6vcyi78ZwLPpXJwumV4dqDYyW4Wg37a8FZznaTs3"]))
-        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            requestType: request.requestType,
-            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
-            email: "dont care"
-        )
-        XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "8u1nbZ2Zv42ouiCVcJPqKQa7VZRoFSQhH6q7Ghkiurkb").toHexString(),
-            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af347554e641b3f3724c0660945d56ca6c51979b4f8f8dfdb8969bb4f1633a8f88d4a6a603ac71f0551c6d9953d550bf3fc34347a96ea975b60e6d4aa790c6ad309640f2c5e3aff76fd4158bf8e53d852839783967ffa057e0989a18233b3de59f0806a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce796b09ffac78f0a42d65d5745216350086645772730cd520a9faf9e91700a55e02060302040004040000000703030105220901ff6beef8f31ebbff0f5f2379404e1b3b63b0cdd3ee1bae7ed5af529b997937f8"
-        )
-    }
-
-    func testAddAndRemoveWhitelistAddressBookEntryInitiationRequest() throws {
-        let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: getOpAccountCreationInfo(),
-            dataAccountCreationInfo: nil
-        )
-        let requestType: SolanaApprovalRequestType = getAddressBookWhitelistAddAndRemove(nonceAccountAddresses: ["H7zYfWgtQE36oFigyuGY4XKuScoCWJaJjFESZbwMKBXk"])
-        let request = getWalletInitiationRequest(requestType, initiation: initiation)
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "c72dc3b10c6905ac3d824707d37378238d5410fc2e4f975aeaa035b601e8705c".data(using: .hexadecimal)!)
-        let initiationRequest = StrikeApi.InitiationRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            initiation: initiation,
-            requestType: requestType,
-            nonces: [StrikeApi.Nonce("9AxzqxyCzsFQFpRkXJsCbnkww53JCCZ9j5dBiVYtKRr5")],
-            email: "dont care",
-            opAccountPrivateKey: pk,
-            dataAccountPrivateKey: nil
-        )
-
-        XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "77A6RbdEjz8JQFFfXBepk7ssX5QUxunQ3TTJdayjkqw5").toHexString(),
-            "03010509d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af343803b4689d806534c7aae6d4a2271b4e6d1ce47015e12b6b13bdf9b90c328b145ab9e373e1af4f5248eaefd355eb8e6d5853f11bdc95fcf3fdd0a85add6eac98ef858b067c16f0c45e0758c97a463a1620b9d0fecc1a60a902d07fc5c8563daf06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000dc4dc6b8f1d08cfa8efcce33cd97d55a46422050a94f87ca154768f0676220a506a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce796b09ffac78f0a42d65d5745216350086645772730cd520a9faf9e91700a55e030703030400040400000007020001340000000000a767000000000050030000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce0804010502064a160000011c39ffbe2869723a3485c86d0ce1a0d00ee545abba4e1bad3de637f8b4aa46010203040201023e16f1767fefc769b7ec3ff138f6dd3d01c1da6745484166e3c0ac6069174681"
-        )
-    }
-
-    func testAddAndRemoveWhitelistAddressBookEntryApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getAddressBookWhitelistAddAndRemove(nonceAccountAddresses: ["E7RtSB2u2sZy54FeHppaj4nYhdfvxsshAKd5u3iB71wW"]))
-        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            requestType: request.requestType,
-            nonces: [StrikeApi.Nonce("B1vADBUUbPLrZGg43MUwsvoGF8nhGhMZgnG6jiz9HWfS")],
-            email: "dont care"
-        )
-        XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "8u1nbZ2Zv42ouiCVcJPqKQa7VZRoFSQhH6q7Ghkiurkb").toHexString(),
-            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af347554e641b3f3724c0660945d56ca6c51979b4f8f8dfdb8969bb4f1633a8f88d4c2cd8df2aa60eb0f9489722851b74098d191194381c7519d79b13b07d1478d093803b4689d806534c7aae6d4a2271b4e6d1ce47015e12b6b13bdf9b90c328b1406a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ce94d0f9e1ddeb6a4c1d7f10e6b1511457c16a7d1bb08b328bf1c832167aacd1a902060302040004040000000703030105220901f95f01739c3b38b7c5b916a1eecd4b69db2153281078c97065a610a171b661ca"
+            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af347554e641b3f3724c0660945d56ca6c51979b4f8f8dfdb8969bb4f1633a8f88d4f6f848968b4992558e8a75c9f6dcffe090932a702d806fece59c015babc5391014f77b30cf799b059605b79ab2be10641f9c65a9bc4f226e8c8b290557ed0c7e06a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000000000000000000000000000000000000000000000000000000000000000000008629739ae31d052f08b5534253dac669eb963e39b38fdfa02dc4b52ce55db0ced05c6308b8f9874498edf6cfda59d7a1ee89e5661d4196385d502db9a16c5cca020603020400040400000007030301052209015a481b8a2b4d64f4ee2fd22776f0b5c32a5a6e9ef384dbe460fe03e1469d9bdf"
         )
     }
 

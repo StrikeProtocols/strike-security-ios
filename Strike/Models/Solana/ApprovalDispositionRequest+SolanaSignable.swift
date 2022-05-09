@@ -421,6 +421,7 @@ extension BalanceAccountSettingsUpdate {
             return
                 account.identifier.sha256HashBytes +
                 ([UInt8(0)] as [UInt8]) +
+                ([UInt8(0)] as [UInt8]) +
                 ([UInt8(1)] as [UInt8]) +
                 ([value ? BooleanSetting.On.toSolanaProgramValue() : BooleanSetting.Off.toSolanaProgramValue()] as [UInt8])
         case .whitelistEnabled(let value):
@@ -428,6 +429,7 @@ extension BalanceAccountSettingsUpdate {
                 account.identifier.sha256HashBytes +
                 ([UInt8(1)] as [UInt8]) +
                 ([value ? BooleanSetting.On.toSolanaProgramValue() : BooleanSetting.Off.toSolanaProgramValue()] as [UInt8]) +
+                ([UInt8(0)] as [UInt8]) +
                 ([UInt8(0)] as [UInt8])
         }
     }

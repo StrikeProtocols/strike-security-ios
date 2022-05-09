@@ -231,7 +231,7 @@ extension SolanaApprovalRequestType {
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
             return "settings update for \(balanceAccountSettingsUpdate.account.name)"
         case .balanceAccountAddressWhitelistUpdate(let balanceAccountSettingsUpdate):
-            return "transfer whitelist update for \(balanceAccountSettingsUpdate.account.name)"
+            return "transfer whitelist update for \(balanceAccountSettingsUpdate.accountInfo.name)"
         case .addressBookUpdate:
             return "address book update"
         case .dAppBookUpdate:
