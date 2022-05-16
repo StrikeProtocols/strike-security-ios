@@ -50,7 +50,12 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
 
             HStack(spacing: 0) {
                 Button {
-                    alert = .confirmation
+                    switch request.requestType {
+                    case .loginApproval:
+                        approve()
+                    default:
+                        alert = .confirmation
+                    }
                 } label: {
                     Text("Approve")
                         .bold()

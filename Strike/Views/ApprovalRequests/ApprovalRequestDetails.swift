@@ -48,7 +48,12 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
 
                 VStack(alignment: .center, spacing: 15) {
                     Button {
-                        alert = .ignoreConfirmation
+                        switch request.requestType {
+                        case .loginApproval:
+                            ignore()
+                        default:
+                            alert = .ignoreConfirmation
+                        }
                     } label: {
                         Text(request.details.ignoreCaption.capitalized)
                             .loadingIndicator(when: action == .ignoring)
@@ -56,7 +61,12 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                     .buttonStyle(DestructiveButtonStyle())
 
                     Button {
-                        alert = .approveConfirmation
+                        switch request.requestType {
+                        case .loginApproval:
+                            approve()
+                        default:
+                            alert = .approveConfirmation
+                        }
                     } label: {
                         Text("Approve")
                             .loadingIndicator(when: action == .approving)
