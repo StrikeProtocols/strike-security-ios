@@ -10,11 +10,12 @@ import SwiftUI
 
 
 struct BalanceAccountNameRow: View {
+    var requestType: SolanaApprovalRequestType
     var update: BalanceAccountNameUpdate
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Rename Wallet")
+            Text(requestType.header)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -48,7 +49,7 @@ struct BalanceAccountNameRow: View {
 #if DEBUG
 struct BalanceAccountNameRow_Previews: PreviewProvider {
     static var previews: some View {
-        BalanceAccountNameRow(update: .sample)
+        BalanceAccountNameRow(requestType: .balanceAccountNameUpdate(.sample), update: .sample)
     }
 }
 

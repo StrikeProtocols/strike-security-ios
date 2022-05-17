@@ -10,11 +10,12 @@ import SwiftUI
 
 
 struct AddressBookUpdateRow: View {
+    var requestType: SolanaApprovalRequestType
     var update: AddressBookUpdate
 
     var body: some View {
         VStack(spacing: 8) {
-            Text(update.change.title)
+            Text(requestType.header)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -33,21 +34,10 @@ struct AddressBookUpdateRow: View {
     }
 }
 
-extension AddressBookUpdate.Change {
-    var title: String {
-        switch self {
-        case .add:
-            return "Add Address Book Entry"
-        case .remove:
-            return "Remove Address Book Entry"
-        }
-    }
-}
-
 #if DEBUG
 struct AddressBookUpdateRow_Previews: PreviewProvider {
     static var previews: some View {
-        AddressBookUpdateRow(update: .sample)
+        AddressBookUpdateRow(requestType: .addressBookUpdate(.sample), update: .sample)
     }
 }
 

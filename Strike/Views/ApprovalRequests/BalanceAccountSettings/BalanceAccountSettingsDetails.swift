@@ -15,7 +15,7 @@ struct BalanceAccountSettingsDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(update.title)
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)

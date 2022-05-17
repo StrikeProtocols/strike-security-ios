@@ -10,11 +10,12 @@ import SwiftUI
 
 
 struct BalanceAccountPolicyRow: View {
+    var requestType: SolanaApprovalRequestType
     var update: BalanceAccountPolicyUpdate
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Replace Wallet Policy")
+            Text(requestType.header)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -41,7 +42,7 @@ struct BalanceAccountPolicyRow: View {
 #if DEBUG
 struct BalanceAccountPolicyRow_Previews: PreviewProvider {
     static var previews: some View {
-        BalanceAccountPolicyRow(update: .sample)
+        BalanceAccountPolicyRow(requestType: .balanceAccountPolicyUpdate(.sample), update: .sample)
     }
 }
 

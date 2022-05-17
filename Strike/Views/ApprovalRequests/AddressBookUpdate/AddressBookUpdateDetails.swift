@@ -14,7 +14,7 @@ struct AddressBookUpdateDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(update.change.title)
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -27,7 +27,8 @@ struct AddressBookUpdateDetails: View {
                 .frame(height: 10)
 
             FactList {
-                Fact(update.entry.value.name, update.entry.value.address.masked())
+                Fact("Name", update.entry.value.name)
+                Fact("Address", update.entry.value.address.masked())
             }
         }
     }

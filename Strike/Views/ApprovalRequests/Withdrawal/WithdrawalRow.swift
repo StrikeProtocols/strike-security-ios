@@ -10,11 +10,12 @@ import SwiftUI
 
 
 struct WithdrawalRow: View {
+    var requestType: SolanaApprovalRequestType
     var withdrawal: WithdrawalRequest
 
     var body: some View {
         VStack {
-            Text("Send \(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol)")
+            Text(requestType.header)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -105,7 +106,7 @@ extension NumberFormatter {
 #if DEBUG
 struct WithdrawalRow_Previews: PreviewProvider {
     static var previews: some View {
-        WithdrawalRow(withdrawal: .sample)
+        WithdrawalRow(requestType: .withdrawalRequest(.sample), withdrawal: .sample)
     }
 }
 #endif

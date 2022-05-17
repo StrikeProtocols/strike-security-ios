@@ -14,7 +14,7 @@ struct BalanceAccountNameDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
-            Text("Rename Wallet")
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)

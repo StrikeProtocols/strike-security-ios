@@ -74,14 +74,14 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
             case .approveConfirmation:
                 return Alert(
                     title: Text("Are you sure?"),
-                    message: Text("You are about to approve \(request.requestType.summaryDescription)"),
+                    message: Text("You are about to approve the following request:\n \(request.requestType.header)"),
                     primaryButton: Alert.Button.default(Text("Confirm"), action: approve),
                     secondaryButton: Alert.Button.cancel(Text("Cancel"))
                 )
             case .ignoreConfirmation:
                 return Alert(
                     title: Text("Are you sure?"),
-                    message: Text("You are about to \(request.details.ignoreCaption) \(request.requestType.summaryDescription)"),
+                    message: Text("You are about to \(request.details.ignoreCaption) the following request:\n \(request.requestType.header)"),
                     primaryButton: Alert.Button.default(Text("Confirm"), action: ignore),
                     secondaryButton: Alert.Button.cancel(Text("Cancel"))
                 )

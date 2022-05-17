@@ -14,7 +14,7 @@ struct DAppTransactionDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Execute dApp Transaction")
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)

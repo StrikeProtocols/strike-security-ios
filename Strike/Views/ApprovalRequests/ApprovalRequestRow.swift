@@ -64,7 +64,7 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
                     case .confirmation:
                         return Alert(
                             title: Text("Are you sure?"),
-                            message: Text("You are about to approve \(request.requestType.summaryDescription)"),
+                            message: Text("You are about to approve the following request:\n \(request.requestType.header)"),
                             primaryButton: Alert.Button.default(Text("Confirm"), action: approve),
                             secondaryButton: Alert.Button.cancel(Text("Cancel"))
                         )
@@ -170,130 +170,13 @@ extension WalletApprovalRequest {
     }
 }
 
-extension SolanaApprovalRequestType {
-    var titleDescription: String {
-        switch self {
-        case .withdrawalRequest:
-            return "Transfer"
-        case .unknown:
-            return "Unknown"
-        case .conversionRequest:
-            return "Conversion"
-        case .wrapConversionRequest:
-            return "Conversion"
-        case .signersUpdate:
-            return "Signers Update"
-        case .balanceAccountCreation(let accountCreation) where accountCreation.accountInfo.accountType == .BalanceAccount:
-            return "Wallet Creation"
-        case .balanceAccountCreation:
-            return "Stake Wallet Creation"
-        case .balanceAccountNameUpdate:
-            return "Wallet Name Update"
-        case .balanceAccountPolicyUpdate:
-            return "Wallet Policy Update"
-        case .balanceAccountSettingsUpdate:
-            return "Wallet Settings Update"
-        case .balanceAccountAddressWhitelistUpdate:
-            return "Replace Transfer Whitelist"
-        case .addressBookUpdate:
-            return "Address Book Update"
-        case .dAppBookUpdate:
-            return "dApp Book Update"
-        case .walletConfigPolicyUpdate:
-            return "Vault Config Policy Update"
-        case .splTokenAccountCreation:
-            return "SPL Token Account Creation"
-        case .dAppTransactionRequest:
-            return "dApp Transaction"
-        case .loginApproval:
-            return "Login Approval"
-        }
-    }
-
-    var summaryDescription: String {
-        switch self {
-        case .withdrawalRequest(let withdrawal):
-            return "a transfer of \(withdrawal.symbolAndAmountInfo.formattedAmount) \(withdrawal.symbolAndAmountInfo.symbolInfo.symbol) \(withdrawal.symbolAndAmountInfo.formattedUSDEquivalent.flatMap { "(\($0) USD)" } ?? "")"
-        case .unknown:
-            return "an unknown approval request"
-        case .conversionRequest(let conversion):
-            return "a conversion of \(conversion.symbolAndAmountInfo.formattedAmount) \(conversion.symbolAndAmountInfo.symbolInfo.symbol) \(conversion.symbolAndAmountInfo.formattedUSDEquivalent.flatMap { "(\($0) USD)" } ?? "")"
-        case .signersUpdate(let signersUpdate) where signersUpdate.slotUpdateType == .Clear:
-            return "the removal of `\(signersUpdate.signer.value.name)`"
-        case .signersUpdate(let signersUpdate):
-            return "the addition of `\(signersUpdate.signer.value.name)`"
-        case .balanceAccountCreation(let balanceAccountCreation):
-            return "a wallet creation of \(balanceAccountCreation.accountInfo.name)"
-        case .balanceAccountNameUpdate(let balanceAccountNameUpdate):
-            return "wallet name change to \(balanceAccountNameUpdate.newAccountName)"
-        case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate):
-            return "policy update for \(balanceAccountPolicyUpdate.accountInfo.name)"
-        case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate):
-            return "settings update for \(balanceAccountSettingsUpdate.account.name)"
-        case .balanceAccountAddressWhitelistUpdate(let balanceAccountSettingsUpdate):
-            return "transfer whitelist update for \(balanceAccountSettingsUpdate.accountInfo.name)"
-        case .addressBookUpdate:
-            return "address book update"
-        case .dAppBookUpdate:
-            return "dApp book update"
-        case .walletConfigPolicyUpdate:
-            return "vault config policy update"
-        case .splTokenAccountCreation(let splTokenAccountCreation):
-            return "SPL token account creation for \(splTokenAccountCreation.tokenSymbolInfo.symbolDescription)"
-        case .wrapConversionRequest(let wrapConversion):
-            return "a conversion of \(wrapConversion.symbolAndAmountInfo.formattedAmount) \(wrapConversion.symbolAndAmountInfo.symbolInfo.symbol) to \(wrapConversion.destinationSymbolInfo.symbol)"
-        case .dAppTransactionRequest(let dAppTransactionRequest):
-            return "a dApp transaction with \(dAppTransactionRequest.dappInfo.name)"
-        case .loginApproval:
-            return "Login Approval"
-        }
-    }
-
-    var icon: Image {
-        switch self {
-        case .withdrawalRequest:
-            return Image("transfer")
-        case .unknown:
-            return Image(systemName: "questionmark.circle")
-        case .conversionRequest:
-            return Image("conversion")
-        case .wrapConversionRequest:
-            return Image("conversion")
-        case .signersUpdate:
-            return Image(systemName: "iphone")
-        case .balanceAccountCreation:
-            return Image("policy")
-        case .balanceAccountNameUpdate:
-            return Image("policy")
-        case .balanceAccountPolicyUpdate:
-            return Image("policy")
-        case .balanceAccountSettingsUpdate:
-            return Image("policy")
-        case .balanceAccountAddressWhitelistUpdate:
-            return Image("policy")
-        case .addressBookUpdate:
-            return Image("policy")
-        case .dAppBookUpdate:
-            return Image("policy")
-        case .walletConfigPolicyUpdate:
-            return Image("policy")
-        case .splTokenAccountCreation:
-            return Image("policy")
-        case .dAppTransactionRequest:
-            return Image("conversion")
-        case .loginApproval:
-            return Image("person.crop.circle.badge.questionmark")
-        }
-    }
-}
-
 #if DEBUG
 struct ApprovalRequestRow_Preivews: PreviewProvider {
     static var previews: some View {
         let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
 
         ApprovalRequestRow(user: .sample, request: .sample, timerPublisher: timerPublisher) {
-            WithdrawalRow(withdrawal: .sample)
+            WithdrawalRow(requestType: .withdrawalRequest(.sample), withdrawal: .sample)
         } detail: {
             WithdrawalDetails(request: .sample, withdrawal: .sample)
         }

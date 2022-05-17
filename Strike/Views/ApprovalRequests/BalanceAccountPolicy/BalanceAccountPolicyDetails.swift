@@ -15,7 +15,7 @@ struct BalanceAccountPolicyDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Replace Wallet Policy")
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -35,7 +35,7 @@ struct BalanceAccountPolicyDetails: View {
 
             VStack(spacing: 20) {
 
-                FactsSection(title: "Who can approve outbound transfers") {
+                FactsSection(title: "Wallet Approvers") {
                     if update.approvalPolicy.approvers.count > 0 {
                         for approver in update.approvalPolicy.approvers {
                             Fact(approver.value.name, approver.value.email)
@@ -45,11 +45,11 @@ struct BalanceAccountPolicyDetails: View {
                     }
                 }
 
-                FactsSection(title: "Approvals required for outbound transfers") {
+                FactsSection(title: "Approvals Required") {
                     Fact("\(update.approvalPolicy.approvalsRequired)", "")
                 }
 
-                FactsSection(title: "Approval timeout") {
+                FactsSection(title: "Approval Expiration") {
                     Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
                 }
             }

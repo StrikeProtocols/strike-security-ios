@@ -23,7 +23,7 @@ struct ApprovalRequestItem: View {
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .withdrawalRequest(let withdrawal):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                WithdrawalRow(withdrawal: withdrawal)
+                WithdrawalRow(requestType: request.requestType, withdrawal: withdrawal)
             } detail: {
                 WithdrawalDetails(request: request, withdrawal: withdrawal)
             }
@@ -35,43 +35,43 @@ struct ApprovalRequestItem: View {
             }
         case .signersUpdate(let signersUpdate):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                SignerUpdateRow(signersUpdate: signersUpdate)
+                SignerUpdateRow(requestType: request.requestType, signersUpdate: signersUpdate)
             } detail: {
                 SignerUpdateDetails(request: request, signersUpdate: signersUpdate)
             }
         case .balanceAccountCreation(let accountCreation):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                AccountCreationRow(accountCreation: accountCreation)
+                AccountCreationRow(requestType: request.requestType, accountCreation: accountCreation)
             } detail: {
                 AccountCreationDetails(request: request, accountCreation: accountCreation)
             }
         case .dAppTransactionRequest(let dAppTransactionRequest):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                DAppTransactionRow(transactionRequest: dAppTransactionRequest)
+                DAppTransactionRow(requestType: request.requestType, transactionRequest: dAppTransactionRequest)
             } detail: {
                 DAppTransactionDetails(request: request, transactionRequest: dAppTransactionRequest)
             }
         case .balanceAccountNameUpdate(let balanceAccountNameUpdate): // 3
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                BalanceAccountNameRow(update: balanceAccountNameUpdate)
+                BalanceAccountNameRow(requestType: request.requestType, update: balanceAccountNameUpdate)
             } detail: {
                 BalanceAccountNameDetails(request: request, update: balanceAccountNameUpdate)
             }
         case .balanceAccountPolicyUpdate(let balanceAccountPolicyUpdate): // 2
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                BalanceAccountPolicyRow(update: balanceAccountPolicyUpdate)
+                BalanceAccountPolicyRow(requestType: request.requestType, update: balanceAccountPolicyUpdate)
             } detail: {
                 BalanceAccountPolicyDetails(request: request, update: balanceAccountPolicyUpdate, user: user)
             }
         case .balanceAccountSettingsUpdate(let balanceAccountSettingsUpdate): // 5
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                BalanceAccountSettingsRow(update: balanceAccountSettingsUpdate)
+                BalanceAccountSettingsRow(requestType: request.requestType, update: balanceAccountSettingsUpdate)
             } detail: {
                 BalanceAccountSettingsDetails(request: request, update: balanceAccountSettingsUpdate, user: user)
             }
         case .addressBookUpdate(let addressBookUpdate): // 4 - remove whitelist
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                AddressBookUpdateRow(update: addressBookUpdate)
+                AddressBookUpdateRow(requestType: request.requestType, update: addressBookUpdate)
             } detail: {
                 AddressBookUpdateDetails(request: request, update: addressBookUpdate)
             }
@@ -79,13 +79,13 @@ struct ApprovalRequestItem: View {
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate): // 1
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                WalletConfigPolicyRow(update: walletConfigPolicyUpdate)
+                WalletConfigPolicyRow(requestType: request.requestType, update: walletConfigPolicyUpdate)
             } detail: {
                 WalletConfigPolicyDetails(request: request, update: walletConfigPolicyUpdate)
             }
         case .splTokenAccountCreation(let splTokenAccountCreation): // 6
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                SPLTokenAccountCreationRow(creation: splTokenAccountCreation)
+                SPLTokenAccountCreationRow(requestType: request.requestType, creation: splTokenAccountCreation)
             } detail: {
                 SPLTokenAccountCreationDetails(request: request, creation: splTokenAccountCreation, user: user)
             }
@@ -95,9 +95,9 @@ struct ApprovalRequestItem: View {
             UnknownRequestRow(request: request, timerPublisher: timerPublisher)
         case .loginApproval:
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                LoginRow()
+                LoginRow(requestType: request.requestType)
             } detail: {
-                LoginDetails()
+                LoginDetails(requestType: request.requestType)
             }
         }
     }

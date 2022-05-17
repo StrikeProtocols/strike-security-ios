@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 struct SignerUpdateRow: View {
+    var requestType: SolanaApprovalRequestType
     var signersUpdate: SignersUpdate
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("\(signersUpdate.slotUpdateType == .Clear ? "Remove" : "Add") Signer")
+            Text(requestType.header)
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)
@@ -32,7 +33,7 @@ struct SignerUpdateRow: View {
 #if DEBUG
 struct SignerUpdateRow_Previews: PreviewProvider {
     static var previews: some View {
-        SignerUpdateRow(signersUpdate: .sample)
+        SignerUpdateRow(requestType: .signersUpdate(.sample), signersUpdate: .sample)
     }
 }
 

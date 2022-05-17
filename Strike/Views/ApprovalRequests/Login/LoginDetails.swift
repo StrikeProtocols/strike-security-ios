@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LoginDetails: View {
+    var requestType: SolanaApprovalRequestType
+
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Log in")
+            Text(requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)

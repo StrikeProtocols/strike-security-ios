@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 struct DAppTransactionRow: View {
+    var requestType: SolanaApprovalRequestType
     var transactionRequest: DAppTransactionRequest
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Execute dApp Transaction")
+            Text(requestType.header)
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)
@@ -101,7 +102,7 @@ extension DAppTransactionRequest.SymbolAndAmountInfo {
 #if DEBUG
 struct DapTransactionRow_Previews: PreviewProvider {
     static var previews: some View {
-        DAppTransactionRow(transactionRequest: .sample)
+        DAppTransactionRow(requestType: .dAppTransactionRequest(.sample), transactionRequest: .sample)
     }
 }
 

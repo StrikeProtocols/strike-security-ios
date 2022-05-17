@@ -14,7 +14,7 @@ struct SignerUpdateDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("\(signersUpdate.slotUpdateType == .Clear ? "Remove" : "Add") Signer")
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -23,14 +23,9 @@ struct SignerUpdateDetails: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
 
-            AccountDetail(name: signersUpdate.signer.value.name, subname: signersUpdate.signer.value.email)
-                .padding(EdgeInsets(top: 12, leading: 24, bottom: 12, trailing: 24))
-                .frame(maxHeight: 60)
-                .background(Color.Strike.thirdBackground)
-                .cornerRadius(8)
-
             FactList {
-                Fact("Public Key", signersUpdate.signer.value.publicKey.masked())
+                Fact("Signer Name", signersUpdate.signer.value.name)
+                Fact("Signer Email", signersUpdate.signer.value.email)
             }
         }
     }

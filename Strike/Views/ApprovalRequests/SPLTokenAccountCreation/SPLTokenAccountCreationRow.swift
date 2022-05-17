@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 struct SPLTokenAccountCreationRow: View {
+    var requestType: SolanaApprovalRequestType
     var creation: SPLTokenAccountCreation
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Enable SPL Token")
+            Text(requestType.header)
                 .font(.title2)
                 .bold()
                 .lineLimit(1)
@@ -40,7 +41,7 @@ struct SPLTokenAccountCreationRow: View {
 #if DEBUG
 struct SPLTokenAccountCreationRow_Previews: PreviewProvider {
     static var previews: some View {
-        SPLTokenAccountCreationRow(creation: .sample)
+        SPLTokenAccountCreationRow(requestType: .splTokenAccountCreation(.sample), creation: .sample)
     }
 }
 

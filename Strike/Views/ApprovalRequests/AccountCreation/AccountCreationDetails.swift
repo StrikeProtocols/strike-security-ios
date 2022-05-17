@@ -14,7 +14,7 @@ struct AccountCreationDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text("Add Wallet")
+            Text(request.requestType.header)
                 .font(.title)
                 .bold()
                 .lineLimit(1)
@@ -23,17 +23,15 @@ struct AccountCreationDetails: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
 
-            AccountDetail(name: accountCreation.accountInfo.name, subname: accountCreation.accountInfo.accountType.description)
-                .padding(EdgeInsets(top: 12, leading: 24, bottom: 12, trailing: 24))
-                .frame(maxHeight: 60)
-                .background(Color.Strike.thirdBackground)
-                .cornerRadius(8)
-
             Spacer()
                 .frame(height: 10)
 
             VStack(spacing: 20) {
-                FactsSection(title: "Who can approve outbound transfers") {
+                FactList {
+                    Fact("Wallet Name", accountCreation.accountInfo.name)
+                }
+
+                FactsSection(title: "Wallet Approvers") {
                     if accountCreation.approvalPolicy.approvers.count > 0 {
                         for approver in accountCreation.approvalPolicy.approvers {
                             Fact(approver.value.name, approver.value.email)
@@ -43,20 +41,12 @@ struct AccountCreationDetails: View {
                     }
                 }
 
-                FactsSection(title: "Approvals required for outbound transfers") {
+                FactsSection(title: "Approvals Required") {
                     Fact("\(accountCreation.approvalPolicy.approvalsRequired)", "")
                 }
 
-                FactsSection(title: "Approval timeout") {
+                FactsSection(title: "Approval Expiration") {
                     Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(accountCreation.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
-                }
-
-                FactsSection(title: "Whitelisting Enabled") {
-                    Fact(accountCreation.whitelistEnabled == .On ? "Yes" : "No", "")
-                }
-
-                FactsSection(title: "Supports DApps") {
-                    Fact(accountCreation.dappsEnabled == .On ? "Yes" : "No", "")
                 }
             }
         }

@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 struct AccountCreationRow: View {
+    var requestType: SolanaApprovalRequestType
     var accountCreation: BalanceAccountCreation
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Add Wallet")
+            Text(requestType.header)
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)
@@ -43,7 +44,7 @@ extension AccountType: CustomStringConvertible {
 #if DEBUG
 struct AccountCreationRow_Previews: PreviewProvider {
     static var previews: some View {
-        AccountCreationRow(accountCreation: .sample)
+        AccountCreationRow(requestType: .balanceAccountCreation(.sample), accountCreation: .sample)
     }
 }
 

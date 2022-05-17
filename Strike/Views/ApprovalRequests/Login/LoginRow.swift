@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LoginRow: View {
+    var requestType: SolanaApprovalRequestType
+
     var body: some View {
         VStack(spacing: 8) {
-            Text("Log in")
+            Text(requestType.header)
                 .font(.title2.bold())
                 .lineLimit(1)
                 .allowsTightening(true)
@@ -24,7 +26,14 @@ struct LoginRow: View {
 #if DEBUG
 struct LoginRow_Previews: PreviewProvider {
     static var previews: some View {
-        LoginRow()
+        LoginRow(requestType: .loginApproval(.sample))
     }
 }
+
+extension LoginApproval {
+    static var sample: Self {
+        LoginApproval(jwtToken: "sampleToken")
+    }
+}
+
 #endif
