@@ -22,7 +22,7 @@ extension SolanaApprovalRequestType {
         case .signersUpdate(let update) where update.slotUpdateType == .Clear:
             return "Remove Signer"
         case .signersUpdate:
-            return "Add Update"
+            return "Add Signer"
         case .balanceAccountCreation(let accountCreation) where accountCreation.accountInfo.accountType == .BalanceAccount:
             return "Add Wallet"
         case .balanceAccountCreation:
@@ -60,40 +60,26 @@ extension SolanaApprovalRequestType {
 
     var titleDescription: String {
         switch self {
-        case .withdrawalRequest:
-            return "Transfer"
+        case .withdrawalRequest,
+             .conversionRequest,
+             .wrapConversionRequest,
+             .balanceAccountNameUpdate,
+             .balanceAccountPolicyUpdate,
+             .balanceAccountSettingsUpdate,
+             .balanceAccountAddressWhitelistUpdate,
+             .dAppTransactionRequest,
+             .splTokenAccountCreation:
+            return "Wallet Change"
+        case .signersUpdate,
+             .balanceAccountCreation,
+             .addressBookUpdate,
+             .walletConfigPolicyUpdate,
+             .dAppBookUpdate:
+            return "Vault Change"
+        case .loginApproval:
+            return "Authentication"
         case .unknown:
             return "Unknown"
-        case .conversionRequest:
-            return "Conversion"
-        case .wrapConversionRequest:
-            return "Conversion"
-        case .signersUpdate:
-            return "Signers Update"
-        case .balanceAccountCreation(let accountCreation) where accountCreation.accountInfo.accountType == .BalanceAccount:
-            return "Wallet Creation"
-        case .balanceAccountCreation:
-            return "Stake Wallet Creation"
-        case .balanceAccountNameUpdate:
-            return "Wallet Name Update"
-        case .balanceAccountPolicyUpdate:
-            return "Wallet Policy Update"
-        case .balanceAccountSettingsUpdate:
-            return "Wallet Settings Update"
-        case .balanceAccountAddressWhitelistUpdate:
-            return "Replace Transfer Whitelist"
-        case .addressBookUpdate:
-            return "Address Book Update"
-        case .dAppBookUpdate:
-            return "dApp Book Update"
-        case .walletConfigPolicyUpdate:
-            return "Vault Config Policy Update"
-        case .splTokenAccountCreation:
-            return "SPL Token Account Creation"
-        case .dAppTransactionRequest:
-            return "dApp Transaction"
-        case .loginApproval:
-            return "Login Approval"
         }
     }
 
