@@ -40,7 +40,7 @@ extension SolanaApprovalRequestType {
         case .balanceAccountSettingsUpdate:
             return "Enable Transfer Whitelist"
         case .balanceAccountAddressWhitelistUpdate:
-            return "Replace Transfer Whitelist"
+            return "Replace Wallet Whitelist"
         case .addressBookUpdate(let update) where update.change == .add:
             return "Add Address Book Entry"
         case .addressBookUpdate:

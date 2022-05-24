@@ -61,6 +61,8 @@
 		3D7FFFED27FA0F7D003B3F48 /* DAppTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FFFEC27FA0F7D003B3F48 /* DAppTransactionRow.swift */; };
 		3D7FFFEF27FA0F88003B3F48 /* DAppTransactionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FFFEE27FA0F88003B3F48 /* DAppTransactionDetails.swift */; };
 		3D8CA666272C5E1900C68657 /* Theme.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D8CA665272C5E1900C68657 /* Theme.xcassets */; };
+		3D952408283D0FB800D42243 /* BalanceAccountWhitelistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952407283D0FB800D42243 /* BalanceAccountWhitelistRow.swift */; };
+		3D95240A283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952409283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift */; };
 		3DA133A526B1AEB300BB4AF4 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA133A426B1AEB300BB4AF4 /* Profile.swift */; };
 		3DA5EEE028353C5300D26BAF /* SolanaApprovalRequestType+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA5EEDF28353C5300D26BAF /* SolanaApprovalRequestType+Language.swift */; };
 		3DAA26F0262F5147000F453D /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA26EF262F5147000F453D /* PrimaryButtonStyle.swift */; };
@@ -187,6 +189,8 @@
 		3D7FFFEC27FA0F7D003B3F48 /* DAppTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppTransactionRow.swift; sourceTree = "<group>"; };
 		3D7FFFEE27FA0F88003B3F48 /* DAppTransactionDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppTransactionDetails.swift; sourceTree = "<group>"; };
 		3D8CA665272C5E1900C68657 /* Theme.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Theme.xcassets; sourceTree = "<group>"; };
+		3D952407283D0FB800D42243 /* BalanceAccountWhitelistRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountWhitelistRow.swift; sourceTree = "<group>"; };
+		3D952409283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountWhitelistDetails.swift; sourceTree = "<group>"; };
 		3DA133A426B1AEB300BB4AF4 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		3DA5EEDF28353C5300D26BAF /* SolanaApprovalRequestType+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SolanaApprovalRequestType+Language.swift"; sourceTree = "<group>"; };
 		3DAA26EF262F5147000F453D /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -461,6 +465,7 @@
 				3DAF53B7262E1402000DD558 /* ApprovalRequestDetails.swift */,
 				3DBD7DCD2655CE0F00662C62 /* ApprovalsNeeded.swift */,
 				3DB7F9BF26D6C2CD00A49B4E /* UnknownRequestRow.swift */,
+				3D952406283D0FA400D42243 /* BalanceAccountWhitelist */,
 				3D115219282181D4007CD43D /* SPLTokenAccountCreation */,
 				3D11521428217F9E007CD43D /* BalanceAccountSettings */,
 				3D11520F282176D8007CD43D /* AddressBookUpdate */,
@@ -505,6 +510,15 @@
 				3DAF53C3262E1ACF000DD558 /* WithdrawalDetails.swift */,
 			);
 			path = Withdrawal;
+			sourceTree = "<group>";
+		};
+		3D952406283D0FA400D42243 /* BalanceAccountWhitelist */ = {
+			isa = PBXGroup;
+			children = (
+				3D952407283D0FB800D42243 /* BalanceAccountWhitelistRow.swift */,
+				3D952409283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift */,
+			);
+			path = BalanceAccountWhitelist;
 			sourceTree = "<group>";
 		};
 		3DAA26EE262F50CB000F453D /* ButtonStyles */ = {
@@ -840,6 +854,7 @@
 				3DAA26F0262F5147000F453D /* PrimaryButtonStyle.swift in Sources */,
 				3D311D43260A336A007A0B98 /* RoundedCell.swift in Sources */,
 				40BCB0B1261B963100CF58A8 /* OktaError+LocalizedError.swift in Sources */,
+				3D952408283D0FB800D42243 /* BalanceAccountWhitelistRow.swift in Sources */,
 				40A9AF0E25DF5F0E004320EF /* ComposeMail.swift in Sources */,
 				3D11521328217709007CD43D /* AddressBookUpdateDetails.swift in Sources */,
 				3D3D6CEC2616432000FEEE0B /* RecoverPasswordView.swift in Sources */,
@@ -871,6 +886,7 @@
 				3DC36BB5262B4E8C005DB1A7 /* ApprovalRequestsList.swift in Sources */,
 				3D115202282169D4007CD43D /* WalletConfigPolicyRow.swift in Sources */,
 				40328E102593ED9900F2EE41 /* StrikeApp.swift in Sources */,
+				3D95240A283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift in Sources */,
 				3D3D6CED2616432000FEEE0B /* LockedOutAccountView.swift in Sources */,
 				3D11521828217FC2007CD43D /* BalanceAccountSettingsDetails.swift in Sources */,
 				3D3D6D362616B84700FEEE0B /* RegistrationView.swift in Sources */,
