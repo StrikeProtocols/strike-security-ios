@@ -27,6 +27,8 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 5
         case .walletConfigPolicyUpdate:
             return 6
+        case .dAppTransactionRequest:
+            return 7
         case .balanceAccountSettingsUpdate:
             return 8
         case .dAppBookUpdate:
@@ -41,7 +43,7 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 13
         case .balanceAccountAddressWhitelistUpdate:
             return 14
-        case .dAppTransactionRequest, .loginApproval, .unknown:
+        case .loginApproval, .unknown:
             return 0
         }
     }
@@ -163,7 +165,23 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     [request.slotUpdateType.toSolanaProgramValue()] +
                     request.signer.combinedBytes
                 )
-            case .dAppTransactionRequest, .loginApproval:
+            case .dAppTransactionRequest(let request):
+                var hashBytes = try Data(
+                    [opCode] +
+                    commonBytes +
+                    signingData.walletAddress.base58Bytes +
+                    request.combinedBytes
+                ).sha256HashBytes
+                for instructionBatch in request.instructions {
+                    for instruction in instructionBatch.instructions {
+                        hashBytes = try Data(
+                            hashBytes +
+                            instruction.combinedBytes
+                        ).sha256HashBytes
+                    }
+                }
+                return Data(hashBytes)
+            case .loginApproval:
                 throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
             case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
@@ -200,7 +218,9 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                 return request.signingData
             case .signersUpdate(let request):
                 return request.signingData
-            case .dAppTransactionRequest, .loginApproval:
+            case .dAppTransactionRequest(let request):
+                return request.signingData
+            case .loginApproval:
                 throw SolanaError.invalidRequest(reason: "Invalid request for Approval")
             case .unknown:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
@@ -213,8 +233,13 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             var data = Data()
             data.append(contentsOf: [opIndex])
             data.append(contentsOf: [solanaProgramValue])
-            let opHash = try Data(SHA256.hash(data: opHashData))
-            data.append(opHash)
+            switch requestType {
+            case .dAppTransactionRequest:
+                try data.append(opHashData)
+            default:
+                let opHash = try Data(SHA256.hash(data: opHashData))
+                data.append(opHash)
+            }
             return data
         }
     }
@@ -280,6 +305,12 @@ extension SlotSignerInfo {
 extension SlotDAppInfo {
     var combinedBytes: [UInt8] {
         return [slotId] + value.address.base58Bytes + value.name.sha256HashBytes
+    }
+}
+
+extension SolanaDApp {
+    var combinedBytes: [UInt8] {
+        return address.base58Bytes + name.sha256HashBytes
     }
 }
 
@@ -400,6 +431,15 @@ extension DAppBookUpdate {
             (entriesToAdd.flatMap(\.combinedBytes) as [UInt8]) +
             ([UInt8(entriesToRemove.count)] as [UInt8]) +
             (entriesToRemove.flatMap(\.combinedBytes) as [UInt8])
+    }
+}
+
+extension DAppTransactionRequest {
+    var combinedBytes: [UInt8] {
+        return
+            account.identifier.sha256HashBytes +
+            dappInfo.combinedBytes +
+            UInt16(instructions.count).bytes
     }
 }
 
