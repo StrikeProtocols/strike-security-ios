@@ -549,6 +549,8 @@ protocol SolanaSignable {
 
 struct LoginApproval: Codable, Equatable  {
     var jwtToken: String
+    var email: String
+    var name: String
 }
 
 extension SolanaApprovalRequestDetails {

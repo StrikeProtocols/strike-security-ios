@@ -544,8 +544,8 @@ extension StrikeTests {
         )
     }
     
-    func getLoginApproval(_ jwtToken: String) -> SolanaApprovalRequestType {
-        return .loginApproval(LoginApproval(jwtToken: jwtToken))
+    func getLoginApproval(_ jwtToken: String, email: String, name: String) -> SolanaApprovalRequestType {
+        return .loginApproval(LoginApproval(jwtToken: jwtToken, email: email, name: name))
     }
     
     

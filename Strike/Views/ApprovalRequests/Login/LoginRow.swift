@@ -32,7 +32,7 @@ struct LoginRow_Previews: PreviewProvider {
 
 extension LoginApproval {
     static var sample: Self {
-        LoginApproval(jwtToken: "sampleToken")
+        LoginApproval(jwtToken: "sampleToken", email: "sample@email.co", name: "Sample User Name")
     }
 }
 
