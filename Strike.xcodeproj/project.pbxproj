@@ -2023,7 +2023,7 @@
 				RAYGUN_ENABLED = no;
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
-				SOLANA_RPC_URL = "https://solana-validator.strikeprotocols.com";
+				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2089,7 +2089,7 @@
 				RAYGUN_ENABLED = yes;
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
-				SOLANA_RPC_URL = "https://solana-validator.strikeprotocols.com";
+				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
