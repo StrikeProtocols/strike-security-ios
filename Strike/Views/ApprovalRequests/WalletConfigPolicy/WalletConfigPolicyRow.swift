@@ -22,15 +22,7 @@ struct WalletConfigPolicyRow: View {
                 .allowsTightening(true)
                 .minimumScaleFactor(0.25)
                 .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
-
-            VStack(spacing: 6) {
-                Text(update.approvalPolicy.approvers.count.approversCaption)
-            }
-            .font(.caption)
-            .foregroundColor(Color.white.opacity(0.5))
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-
+                .padding(EdgeInsets(top: 15, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }

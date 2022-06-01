@@ -14,7 +14,7 @@ struct DestructiveButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 45)
             .font(Font.subheadline.bold())
             .foregroundColor(Color.Strike.red)
-            .background(Color.Strike.red.opacity(0.1))
+            .background(Color.Strike.red.opacity(0.2))
             .cornerRadius(8)
             .progressViewStyle(CircularProgressViewStyle(tint: Color.Strike.red))
     }

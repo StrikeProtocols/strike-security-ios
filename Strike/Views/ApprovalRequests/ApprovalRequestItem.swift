@@ -97,11 +97,11 @@ struct ApprovalRequestItem: View {
             } detail: {
                 BalanceAccountWhitelistDetails(request: request, update: balanceAccountAddressWhitelistUpdate, user: user)
             }
-        case .loginApproval:
+        case .loginApproval(let login):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                LoginRow(requestType: request.requestType)
+                LoginRow(requestType: request.requestType, login: login)
             } detail: {
-                LoginDetails(requestType: request.requestType)
+                LoginDetails(requestType: request.requestType, login: login)
             }
         }
     }

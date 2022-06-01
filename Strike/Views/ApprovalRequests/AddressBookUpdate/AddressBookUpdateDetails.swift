@@ -14,18 +14,6 @@ struct AddressBookUpdateDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(request.requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            Spacer()
-                .frame(height: 10)
-
             FactList {
                 Fact("Name", update.entry.value.name)
                 Fact("Address", update.entry.value.address.masked())
@@ -39,6 +27,14 @@ struct AddressBookUpdateDetails: View {
 struct AddressBookUpdateDetails_Previews: PreviewProvider {
     static var previews: some View {
         AddressBookUpdateDetails(request: .sample, update: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                AddressBookUpdateDetails(request: .sample, update: .sample)
+            }
+        }
     }
 }
 #endif

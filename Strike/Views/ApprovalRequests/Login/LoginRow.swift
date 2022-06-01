@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginRow: View {
     var requestType: SolanaApprovalRequestType
+    var login: LoginApproval
 
     var body: some View {
         VStack(spacing: 8) {
@@ -18,7 +19,12 @@ struct LoginRow: View {
                 .allowsTightening(true)
                 .minimumScaleFactor(0.25)
                 .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 16, leading: 20, bottom: 20, trailing: 20))
+                .padding(EdgeInsets(top: 16, leading: 20, bottom: 0, trailing: 20))
+
+            Text(login.email)
+                .font(.caption)
+                .foregroundColor(Color.white.opacity(0.5))
+                .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }
@@ -26,7 +32,7 @@ struct LoginRow: View {
 #if DEBUG
 struct LoginRow_Previews: PreviewProvider {
     static var previews: some View {
-        LoginRow(requestType: .loginApproval(.sample))
+        LoginRow(requestType: .loginApproval(.sample), login: .sample)
     }
 }
 

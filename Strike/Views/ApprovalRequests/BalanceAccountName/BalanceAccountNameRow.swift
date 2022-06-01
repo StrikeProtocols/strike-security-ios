@@ -24,24 +24,10 @@ struct BalanceAccountNameRow: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
 
-            HStack(spacing: 0) {
-                AccountDetail(name: update.accountInfo.name)
-                    .padding(10)
-                    .frame(maxWidth: .infinity, maxHeight: 40)
-                    .roundedCell()
-
-                Text("→")
-                    .font(.body)
-                    .foregroundColor(Color.white)
-                    .frame(width: 20, height: 20)
-
-                AccountDetail(name: update.newAccountName)
-                    .padding(10)
-                    .frame(maxWidth: .infinity, maxHeight: 40)
-                    .roundedCell()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(EdgeInsets(top: 20, leading: 14, bottom: 20, trailing: 14))
+            Text("\(update.accountInfo.name) → \(update.newAccountName)")
+                .font(.caption)
+                .foregroundColor(Color.white.opacity(0.5))
+                .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }

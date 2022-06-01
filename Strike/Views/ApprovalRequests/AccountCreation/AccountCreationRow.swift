@@ -22,10 +22,10 @@ struct AccountCreationRow: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 16, leading: 20, bottom: 0, trailing: 20))
 
-            AccountDetail(name: accountCreation.accountInfo.name, subname: accountCreation.accountInfo.accountType.description)
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                .roundedCell()
-                .padding(EdgeInsets(top: 16, leading: 10, bottom: 20, trailing: 10))
+            Text(accountCreation.accountInfo.name)
+                .font(.caption)
+                .foregroundColor(Color.white.opacity(0.5))
+                .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }

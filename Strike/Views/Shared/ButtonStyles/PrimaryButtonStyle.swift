@@ -14,7 +14,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 60)
             .font(Font.title.bold())
             .foregroundColor(Color.Strike.green)
-            .background(Color.Strike.green.opacity(0.1))
+            .background(Color.Strike.green.opacity(0.2))
             .cornerRadius(8)
             .progressViewStyle(CircularProgressViewStyle(tint: Color.Strike.green))
     }

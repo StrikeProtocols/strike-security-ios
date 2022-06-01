@@ -14,18 +14,6 @@ struct DAppTransactionDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(request.requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            Spacer()
-                .frame(height: 10)
-
             ForEach(0..<transactionRequest.balanceChanges.count, id: \.self) { i in
                 let balanceChange = transactionRequest.balanceChanges[i]
 
@@ -54,7 +42,7 @@ struct DAppTransactionDetails: View {
                         AccountDetail(name: transactionRequest.dappInfo.name)
                             .padding(10)
                             .frame(maxWidth: .infinity, maxHeight: 40)
-                            .roundedCell()
+                            .roundedCell(background: .Strike.thirdBackground)
 
                         Text(balanceChange.isNegative ? "←" : "→")
                             .font(.body)
@@ -64,13 +52,16 @@ struct DAppTransactionDetails: View {
                         AccountDetail(name: transactionRequest.account.name)
                             .padding(10)
                             .frame(maxWidth: .infinity, maxHeight: 40)
-                            .roundedCell()
+                            .roundedCell(background: .Strike.thirdBackground)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(EdgeInsets(top: 5, leading: 14, bottom: 5, trailing: 14))
                 }
             }
             .padding([.bottom], 20)
+
+            Spacer()
+                .frame(height: 10)
         }
     }
 }
@@ -79,6 +70,14 @@ struct DAppTransactionDetails: View {
 struct DAppTransactionDetails_Previews: PreviewProvider {
     static var previews: some View {
         DAppTransactionDetails(request: .sample, transactionRequest: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                DAppTransactionDetails(request: .sample, transactionRequest: .sample)
+            }
+        }
     }
 }
 #endif

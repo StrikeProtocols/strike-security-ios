@@ -16,6 +16,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
     @State private var action: Action = .none
     @State private var alert: AlertType? = nil
     @State private var isComposingMail = false
+    @State private var timeRemaining: DateComponents = DateComponents()
 
     var user: StrikeApi.User
     var request: WalletApprovalRequest
@@ -25,56 +26,86 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Countdown(date: request.expireDate, prefix: "Expires in ", suffix: "", timerPublisher: timerPublisher)
-                .foregroundColor(Color.white)
-                .frame(maxWidth: .infinity)
-                .padding(5)
-                .background(request.expireDate <= Date() ? Color.Strike.red : Color.white.opacity(0.05))
-
             ScrollView(.vertical) {
                 VStack(alignment: .center, spacing: 15) {
+                    VStack(alignment: .center, spacing: 0) {
+                        Text(request.requestType.header)
+                            .font(.title)
+                            .bold()
+                            .lineLimit(1)
+                            .allowsTightening(true)
+                            .multilineTextAlignment(.center)
+                            .minimumScaleFactor(0.25)
+                            .foregroundColor(Color.white)
+                            .padding(.top, 20)
+
+                        if let subHeader = request.requestType.subHeader {
+                            Text(subHeader)
+                                .font(.caption)
+                                .foregroundColor(Color.white.opacity(0.5))
+                                .padding(.top, 5)
+                        }
+                    }
+                    .padding(.bottom, 10)
+
                     content()
 
-                    FactList {
-                        Fact("Approvals Needed", "\(request.numberOfApprovalsNeeded)")
-
+                    FactsSection(title: "STATUS") {
                         Fact("Requested By", request.submitterEmail) {
                             isComposingMail = true
                         }
 
-                        Fact("Requested Date", DateFormatter.mediumFormatter.string(from: request.submitDate))
-                    }
-                }
+                        Fact("Approvals Received", "\(request.numberOfApprovalsReceived) of \(request.numberOfDispositionsRequired)")
 
-                VStack(alignment: .center, spacing: 15) {
-                    Button {
-                        switch request.requestType {
-                        case .loginApproval:
-                            ignore()
-                        default:
-                            alert = .ignoreConfirmation
-                        }
-                    } label: {
-                        Text(request.details.ignoreCaption.capitalized)
-                            .loadingIndicator(when: action == .ignoring)
-                    }
-                    .buttonStyle(DestructiveButtonStyle())
+                        Fact("Denials Received", "\(request.numberOfDeniesReceived) of \(request.numberOfDispositionsRequired)")
 
-                    Button {
-                        switch request.requestType {
-                        case .loginApproval:
-                            approve()
-                        default:
-                            alert = .approveConfirmation
+                        if request.expireDate <= Date() {
+                            Fact("Expired", "")
+                        } else {
+                            Fact("Expires In", formattedCountdown)
                         }
-                    } label: {
-                        Text(request.details.approveButtonCaption)
-                            .loadingIndicator(when: action == .approving)
                     }
-                    .buttonStyle(PrimaryButtonStyle())
+                    .onReceive(timerPublisher) { _ in
+                        updateTimeRemaining()
+                    }
+                    .onAppear(perform: updateTimeRemaining)
                 }
-                .padding()
             }
+
+            VStack(alignment: .center, spacing: 15) {
+                Button {
+                    switch request.requestType {
+                    case .loginApproval:
+                        ignore()
+                    default:
+                        alert = .ignoreConfirmation
+                    }
+                } label: {
+                    Text(request.details.ignoreCaption.capitalized)
+                        .loadingIndicator(when: action == .ignoring)
+                }
+                .buttonStyle(DestructiveButtonStyle())
+
+                Button {
+                    switch request.requestType {
+                    case .loginApproval:
+                        approve()
+                    default:
+                        alert = .approveConfirmation
+                    }
+                } label: {
+                    Text(request.details.approveButtonCaption)
+                        .loadingIndicator(when: action == .approving)
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+            .padding()
+            .background(
+                Rectangle()
+                    .ignoresSafeArea()
+                    .foregroundColor(.black)
+                    .shadow(color: .Strike.gray, radius: 0, x: 0, y: -1)
+            )
         }
         .background(Color.Strike.primaryBackground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
@@ -127,6 +158,14 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
         default:
             return "Unable to approve request. Please try again"
         }
+    }
+
+    private func updateTimeRemaining() {
+        timeRemaining = Calendar.current.dateComponents([.hour, .minute, .second], from: Date(), to: request.expireDate)
+    }
+
+    private var formattedCountdown: String {
+        DateComponentsFormatter.positionalFormatter.string(for: timeRemaining) ?? ""
     }
 
     private func approve() {

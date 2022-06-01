@@ -12,13 +12,13 @@ extension SolanaApprovalRequestType {
     var header: String {
         switch self {
         case .withdrawalRequest(let request):
-            return "Send \(request.symbolAndAmountInfo.symbolInfo.symbol)"
+            return "Send \(request.symbolAndAmountInfo.formattedAmount) \(request.symbolAndAmountInfo.symbolInfo.symbol)"
         case .unknown:
             return "Unknown"
         case .conversionRequest(let request):
-            return "Convert \(request.symbolAndAmountInfo.symbolInfo.symbol)"
+            return "Convert \(request.symbolAndAmountInfo.formattedAmount) \(request.symbolAndAmountInfo.symbolInfo.symbol)"
         case .wrapConversionRequest(let request):
-            return "Convert \(request.symbolAndAmountInfo.symbolInfo.symbol)"
+            return "Convert \(request.symbolAndAmountInfo.formattedAmount) \(request.symbolAndAmountInfo.symbolInfo.symbol)"
         case .signersUpdate(let update) where update.slotUpdateType == .Clear:
             return "Remove Signer"
         case .signersUpdate:
@@ -55,6 +55,29 @@ extension SolanaApprovalRequestType {
             return "Execute dApp Transaction"
         case .loginApproval:
             return "Log In"
+        }
+    }
+
+    var subHeader: String? {
+        switch self {
+        case .withdrawalRequest(let request):
+            return request.symbolAndAmountInfo.formattedUSDEquivalent.flatMap {
+                "\($0) USD equivalent"
+            }
+        case .balanceAccountSettingsUpdate(let update):
+            return update.account.name
+        case .balanceAccountPolicyUpdate(let update):
+            return update.accountInfo.name
+        case .conversionRequest(let request):
+            return request.symbolAndAmountInfo.formattedUSDEquivalent.flatMap {
+                "\($0) USD equivalent"
+            }
+        case .wrapConversionRequest(let request):
+            return request.symbolAndAmountInfo.formattedUSDEquivalent.flatMap {
+                "\($0) USD equivalent"
+            }
+        default:
+            return nil
         }
     }
 

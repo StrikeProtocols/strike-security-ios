@@ -9,17 +9,30 @@ import SwiftUI
 
 struct LoginDetails: View {
     var requestType: SolanaApprovalRequestType
+    var login: LoginApproval
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 20, trailing: 10))
+            FactList {
+                Fact("Login Name", login.name)
+                Fact("Login Email", login.email)
+            }
         }
     }
 }
+
+#if DEBUG
+struct LoginDetails_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginDetails(requestType: .loginApproval(.sample), login: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                LoginDetails(requestType: .loginApproval(.sample), login: .sample)
+            }
+        }
+    }
+}
+#endif

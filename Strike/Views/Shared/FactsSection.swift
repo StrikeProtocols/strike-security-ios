@@ -13,7 +13,7 @@ struct FactsSection: View {
     @FactBuilder var content: () -> [Fact]
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             Header(title: title)
             FactList(facts: content)
         }
@@ -25,8 +25,12 @@ struct Header: View {
 
     var body: some View {
         Text(title)
+            .textCase(.uppercase)
+            .multilineTextAlignment(.leading)
             .font(.footnote)
-            .frame(maxWidth: .infinity, minHeight: 22)
-            .background(Color.Strike.thirdBackground /**/)
+            .padding(5)
+            .padding(.leading, 5)
+            .frame(minHeight: 22)
+            .foregroundColor(Color.white.opacity(0.5))
     }
 }

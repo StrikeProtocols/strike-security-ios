@@ -95,9 +95,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(Color.Strike.secondaryBackground)
+        appearance.backgroundColor = UIColor.black
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.shadowImage = UIImage()
+        appearance.shadowColor = .clear
         let buttonAppearance = UIBarButtonItemAppearance()
         buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
         appearance.buttonAppearance = buttonAppearance

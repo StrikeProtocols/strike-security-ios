@@ -14,35 +14,18 @@ struct WalletConfigPolicyDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(request.requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
+            FactsSection(title: "Approvals") {
+                Fact("Approvals Required", "\(update.approvalPolicy.approvalsRequired)")
+                Fact("Approval Expiration", "\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")")
+            }
 
-            Spacer()
-                .frame(height: 10)
-
-            VStack(spacing: 20) {
-                FactsSection(title: "Vault Approvers") {
-                    if update.approvalPolicy.approvers.count > 0 {
-                        for approver in update.approvalPolicy.approvers.sorted(by: { $0.value.name < $1.value.name }) {
-                            Fact(approver.value.name, approver.value.email)
-                        }
-                    } else {
-                        Fact("No users may approve requests", "")
+            FactsSection(title: "Vault Approvers") {
+                if update.approvalPolicy.approvers.count > 0 {
+                    for approver in update.approvalPolicy.approvers.sorted(by: { $0.value.name < $1.value.name }) {
+                        Fact(approver.value.name, approver.value.email)
                     }
-                }
-
-                FactsSection(title: "Approvals Required") {
-                    Fact("\(update.approvalPolicy.approvalsRequired)", "")
-                }
-
-                FactsSection(title: "Approval Expiration") {
-                    Fact("\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")", "")
+                } else {
+                    Fact("No users may approve requests", "")
                 }
             }
         }
@@ -53,6 +36,14 @@ struct WalletConfigPolicyDetails: View {
 struct WalletConfigPolicyDetails_Previews: PreviewProvider {
     static var previews: some View {
         WalletConfigPolicyDetails(request: .sample, update: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                WalletConfigPolicyDetails(request: .sample, update: .sample)
+            }
+        }
     }
 }
 #endif

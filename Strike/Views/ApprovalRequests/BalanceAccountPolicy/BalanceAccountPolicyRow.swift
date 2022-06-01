@@ -24,17 +24,10 @@ struct BalanceAccountPolicyRow: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
 
-            VStack(spacing: 6) {
-                Text(update.approvalPolicy.approvers.count.approversCaption)
-            }
-            .font(.caption)
-            .foregroundColor(Color.white.opacity(0.5))
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-
-            AccountDetail(name: update.accountInfo.name)
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                .roundedCell()
-                .padding(EdgeInsets(top: 16, leading: 10, bottom: 20, trailing: 10))
+            Text(update.accountInfo.name)
+                .font(.caption)
+                .foregroundColor(Color.white.opacity(0.5))
+                .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }
 }

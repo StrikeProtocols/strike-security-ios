@@ -15,33 +15,13 @@ struct BalanceAccountWhitelistDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Text(request.requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            AccountDetail(name: update.accountInfo.name, subname: user.organization.name)
-                .padding(EdgeInsets(top: 12, leading: 24, bottom: 12, trailing: 24))
-                .frame(maxHeight: 60)
-                .background(Color.Strike.thirdBackground /**/)
-                .cornerRadius(8)
-
-            Spacer()
-                .frame(height: 10)
-
-            VStack(spacing: 20) {
-                FactsSection(title: "Whitelisted Addresses") {
-                    if update.destinations.count > 0 {
-                        for destination in update.destinations.sorted(by: { $0.destinationName < $1.destinationName }) {
-                            Fact(destination.destinationName, destination.value.address.masked())
-                        }
-                    } else {
-                        Fact("No whitelisted addresses", "")
+            FactsSection(title: "Whitelisted Addresses") {
+                if update.destinations.count > 0 {
+                    for destination in update.destinations.sorted(by: { $0.destinationName < $1.destinationName }) {
+                        Fact(destination.destinationName, destination.value.address.masked())
                     }
+                } else {
+                    Fact("No whitelisted addresses", "")
                 }
             }
         }
@@ -58,6 +38,14 @@ extension SlotDestinationInfo {
 struct BalanceAccountWhitelistDetails_Previews: PreviewProvider {
     static var previews: some View {
         BalanceAccountWhitelistDetails(request: .sample, update: .sample, user: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                BalanceAccountWhitelistDetails(request: .sample, update: .sample, user: .sample)
+            }
+        }
     }
 }
 #endif

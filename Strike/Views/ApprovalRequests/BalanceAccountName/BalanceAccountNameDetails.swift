@@ -14,50 +14,10 @@ struct BalanceAccountNameDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
-            Text(request.requestType.header)
-                .font(.title)
-                .bold()
-                .lineLimit(1)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.25)
-                .foregroundColor(Color.white)
-                .padding(EdgeInsets(top: 22, leading: 10, bottom: 10, trailing: 10))
-
-            HStack(spacing: 0) {
-                VStack { Text("From").font(Font.caption.bold()) }
-                    .frame(maxWidth: .infinity)
-                Spacer()
-                    .frame(width: 20)
-                VStack { Text("To").font(Font.caption.bold()) }
-                    .frame(maxWidth: .infinity)
+            FactList {
+                Fact("Old Wallet Name", update.accountInfo.name)
+                Fact("New Wallet Name", update.newAccountName)
             }
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing])
-
-            HStack(spacing: 0) {
-                AccountDetail(name: update.accountInfo.name)
-                    .padding(10)
-                    .frame(maxWidth: .infinity, minHeight: 60)
-                    .background(Color.Strike.thirdBackground /**/)
-                    .cornerRadius(8)
-
-                Text("→")
-                    .font(.caption)
-                    .foregroundColor(Color.white.opacity(0.5))
-                    .frame(width: 20)
-
-                AccountDetail(name: update.newAccountName)
-                    .padding(10)
-                    .frame(maxWidth: .infinity, minHeight: 60)
-                    .background(Color.Strike.thirdBackground /**/)
-                    .cornerRadius(8)
-            }
-            .frame(maxWidth: .infinity)
-            .padding([.leading, .trailing])
-
-            Spacer()
-                .frame(height: 10)
-
         }
     }
 }
@@ -66,6 +26,14 @@ struct BalanceAccountNameDetails: View {
 struct BalanceAccountNameDetails_Previews: PreviewProvider {
     static var previews: some View {
         BalanceAccountNameDetails(request: .sample, update: .sample)
+
+        let timerPublisher = Timer.TimerPublisher(interval: 1, runLoop: .current, mode: .default).autoconnect()
+
+        NavigationView {
+            ApprovalRequestDetails(user: .sample, request: .sample, timerPublisher: timerPublisher) {
+                BalanceAccountNameDetails(request: .sample, update: .sample)
+            }
+        }
     }
 }
 #endif

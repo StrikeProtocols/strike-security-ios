@@ -28,7 +28,7 @@ struct FactList: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(0..<items.count) { index in
+            ForEach(0..<items.count, id: \.self) { index in
                 items[index].content
                     .padding([.leading, .trailing], 10)
                     .frame(maxWidth: .infinity, minHeight: 44)
@@ -77,7 +77,7 @@ struct RowBackground: View {
                 Spacer()
                 Divider()
             }
-            .background(Color.Strike.thirdBackground)
+            .background(Color.black)
         case (_, false):
             Color.Strike.secondaryBackground
         }
@@ -131,19 +131,19 @@ extension Fact {
                     Text(name)
                         .strikethrough(style == .deleted)
                         .font(.subheadline)
-                        .foregroundColor(Color.white.opacity(0.5))
+                        .foregroundColor(Color.white)
 
                     Spacer()
 
                     if let action = action {
                         Button(action: action) {
                             content()
-                                .font(.subheadline)
+                                .font(.subheadline.bold())
                                 .foregroundColor(Color.white)
                         }
                     } else {
                         content()
-                            .font(.subheadline)
+                            .font(.subheadline.bold())
                             .foregroundColor(Color.white)
                     }
                 }
