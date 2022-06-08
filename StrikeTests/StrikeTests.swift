@@ -717,7 +717,7 @@ class StrikeTests: XCTestCase {
         let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6IlNvbHIifQ.SWCJDd6B_m7xr_puQH-wgbxvXyJYXH9lTpldOU0eQKc"
         let email = "sample@email.co"
         let name = "Sample User Name"
-        let request = getWalletApprovalRequest(getLoginApproval(jwtToken, email, name))
+        let request = getWalletApprovalRequest(getLoginApproval(jwtToken, email: email, name: name))
         let approvalRequest = StrikeApi.ApprovalDispositionRequest(
             disposition: .Approve,
             requestID: request.id,
