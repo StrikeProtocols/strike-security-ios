@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "bip39",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pengpengliu/BIP39",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e79bd90275e50643cf8f97208ffa536d0def3ec7"
+      }
+    },
+    {
       "identity" : "logger",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/shibapm/Logger",

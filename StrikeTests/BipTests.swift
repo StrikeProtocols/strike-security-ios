@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Strike
+import BIP39
 
 struct TestItem: Codable {
     let mnemonic: String

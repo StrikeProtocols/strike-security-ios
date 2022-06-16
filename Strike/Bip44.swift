@@ -7,6 +7,7 @@
 
 import Foundation
 import CryptoKit
+import BIP39
 
 struct Ed25519HierachicalPrivateKey {
     public let privateKey: Curve25519.Signing.PrivateKey

@@ -124,10 +124,10 @@
 		6C0E3EF727EE6367002FEE7C /* SMP Bignum Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E3EF627EE6367002FEE7C /* SMP Bignum Extensions.swift */; };
 		6C0E3EF927EE64BA002FEE7C /* SMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E3EF827EE64BA002FEE7C /* SMP.swift */; };
 		6C0E3EFB27F09D2A002FEE7C /* StrikeTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E3EFA27F09D2A002FEE7C /* StrikeTestHelper.swift */; };
-		6C1E8C972851172900F7C337 /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E8C962851172900F7C337 /* Bip39.swift */; };
 		6C1E8C99285118F900F7C337 /* BipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E8C98285118F900F7C337 /* BipTests.swift */; };
 		6C74FA0228525AC3005C8DE1 /* test-data.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C74FA0128525AC3005C8DE1 /* test-data.json */; };
 		6C74FA0428526282005C8DE1 /* Bip44.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C74FA0328526282005C8DE1 /* Bip44.swift */; };
+		6C74FA07285AAD5F005C8DE1 /* BIP39 in Frameworks */ = {isa = PBXBuildFile; productRef = 6C74FA06285AAD5F005C8DE1 /* BIP39 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,7 +263,6 @@
 		6C0E3EF627EE6367002FEE7C /* SMP Bignum Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMP Bignum Extensions.swift"; sourceTree = "<group>"; };
 		6C0E3EF827EE64BA002FEE7C /* SMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMP.swift; sourceTree = "<group>"; };
 		6C0E3EFA27F09D2A002FEE7C /* StrikeTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrikeTestHelper.swift; sourceTree = "<group>"; };
-		6C1E8C962851172900F7C337 /* Bip39.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bip39.swift; sourceTree = "<group>"; };
 		6C1E8C98285118F900F7C337 /* BipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BipTests.swift; sourceTree = "<group>"; };
 		6C74FA0128525AC3005C8DE1 /* test-data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test-data.json"; sourceTree = "<group>"; };
 		6C74FA0328526282005C8DE1 /* Bip44.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bip44.swift; sourceTree = "<group>"; };
@@ -276,6 +275,7 @@
 			files = (
 				40A8ED9425AE8B9A004A7419 /* Moya in Frameworks */,
 				3DC2F42525FAA60F0061BB3A /* OktaAuthNative in Frameworks */,
+				6C74FA07285AAD5F005C8DE1 /* BIP39 in Frameworks */,
 				3D4C1456270D0B9A00382FBF /* OktaOidc in Frameworks */,
 				3D4C145F2710C9BE00382FBF /* raygun4apple.framework in Frameworks */,
 			);
@@ -680,7 +680,6 @@
 				6C0E3EF127EE5E29002FEE7C /* NaclLowLevel.swift */,
 				6C0E3EF627EE6367002FEE7C /* SMP Bignum Extensions.swift */,
 				6C0E3EF827EE64BA002FEE7C /* SMP.swift */,
-				6C1E8C962851172900F7C337 /* Bip39.swift */,
 				6C74FA0328526282005C8DE1 /* Bip44.swift */,
 			);
 			name = Helpers;
@@ -716,6 +715,7 @@
 				40A8ED9325AE8B9A004A7419 /* Moya */,
 				3DC2F42425FAA60F0061BB3A /* OktaAuthNative */,
 				3D4C1455270D0B9A00382FBF /* OktaOidc */,
+				6C74FA06285AAD5F005C8DE1 /* BIP39 */,
 			);
 			productName = Strike;
 			productReference = 40328E0C2593ED9900F2EE41 /* Strike.app */;
@@ -770,6 +770,7 @@
 				40A8ED9225AE8B99004A7419 /* XCRemoteSwiftPackageReference "Moya" */,
 				3DC2F42325FAA60F0061BB3A /* XCRemoteSwiftPackageReference "okta-auth-swift" */,
 				3D4C1454270D0B9A00382FBF /* XCRemoteSwiftPackageReference "okta-oidc-ios" */,
+				6C74FA05285AAD5F005C8DE1 /* XCRemoteSwiftPackageReference "BIP39" */,
 			);
 			productRefGroup = 40328E0D2593ED9900F2EE41 /* Products */;
 			projectDirPath = "";
@@ -914,7 +915,6 @@
 				3D3D6D112616447200FEEE0B /* Alert+DismissButton.swift in Sources */,
 				3DAFFD2E25F8951100B408AD /* MainView.swift in Sources */,
 				3DC36BB5262B4E8C005DB1A7 /* ApprovalRequestsList.swift in Sources */,
-				6C1E8C972851172900F7C337 /* Bip39.swift in Sources */,
 				3D115202282169D4007CD43D /* WalletConfigPolicyRow.swift in Sources */,
 				40328E102593ED9900F2EE41 /* StrikeApp.swift in Sources */,
 				3D95240A283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift in Sources */,
@@ -2330,6 +2330,14 @@
 				minimumVersion = 14.0.0;
 			};
 		};
+		6C74FA05285AAD5F005C8DE1 /* XCRemoteSwiftPackageReference "BIP39" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pengpengliu/BIP39";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2347,6 +2355,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 40A8ED9225AE8B99004A7419 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		6C74FA06285AAD5F005C8DE1 /* BIP39 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C74FA05285AAD5F005C8DE1 /* XCRemoteSwiftPackageReference "BIP39" */;
+			productName = BIP39;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
