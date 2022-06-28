@@ -277,6 +277,7 @@ struct SolanaSigningData: Codable, Equatable {
     let multisigOpAccountAddress: String
     let walletAddress: String
     let nonceAccountAddresses: [String]
+    let nonceAccountAddressesSlot: UInt64
     let initiator: String
 }
 
@@ -614,6 +615,45 @@ extension SolanaApprovalRequestType {
     }
 }
 
+extension SolanaApprovalRequestType {
+    var nonceAccountAddressesSlot: UInt64 {
+        switch self {
+        case .dAppTransactionRequest(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .addressBookUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .balanceAccountCreation(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .balanceAccountNameUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .balanceAccountPolicyUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .balanceAccountSettingsUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .balanceAccountAddressWhitelistUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .conversionRequest(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .dAppBookUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .signersUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .withdrawalRequest(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .splTokenAccountCreation(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .walletConfigPolicyUpdate(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .wrapConversionRequest(let request):
+            return request.signingData.nonceAccountAddressesSlot
+        case .loginApproval,
+             .acceptVaultInvitation,
+             .unknown:
+            return 0
+        }
+    }
+}
+
 #if DEBUG
 extension WalletApprovalRequest {
     static var sample: Self {
@@ -677,6 +717,7 @@ extension SolanaSigningData {
             multisigOpAccountAddress: "multisigAddress",
             walletAddress: "walletAddress",
             nonceAccountAddresses: ["nonceAccountAddress"],
+            nonceAccountAddressesSlot: 12345,
             initiator: "initiatorAddress"
         )
     }

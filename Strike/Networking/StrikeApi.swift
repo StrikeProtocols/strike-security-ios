@@ -218,12 +218,20 @@ extension StrikeApi {
             struct AccountData: Decodable {
                 let data: Nonce
             }
-
+            struct Context: Decodable {
+                let slot: UInt64
+            }
+            
+            let context: Context
             let value: [AccountData]
         }
 
         let id: String
         let result: Result
+        
+        var slot: UInt64 {
+            result.context.slot
+        }
 
         var nonces: [Nonce] {
             result.value.map(\.data)

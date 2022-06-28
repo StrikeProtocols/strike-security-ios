@@ -405,6 +405,7 @@ enum SolanaError: Error, Equatable {
     case invalidRequest(reason: String? = nil)
     case notFoundProgramAddress
     case invalidPublicKey
+    case noAccountsForSlot
 }
 
 extension AddressBookUpdate {

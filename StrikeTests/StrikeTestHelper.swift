@@ -28,6 +28,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "SLnWXM1QTraLWFhCm7JxDZk11PBE5Gu524ASzAC6YjW",
                     walletAddress: "ECzeaMTMBXYXXfVM53n5iPepf8749QUqEzjW8jxefGhh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
         ))
@@ -47,6 +48,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "Hx9JnkPHioA9eu92y7jho1TxNaBCHYbw8zaSxvkGXSdD",
                     walletAddress: "FWhBukWcdXaMqZhJMvAAEH6PH81nV6JSpBEmwdvWgUjW",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"))
                 )
         )
@@ -80,6 +82,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "2DBQ368KgyPkmqd6fKsQpmpMhBTDTuW6wWESbxDs5otz",
                     walletAddress: "JCd6uutAtgsbxDfM54ss4TyeG6kakvSfdxJwjBTjkPLh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -117,6 +120,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "9NDFtaczqouZ9SGTfd489EfN3KvMQgrAjpuu4QEr9Kys",
                     walletAddress: "JCd6uutAtgsbxDfM54ss4TyeG6kakvSfdxJwjBTjkPLh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -154,6 +158,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "6UcFAr9rqGfFEtLxnYdW6QjeRor3aej5akLpYpXUkPWX",
                     walletAddress: "7fvoSJ6iNAyTFvBDuAWuciXWYiyUBtJfCUswZF3YGbUN",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -196,6 +201,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "11111111111111111111111111111111",
                     walletAddress: "2sGiNkpwYod6c1Wcd6H1ycd85KwykMfb8ZCt7t3XEp4h",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -231,6 +237,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "11111111111111111111111111111111",
                     walletAddress: "Ebse7xEiKuhe3bWY6dXiWB8QS4QDhr8fRBgH4tUKR2Ys",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -266,6 +273,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "11111111111111111111111111111111",
                     walletAddress: "Ebse7xEiKuhe3bWY6dXiWB8QS4QDhr8fRBgH4tUKR2Ys",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 )
             )
@@ -286,6 +294,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "Dpt714om7J3B3f1ygptgoEnFvHo3aiXjeLPP7TqjHJhq",
                     walletAddress: "JCd6uutAtgsbxDfM54ss4TyeG6kakvSfdxJwjBTjkPLh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -307,6 +316,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "Hn2CJuYyyB2H3wwmdHPy1Aun2Jkye3MCSVajzUvw55A9",
                     walletAddress: "Re4dLGch8a1G98PeRtpHa5ApS6Gnik444CqB5BQ8rY1",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -328,6 +338,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "Dp4oaRWRtBxQdf5Lg2zti3TCjsUsxv4rUBgtf2HSQnVb",
                     walletAddress: "JCd6uutAtgsbxDfM54ss4TyeG6kakvSfdxJwjBTjkPLh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -349,6 +360,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "9CfoFci2agjCJ7bWqfgKEFSAc5zB6UR63MrK61nRaJzm",
                     walletAddress: "Re4dLGch8a1G98PeRtpHa5ApS6Gnik444CqB5BQ8rY1",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -376,6 +388,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "F6iUTdJDE4vnTgBanCtBgtoNHag57Uaut82xATGVVps3",
                     walletAddress: "JCd6uutAtgsbxDfM54ss4TyeG6kakvSfdxJwjBTjkPLh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -410,6 +423,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "DbdTEwihgEYJYAgXBKEqQGknGyHsRnxE5coeZaVS4T9y",
                     walletAddress: "ECzeaMTMBXYXXfVM53n5iPepf8749QUqEzjW8jxefGhh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -431,6 +445,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "7DY87mHHiSSyxFBbhCYbTpQE5M4Jk9Z9hymJ7UzL3sPm",
                     walletAddress: "4XaqL4MtTUDrncTGBqvTC9ketf8WVqrUocDkYhKAnDju",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -461,6 +476,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "71S5qEAD3DMn7QY9fdb2uR1TV7kiAfcAqNHfQfyFUSME",
                     walletAddress: "AoEAvW2TvZYmy2WbmqN4nXdJT8o21RbJP6xNK2yR4of",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -492,6 +508,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "SLnWXM1QTraLWFhCm7JxDZk11PBE5Gu524ASzAC6YjW",
                     walletAddress: "ECzeaMTMBXYXXfVM53n5iPepf8749QUqEzjW8jxefGhh",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "3wKxhgiogoCaA2uxPYeH7cy3cG4hxRPogrPmDPLS54iZ"
                 ))
         )
@@ -538,6 +555,7 @@ extension StrikeTests {
                     multisigOpAccountAddress: "22btwB54QFYCLFVf53k64Jhj8KnpYCx2HwJmsqTq8Ly2",
                     walletAddress: "3CwacbyswAFN914pyjBRGrZm5m7QdSYuNHdnJWeTrJ85",
                     nonceAccountAddresses: nonceAccountAddresses,
+                    nonceAccountAddressesSlot: 2256,
                     initiator: "9CZ2ZaGe961oLCWJUpr16ofZxBM4yK9tGfbdwj57JNJP"
                 )
             )

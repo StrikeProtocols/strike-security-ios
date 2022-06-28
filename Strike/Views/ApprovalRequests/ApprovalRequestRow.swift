@@ -114,7 +114,8 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
         isLoading = true
 
         strikeApi.provider.requestWithNonces(
-            accountAddresses: request.requestType.nonceAccountAddresses
+            accountAddresses: request.requestType.nonceAccountAddresses,
+            accountAddressesSlot: request.requestType.nonceAccountAddressesSlot
         ) { nonces in
             switch request.details {
             case .approval(let requestType):

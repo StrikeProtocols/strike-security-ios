@@ -176,7 +176,8 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
         action = .approving
 
         strikeApi.provider.requestWithNonces(
-            accountAddresses: request.requestType.nonceAccountAddresses
+            accountAddresses: request.requestType.nonceAccountAddresses,
+            accountAddressesSlot: request.requestType.nonceAccountAddressesSlot
         ) { nonces in
             switch request.details {
             case .approval(let requestType):
@@ -220,7 +221,8 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
         action = .ignoring
 
         strikeApi.provider.requestWithNonces(
-            accountAddresses: request.requestType.nonceAccountAddresses
+            accountAddresses: request.requestType.nonceAccountAddresses,
+            accountAddressesSlot: request.requestType.nonceAccountAddressesSlot
         ) { nonces in
             switch request.details {
             case .approval(let requestType):
