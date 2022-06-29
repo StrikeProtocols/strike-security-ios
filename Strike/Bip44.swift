@@ -23,10 +23,10 @@ struct Ed25519HierachicalPrivateKey {
         self.chainCode = SymmetricKey(data: data.suffix(32))
     }
     
-    public static func fromSeedPhrase(words: [String]) throws -> Ed25519HierachicalPrivateKey {
+    public static func fromRootSeed(rootSeed: [UInt8]) throws -> Ed25519HierachicalPrivateKey {
         var derivedKey = try Ed25519HierachicalPrivateKey(
-            data: try Data(HMAC<SHA512>.authenticationCode(
-                for: Mnemonic(phrase: words).seed,
+            data: Data(HMAC<SHA512>.authenticationCode(
+                for: rootSeed,
                 using: SymmetricKey.init(data: "ed25519 seed".data(using: .utf8)!)
             ))
         )
