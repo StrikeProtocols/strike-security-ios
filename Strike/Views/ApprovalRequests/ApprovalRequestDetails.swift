@@ -39,6 +39,17 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                             .foregroundColor(Color.white)
                             .padding(.top, 20)
 
+                        if let header2 = request.requestType.header2 {
+                            Text(header2)
+                                .font(.title2)
+                                .lineLimit(1)
+                                .allowsTightening(true)
+                                .multilineTextAlignment(.center)
+                                .minimumScaleFactor(0.25)
+                                .foregroundColor(Color.white.opacity(0.8))
+                                .padding(.top, 5)
+                        }
+                        
                         if let subHeader = request.requestType.subHeader {
                             Text(subHeader)
                                 .font(.caption)
@@ -51,7 +62,7 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                     content()
 
                     FactsSection(title: "STATUS") {
-                        Fact("Requested By", request.submitterEmail) {
+                        Fact("Initiated By", request.submitterEmail) {
                             isComposingMail = true
                         }
 

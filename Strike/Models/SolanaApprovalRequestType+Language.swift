@@ -20,35 +20,35 @@ extension SolanaApprovalRequestType {
         case .wrapConversionRequest(let request):
             return "Swap \(request.symbolAndAmountInfo.formattedAmount) \(request.symbolAndAmountInfo.symbolInfo.symbol)"
         case .signersUpdate(let update) where update.slotUpdateType == .Clear:
-            return "Remove Signer"
+            return "Remove User"
         case .signersUpdate:
-            return "Add Signer"
+            return "Add User"
         case .balanceAccountCreation(let accountCreation) where accountCreation.accountInfo.accountType == .BalanceAccount:
             return "Add Wallet"
         case .balanceAccountCreation:
             return "Add Wallet"
         case .balanceAccountNameUpdate:
-            return "Rename Wallet"
+            return "Rename"
         case .balanceAccountPolicyUpdate:
-            return "Replace Wallet Approval Policy"
+            return "Update Transfer Approvals"
         case .balanceAccountSettingsUpdate(let update) where update.change == .dappsEnabled(false):
             return "Disable dApp Access"
         case .balanceAccountSettingsUpdate(let update) where update.change == .dappsEnabled(true):
             return "Enable dApp Access"
         case .balanceAccountSettingsUpdate(let update) where update.change == .whitelistEnabled(false):
-            return "Disable Transfer Whitelist"
-        case .balanceAccountSettingsUpdate:
-            return "Enable Transfer Whitelist"
-        case .balanceAccountAddressWhitelistUpdate:
-            return "Replace Wallet Whitelist"
+            return "Disable Whitelist"
+        case .balanceAccountSettingsUpdate(let update):
+            return "Enable Whitelist"
+        case .balanceAccountAddressWhitelistUpdate(let update):
+            return "Edit Whitelist Addresses"
         case .addressBookUpdate(let update) where update.change == .add:
-            return "Add Address Book Entry"
-        case .addressBookUpdate:
-            return "Remove Address Book Entry"
+            return "Add Address"
+        case .addressBookUpdate(let update):
+            return "Remove Address"
         case .dAppBookUpdate:
             return "Replace dApp Book"
         case .walletConfigPolicyUpdate:
-            return "Replace Vault Approval Policy"
+            return "Update Administration Policy"
         case .splTokenAccountCreation:
             return "Enable SPL Token"
         case .dAppTransactionRequest:
@@ -59,6 +59,21 @@ extension SolanaApprovalRequestType {
             return "Accept Vault Invitation"
         }
     }
+    
+    var header2: String? {
+        switch self {
+        case .balanceAccountSettingsUpdate(let update):
+            return update.account.name.walletName()
+        case .balanceAccountPolicyUpdate(let update):
+            return update.accountInfo.name.walletName()
+        case .balanceAccountAddressWhitelistUpdate(let update):
+            return update.accountInfo.name.walletName()
+        case .balanceAccountNameUpdate(let update):
+            return "\(update.accountInfo.name.walletName()) → \(update.newAccountName.walletName())"
+        default:
+            return nil
+        }
+    }
 
     var subHeader: String? {
         switch self {
@@ -66,10 +81,6 @@ extension SolanaApprovalRequestType {
             return request.symbolAndAmountInfo.formattedUSDEquivalent.flatMap {
                 "\($0) USD equivalent"
             }
-        case .balanceAccountSettingsUpdate(let update):
-            return update.account.name
-        case .balanceAccountPolicyUpdate(let update):
-            return update.accountInfo.name
         case .conversionRequest(let request):
             return request.symbolAndAmountInfo.formattedUSDEquivalent.flatMap {
                 "\($0) USD equivalent"
@@ -88,6 +99,7 @@ extension SolanaApprovalRequestType {
         case .withdrawalRequest,
              .conversionRequest,
              .wrapConversionRequest,
+             .balanceAccountCreation,
              .balanceAccountNameUpdate,
              .balanceAccountPolicyUpdate,
              .balanceAccountSettingsUpdate,
@@ -96,12 +108,13 @@ extension SolanaApprovalRequestType {
              .splTokenAccountCreation:
             return "Wallet Change"
         case .signersUpdate,
-             .balanceAccountCreation,
-             .addressBookUpdate,
-             .walletConfigPolicyUpdate,
-             .dAppBookUpdate,
              .acceptVaultInvitation:
-            return "Vault Change"
+            return "User Change"
+        case .addressBookUpdate,
+             .dAppBookUpdate:
+            return "Address Book Change"
+        case .walletConfigPolicyUpdate:
+            return "Administration Change"
         case .loginApproval:
             return "Authentication"
         case .unknown:

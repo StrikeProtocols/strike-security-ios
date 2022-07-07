@@ -22,9 +22,9 @@ struct AccountCreationRow: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 16, leading: 20, bottom: 0, trailing: 20))
 
-            Text(accountCreation.accountInfo.name)
-                .font(.caption)
-                .foregroundColor(Color.white.opacity(0.5))
+            Text(accountCreation.accountInfo.name.walletName())
+                .font(.title3)
+                .foregroundColor(Color.white.opacity(0.8))
                 .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }

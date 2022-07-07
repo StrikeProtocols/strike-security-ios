@@ -28,7 +28,7 @@ struct WrapConversionRow: View {
                 Text("\(usdEquivalent) USD equivalent")
                     .font(.caption)
                     .foregroundColor(Color.white.opacity(0.5))
-                    .padding(EdgeInsets(top: 2, leading: 20, bottom: 0, trailing: 20))
+                    .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
             }
         }
     }

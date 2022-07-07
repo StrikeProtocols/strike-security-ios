@@ -15,8 +15,8 @@ struct SignerUpdateDetails: View {
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             FactList {
-                Fact("Signer Name", signersUpdate.signer.value.name)
-                Fact("Signer Email", signersUpdate.signer.value.email)
+                Fact("User Name", signersUpdate.signer.value.name)
+                Fact("User Email", signersUpdate.signer.value.email)
             }
         }
     }

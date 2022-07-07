@@ -25,8 +25,8 @@ struct AddressBookUpdateRow: View {
                 .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
 
             Text(update.entry.value.name)
-                .font(.caption)
-                .foregroundColor(Color.white.opacity(0.5))
+                .font(.title3)
+                .foregroundColor(Color.white.opacity(0.8))
                 .padding(EdgeInsets(top: 2, leading: 20, bottom: 20, trailing: 20))
         }
     }

@@ -23,7 +23,7 @@ struct AccountCreationDetails: View {
                 Fact("Approval Expiration", "\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(accountCreation.approvalPolicy.approvalTimeout / 1000))) ?? "")")
             }
 
-            FactsSection(title: "Approvers") {
+            FactsSection(title: "Transfer Approvers") {
                 if accountCreation.approvalPolicy.approvers.count > 0 {
                     for approver in accountCreation.approvalPolicy.approvers {
                         Fact(approver.value.name, approver.value.email)
