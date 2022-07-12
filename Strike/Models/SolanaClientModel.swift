@@ -96,7 +96,6 @@ enum SolanaApprovalRequestType: Codable, Equatable {
     case addressBookUpdate(AddressBookUpdate)
     case dAppBookUpdate(DAppBookUpdate)
     case walletConfigPolicyUpdate(WalletConfigPolicyUpdate)
-    case splTokenAccountCreation(SPLTokenAccountCreation)
     case dAppTransactionRequest(DAppTransactionRequest)
     case loginApproval(LoginApproval)
     case acceptVaultInvitation(AcceptVaultInvitation)
@@ -134,8 +133,6 @@ enum SolanaApprovalRequestType: Codable, Equatable {
             self = .dAppBookUpdate(try DAppBookUpdate(from: decoder))
         case "WalletConfigPolicyUpdate":
             self = .walletConfigPolicyUpdate(try WalletConfigPolicyUpdate(from: decoder))
-        case "SPLTokenAccountCreation":
-            self = .splTokenAccountCreation(try SPLTokenAccountCreation(from: decoder))
         case "DAppTransactionRequest":
             self = .dAppTransactionRequest(try DAppTransactionRequest(from: decoder))
         case "LoginApproval":
@@ -186,9 +183,6 @@ enum SolanaApprovalRequestType: Codable, Equatable {
         case .walletConfigPolicyUpdate(let walletConfigPolicyUpdate):
             try container.encode("WalletConfigPolicyUpdate", forKey: .type)
             try walletConfigPolicyUpdate.encode(to: encoder)
-        case .splTokenAccountCreation(let splTokenAccountCreation):
-            try container.encode("SPLTokenAccountCreation", forKey: .type)
-            try splTokenAccountCreation.encode(to: encoder)
         case .dAppTransactionRequest(let dAppTransactionRequest):
             try container.encode("DAppTransactionRequest", forKey: .type)
             try dAppTransactionRequest.encode(to: encoder)
@@ -538,13 +532,6 @@ struct WalletConfigPolicyUpdate: Codable, Equatable  {
     var signingData: SolanaSigningData
 }
 
-struct SPLTokenAccountCreation: Codable, Equatable  {
-    var payerBalanceAccount: AccountInfo
-    var balanceAccounts: [AccountInfo]
-    var tokenSymbolInfo: SymbolInfo
-    var signingData: SolanaSigningData
-}
-
 struct MultisigAccountCreationInfo: Codable, Equatable  {
     var accountSize: UInt64
     var minBalanceForRentExemption: UInt64
@@ -607,8 +594,6 @@ extension SolanaApprovalRequestType {
             return request.signingData.nonceAccountAddresses
         case .withdrawalRequest(let request):
             return request.signingData.nonceAccountAddresses
-        case .splTokenAccountCreation(let request):
-            return request.signingData.nonceAccountAddresses
         case .walletConfigPolicyUpdate(let request):
             return request.signingData.nonceAccountAddresses
         case .wrapConversionRequest(let request):
@@ -645,8 +630,6 @@ extension SolanaApprovalRequestType {
         case .signersUpdate(let request):
             return request.signingData.nonceAccountAddressesSlot
         case .withdrawalRequest(let request):
-            return request.signingData.nonceAccountAddressesSlot
-        case .splTokenAccountCreation(let request):
             return request.signingData.nonceAccountAddressesSlot
         case .walletConfigPolicyUpdate(let request):
             return request.signingData.nonceAccountAddressesSlot

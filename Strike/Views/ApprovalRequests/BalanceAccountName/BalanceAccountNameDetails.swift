@@ -13,10 +13,8 @@ struct BalanceAccountNameDetails: View {
     var update: BalanceAccountNameUpdate
 
     var body: some View {
-        VStack(alignment: .center, spacing: 15) {
-            FactList {
-                Fact("Wallet Name", update.newAccountName)
-            }
+        VStack(alignment: .center, spacing: 10) {
+
         }
     }
 }

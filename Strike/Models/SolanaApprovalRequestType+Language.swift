@@ -49,8 +49,6 @@ extension SolanaApprovalRequestType {
             return "Replace dApp Book"
         case .walletConfigPolicyUpdate:
             return "Update Administration Policy"
-        case .splTokenAccountCreation:
-            return "Enable SPL Token"
         case .dAppTransactionRequest:
             return "Execute dApp Transaction"
         case .loginApproval:
@@ -104,8 +102,7 @@ extension SolanaApprovalRequestType {
              .balanceAccountPolicyUpdate,
              .balanceAccountSettingsUpdate,
              .balanceAccountAddressWhitelistUpdate,
-             .dAppTransactionRequest,
-             .splTokenAccountCreation:
+             .dAppTransactionRequest:
             return "Wallet Change"
         case .signersUpdate,
              .acceptVaultInvitation:
@@ -149,8 +146,6 @@ extension SolanaApprovalRequestType {
         case .dAppBookUpdate:
             return Image("policy")
         case .walletConfigPolicyUpdate:
-            return Image("policy")
-        case .splTokenAccountCreation:
             return Image("policy")
         case .dAppTransactionRequest:
             return Image("conversion")

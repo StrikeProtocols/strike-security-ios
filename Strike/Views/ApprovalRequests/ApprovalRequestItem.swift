@@ -83,12 +83,6 @@ struct ApprovalRequestItem: View {
             } detail: {
                 WalletConfigPolicyDetails(request: request, update: walletConfigPolicyUpdate)
             }
-        case .splTokenAccountCreation(let splTokenAccountCreation): // 6
-            ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
-                SPLTokenAccountCreationRow(requestType: request.requestType, creation: splTokenAccountCreation)
-            } detail: {
-                SPLTokenAccountCreationDetails(request: request, creation: splTokenAccountCreation, user: user)
-            }
         case .wrapConversionRequest(let wrapConversionRequest):
             ApprovalRequestRow(user: user, request: request, timerPublisher: timerPublisher, onStatusChange: onStatusChange) {
                 WrapConversionRow(requestType: request.requestType, conversion: wrapConversionRequest)

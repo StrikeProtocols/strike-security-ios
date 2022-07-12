@@ -36,8 +36,6 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
             return 24
         case .balanceAccountPolicyUpdate:
             return 26
-        case .splTokenAccountCreation:
-            return 29
         case .balanceAccountAddressWhitelistUpdate:
             return 33
         default:
@@ -226,12 +224,6 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                     commonBytes +
                     request.combinedBytes
                 )
-            case .splTokenAccountCreation(let request):
-                return Data(
-                    [opCode] +
-                    commonBytes +
-                    request.combinedBytes
-                )
             default:
                 throw SolanaError.invalidRequest(reason: "Unknown Approval")
             }
@@ -290,8 +282,6 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                 return request.signingData
             case .walletConfigPolicyUpdate(let request):
                 return request.signingData
-            case .splTokenAccountCreation(let request):
-                return request.signingData
             default:
                 throw SolanaError.invalidRequest(reason: "Unknown Initiation")
             }
@@ -341,22 +331,6 @@ extension StrikeApi.InitiationRequest: SolanaSignable {
                 Account.Meta(publicKey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false),
                 Account.Meta(publicKey: try PublicKey(string: signingData.feePayer), isSigner: true, isWritable: false)
             ]
-        case .splTokenAccountCreation(let request):
-            let tokenMintPublicKey = try PublicKey(string: request.tokenSymbolInfo.tokenMintAddress)
-            var accounts = [
-                Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),
-                Account.Meta(publicKey: try PublicKey(string: signingData.walletAddress), isSigner: false, isWritable: false),
-                Account.Meta(publicKey: approverPublicKey, isSigner: true, isWritable: false),
-                Account.Meta(publicKey: tokenMintPublicKey, isSigner: false, isWritable: false),
-                Account.Meta(publicKey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false),
-                Account.Meta(publicKey: try PublicKey(string: signingData.feePayer), isSigner: true, isWritable: false)
-            ]
-            for balanceAccount in request.balanceAccounts {
-                let balanceAccountTokenAddress = try PublicKey.associatedTokenAddress(walletAddress: try PublicKey(string: balanceAccount.address),
-                                                                                      tokenMintAddress: tokenMintPublicKey).get()
-                accounts.append(Account.Meta(publicKey: balanceAccountTokenAddress, isSigner: false, isWritable: false))
-            }
-            return accounts;
         default:
             return [
                 Account.Meta(publicKey: try opAccountPublicKey, isSigner: false, isWritable: true),

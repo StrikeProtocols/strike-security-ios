@@ -39,8 +39,6 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             return 11
         case .balanceAccountPolicyUpdate:
             return 12
-        case .splTokenAccountCreation:
-            return 13
         case .balanceAccountAddressWhitelistUpdate:
             return 14
         case .loginApproval, .acceptVaultInvitation, .unknown:
@@ -111,13 +109,6 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
                     request.combinedBytes
                 )
             case .dAppBookUpdate(let request):
-                return try Data(
-                    [opCode] +
-                    commonBytes +
-                    signingData.walletAddress.base58Bytes +
-                    request.combinedBytes
-                )
-            case .splTokenAccountCreation(let request):
                 return try Data(
                     [opCode] +
                     commonBytes +
@@ -207,8 +198,6 @@ extension StrikeApi.ApprovalDispositionRequest: SolanaSignable {
             case .dAppBookUpdate(let request):
                 return request.signingData
             case .walletConfigPolicyUpdate(let request):
-                return request.signingData
-            case .splTokenAccountCreation(let request):
                 return request.signingData
             case .withdrawalRequest(let request):
                 return request.signingData
@@ -507,15 +496,6 @@ extension BalanceAccountAddressWhitelistUpdate {
     }
 }
 
-extension SPLTokenAccountCreation {
-    var combinedBytes: [UInt8] {
-        return
-            payerBalanceAccount.identifier.sha256HashBytes +
-            ([UInt8(balanceAccounts.count)] as [UInt8]) +
-            (balanceAccounts.flatMap({$0.identifier.sha256HashBytes}) as [UInt8]) +
-            tokenSymbolInfo.tokenMintAddress.base58Bytes
-    }
-}
 
 extension SolanaSigningData {
     var commonOpHashBytes: [UInt8] {

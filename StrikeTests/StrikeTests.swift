@@ -673,46 +673,6 @@ class StrikeTests: XCTestCase {
         )
     }
 
-    func testSPLTokenAccountCreationInitiationRequest() throws {
-        let initiation = MultisigOpInitiation(
-            opAccountCreationInfo: getOpAccountCreationInfo(),
-            dataAccountCreationInfo: nil,
-            initiatorIsApprover: true
-        )
-        let requestType: SolanaApprovalRequestType = getSPLTokenAccountCreation(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"])
-        let request = getWalletInitiationRequest(requestType, initiation: initiation)
-        let pk = try Curve25519.Signing.PrivateKey.init(rawRepresentation: "affd2d3a1283a92c72347c5075126b7868a9bc17b32dbb06eaf90ec8fdb51f3e".data(using: .hexadecimal)!)
-        let initiationRequest = StrikeApi.InitiationRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            initiation: initiation,
-            requestType: requestType,
-            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
-            email: "dont care",
-            opAccountPrivateKey: pk,
-            dataAccountPrivateKey: nil
-        )
-
-        XCTAssertEqual(
-            try initiationRequest.signableData(approverPublicKey: "CXCdHsyMVVKEQbRorowkBBnRtmC7QSAmg4QFqQJAMt85").toHexString(),
-            "0301070bd5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af344b6a3d93450d66eb4dc907e6f3c8f478feb3c8afd69ea70a6f73eb771d87cb14ab2d202d4ab70a619c12c35cd765878d7711743f57c555940b27087173491fd68e3dffb3877aaf1f737715f58920c52f4fcec66fab4ac69bb95f0ad69e33bcd706a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea9400000c43a8066d7b0612d9abc74bf23e9bc1230258306dcb561755b8d71c5ad38d5f4069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f0000000000106a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b21000000008269b01bf858c755348eccb7fd606a006e63d0cd6c0eb0b1a88694fbd26ffae0000000000000000000000000000000000000000000000000000000000000000074252b614aa502d0fa9eb2aef6eb7b43c25b6db7a61b70ae56b0cde9770fe09b7c91fdec5cfa84288fc1e5d1732f0cc5ebba8ba90e1720fc85cf8f328bd1529a030903030400040400000009020001340000000080b2720000000000b80300000000000074252b614aa502d0fa9eb2aef6eb7b43c25b6db7a61b70ae56b0cde9770fe09b0a07010502060700088b011d0000000000000000000000000000000000000000000000000000000000000000000000000000000000794b77f810f9c71db95d8fd3a9adc5805b501983c8e0b50ee675c3dc13eca3f601794b77f810f9c71db95d8fd3a9adc5805b501983c8e0b50ee675c3dc13eca3f6069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f00000000001"
-        )
-    }
-
-    func testSPLTokenAccountCreationApprovalRequest() throws {
-        let request = getWalletApprovalRequest(getSPLTokenAccountCreation(nonceAccountAddresses: ["AaFj4THN8CJmDPyJjPuDpsfC5FZys2Wmczust5UfmqeN"]))
-        let approvalRequest = StrikeApi.ApprovalDispositionRequest(
-            disposition: .Approve,
-            requestID: request.id,
-            requestType: request.requestType,
-            nonces: [StrikeApi.Nonce("9PGftXH39kRKndTxL4hQppfonLMZQpWWWzvaHzYsAcLy")],
-            email: "dont care"
-        )
-        XCTAssertEqual(
-            try approvalRequest.signableData(approverPublicKey: "GYFxPGjuBXYKg1S91zgpVZCLP4guLGRho27bTAkAzjVL").toHexString(),
-            "02010408d5259a75898e5c16f1b0675c496a9f8ee74dd7687f234ba93c0ff09dfee8af34e6e137f1b3e582e55db0f594a6cb6f05d5a08fc71d7413042921bf24f72e73eb8e3dffb3877aaf1f737715f58920c52f4fcec66fab4ac69bb95f0ad69e33bcd7067de40aba79d99d4939c2d114f77607a1b4bb284b5ccf6c5b8bfe7df8307bd506a7d517192c568ee08a845f73d29788cf035c3145b21ab344d8062ea940000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b2100000000000000000000000000000000000000000000000000000000000000000000000074252b614aa502d0fa9eb2aef6eb7b43c25b6db7a61b70ae56b0cde9770fe09b7c91fdec5cfa84288fc1e5d1732f0cc5ebba8ba90e1720fc85cf8f328bd1529a020603020400040400000007030301052209016af8107938dc689b7fcaf33f32753bff169f10352bd77c5f9175657e6823e923")
-    }
-
     func testLoginApproval() throws {
         let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6IlNvbHIifQ.SWCJDd6B_m7xr_puQH-wgbxvXyJYXH9lTpldOU0eQKc"
         let email = "sample@email.co"

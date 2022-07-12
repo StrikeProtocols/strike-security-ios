@@ -17,8 +17,6 @@
 		3D11521328217709007CD43D /* AddressBookUpdateDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521228217709007CD43D /* AddressBookUpdateDetails.swift */; };
 		3D11521628217FB5007CD43D /* BalanceAccountSettingsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521528217FB5007CD43D /* BalanceAccountSettingsRow.swift */; };
 		3D11521828217FC2007CD43D /* BalanceAccountSettingsDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521728217FC2007CD43D /* BalanceAccountSettingsDetails.swift */; };
-		3D11521B282181EF007CD43D /* SPLTokenAccountCreationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */; };
-		3D11521D282181FB007CD43D /* SPLTokenAccountCreationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */; };
 		3D11A60027580CD2008C03B1 /* CaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A5FF27580CD2008C03B1 /* CaptureController.swift */; };
 		3D11A60327580D3F008C03B1 /* DAppScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A60227580D3F008C03B1 /* DAppScan.swift */; };
 		3D11A60527580D81008C03B1 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11A60427580D81008C03B1 /* CameraPreview.swift */; };
@@ -153,8 +151,6 @@
 		3D11521228217709007CD43D /* AddressBookUpdateDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookUpdateDetails.swift; sourceTree = "<group>"; };
 		3D11521528217FB5007CD43D /* BalanceAccountSettingsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountSettingsRow.swift; sourceTree = "<group>"; };
 		3D11521728217FC2007CD43D /* BalanceAccountSettingsDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceAccountSettingsDetails.swift; sourceTree = "<group>"; };
-		3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLTokenAccountCreationRow.swift; sourceTree = "<group>"; };
-		3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPLTokenAccountCreationDetails.swift; sourceTree = "<group>"; };
 		3D11A5FF27580CD2008C03B1 /* CaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureController.swift; sourceTree = "<group>"; };
 		3D11A60227580D3F008C03B1 /* DAppScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppScan.swift; sourceTree = "<group>"; };
 		3D11A60427580D81008C03B1 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
@@ -340,15 +336,6 @@
 			path = BalanceAccountSettings;
 			sourceTree = "<group>";
 		};
-		3D115219282181D4007CD43D /* SPLTokenAccountCreation */ = {
-			isa = PBXGroup;
-			children = (
-				3D11521A282181EF007CD43D /* SPLTokenAccountCreationRow.swift */,
-				3D11521C282181FB007CD43D /* SPLTokenAccountCreationDetails.swift */,
-			);
-			path = SPLTokenAccountCreation;
-			sourceTree = "<group>";
-		};
 		3D11A60127580D1C008C03B1 /* DApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,7 +471,6 @@
 				3DB7F9BF26D6C2CD00A49B4E /* UnknownRequestRow.swift */,
 				3D6B53082851079C00F7F77F /* WrapConverstion */,
 				3D952406283D0FA400D42243 /* BalanceAccountWhitelist */,
-				3D115219282181D4007CD43D /* SPLTokenAccountCreation */,
 				3D11521428217F9E007CD43D /* BalanceAccountSettings */,
 				3D11520F282176D8007CD43D /* AddressBookUpdate */,
 				3D11520A2821730C007CD43D /* BalanceAccountName */,
@@ -873,7 +859,6 @@
 				3D311DEA260BD14A007A0B98 /* Moya+AuthProvider.swift in Sources */,
 				3DC7A74527D67E8900A2BBA7 /* SolanaClientModel.swift in Sources */,
 				3D311D56260A3A1A007A0B98 /* OktaAuthProvider.swift in Sources */,
-				3D11521B282181EF007CD43D /* SPLTokenAccountCreationRow.swift in Sources */,
 				3D3D6CF12616437400FEEE0B /* AuthProvider.swift in Sources */,
 				3D1C761927D8501C0016BB32 /* PublicKey.swift in Sources */,
 				3DAA26F6262F5156000F453D /* DestructiveButtonStyle.swift in Sources */,
@@ -943,7 +928,6 @@
 				6C0E3EF727EE6367002FEE7C /* SMP Bignum Extensions.swift in Sources */,
 				4006422F259A422400A8D8D3 /* StrikeApi.swift in Sources */,
 				6C0E3EF927EE64BA002FEE7C /* SMP.swift in Sources */,
-				3D11521D282181FB007CD43D /* SPLTokenAccountCreationDetails.swift in Sources */,
 				3DC7A73C27CE749F00A2BBA7 /* Keychain.swift in Sources */,
 				3D633E162748656500BACCCE /* BiometryCheck.swift in Sources */,
 				3D11A60727581510008C03B1 /* CameraAccessRequired.swift in Sources */,

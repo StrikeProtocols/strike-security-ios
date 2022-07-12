@@ -19,7 +19,7 @@ struct WalletConfigPolicyDetails: View {
                 Fact("Approval Expiration", "\(DateComponentsFormatter.abbreviatedFormatter.string(for: DateComponents(second: Int(update.approvalPolicy.approvalTimeout / 1000))) ?? "")")
             }
 
-            FactsSection(title: "Approvers") {
+            FactsSection(title: "Administrators") {
                 if update.approvalPolicy.approvers.count > 0 {
                     for approver in update.approvalPolicy.approvers.sorted(by: { $0.value.name < $1.value.name }) {
                         Fact(approver.value.name, approver.value.email)
