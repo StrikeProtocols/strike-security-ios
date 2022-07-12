@@ -256,6 +256,8 @@ struct SymbolInfo: Codable, Equatable {
     let symbol: String
     let symbolDescription: String
     let tokenMintAddress: String
+    let imageUrl: String?
+    let nftMetadata: NftMetadata?
 }
 
 struct SymbolAndAmountInfo: Codable, Equatable {
@@ -318,6 +320,10 @@ struct WhitelistUpdate: Codable, Equatable {
     let account: AccountInfo
     let destinationsToAdd: [SlotDestinationInfo]
     let destinationsToRemove: [SlotDestinationInfo]
+}
+
+struct NftMetadata: Codable, Equatable {
+    let name: String
 }
 
 struct WithdrawalRequest: Codable, Equatable  {
@@ -749,7 +755,9 @@ extension SymbolInfo {
         SymbolInfo(
             symbol: "BTC",
             symbolDescription: "Bitcoin",
-            tokenMintAddress: "28548397fdsf"
+            tokenMintAddress: "28548397fdsf",
+            imageUrl: nil,
+            nftMetadata: nil
         )
     }
 }

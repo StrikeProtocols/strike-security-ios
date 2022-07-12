@@ -18,6 +18,9 @@ struct WithdrawalDetails: View {
                 Fact("From Wallet", withdrawal.account.name)
                 Fact("Destinaton", withdrawal.destination.name)
                 Fact("Destination Address", withdrawal.destination.address.masked())
+                if withdrawal.symbolAndAmountInfo.symbolInfo.nftMetadata != nil {
+                    Fact("NFT Name", withdrawal.symbolAndAmountInfo.symbolInfo.nftMetadata!.name)
+                }
             }
         }
     }

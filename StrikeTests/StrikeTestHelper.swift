@@ -103,7 +103,9 @@ extension StrikeTests {
                     symbolInfo: SymbolInfo(
                         symbol: "SOL",
                         symbolDescription: "Solana",
-                        tokenMintAddress: "11111111111111111111111111111111"
+                        tokenMintAddress: "11111111111111111111111111111111",
+                        imageUrl: nil,
+                        nftMetadata: nil
                     ),
                     amount: "0.500000000",
                     usdEquivalent: "17.75"
@@ -141,7 +143,9 @@ extension StrikeTests {
                     symbolInfo: SymbolInfo(
                         symbol: "soTEST",
                         symbolDescription: "Test SPL token",
-                        tokenMintAddress: "AZ6C941cFEv7EWUsPeeYYEK278Lw5wK4AVR6Mngdt9fr"
+                        tokenMintAddress: "AZ6C941cFEv7EWUsPeeYYEK278Lw5wK4AVR6Mngdt9fr",
+                        imageUrl: nil,
+                        nftMetadata: nil
                     ),
                     amount: "0.000500",
                     usdEquivalent: nil
@@ -179,7 +183,9 @@ extension StrikeTests {
                     symbolInfo: SymbolInfo(
                         symbol: "USDC",
                         symbolDescription: "USD Coin",
-                        tokenMintAddress: "ALmJ9wWY2o1FiLcSDuvHN3xH5UHLkYsVbz2JWD37MuUY"
+                        tokenMintAddress: "ALmJ9wWY2o1FiLcSDuvHN3xH5UHLkYsVbz2JWD37MuUY",
+                        imageUrl: nil,
+                        nftMetadata: nil
                     ),
                     amount: "500.000000",
                     usdEquivalent: "500.00"
@@ -193,7 +199,9 @@ extension StrikeTests {
                 destinationSymbolInfo: SymbolInfo(
                     symbol: "USD",
                     symbolDescription: "US Dollar",
-                    tokenMintAddress: "11111111111111111111111111111111"
+                    tokenMintAddress: "11111111111111111111111111111111",
+                    imageUrl: nil,
+                    nftMetadata: nil
                 ),
                 signingData: SolanaSigningData(
                     feePayer: "FBiyhqgyrv6iRejRgL9tDYxB2jtEB4RH9pnPK2CN5J4m",
@@ -221,7 +229,9 @@ extension StrikeTests {
                     symbolInfo: SymbolInfo(
                         symbol: "SOL",
                         symbolDescription: "Solana",
-                        tokenMintAddress: "11111111111111111111111111111111"
+                        tokenMintAddress: "11111111111111111111111111111111",
+                        imageUrl: nil,
+                        nftMetadata: nil
                     ),
                     amount: "0.500000000",
                     usdEquivalent: "44.39"
@@ -229,7 +239,9 @@ extension StrikeTests {
                 destinationSymbolInfo: SymbolInfo(
                     symbol: "wSOL",
                     symbolDescription: "Wrapped SOL",
-                    tokenMintAddress: "11111111111111111111111111111111"
+                    tokenMintAddress: "11111111111111111111111111111111",
+                    imageUrl: nil,
+                    nftMetadata: nil
                 ),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
@@ -257,7 +269,9 @@ extension StrikeTests {
                     symbolInfo: SymbolInfo(
                         symbol: "wSOL",
                         symbolDescription: "Wrapped SOL",
-                        tokenMintAddress: "11111111111111111111111111111111"
+                        tokenMintAddress: "11111111111111111111111111111111",
+                        imageUrl: nil,
+                        nftMetadata: nil
                     ),
                     amount: "0.300000000",
                     usdEquivalent: "26.63"
@@ -265,7 +279,9 @@ extension StrikeTests {
                 destinationSymbolInfo: SymbolInfo(
                     symbol: "SOL",
                     symbolDescription: "Solana",
-                    tokenMintAddress: "11111111111111111111111111111111"
+                    tokenMintAddress: "11111111111111111111111111111111",
+                    imageUrl: nil,
+                    nftMetadata: nil
                 ),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
@@ -500,7 +516,9 @@ extension StrikeTests {
                 tokenSymbolInfo: SymbolInfo(
                     symbol: "wSOL",
                     symbolDescription: "Wrapped SOL",
-                    tokenMintAddress: "So11111111111111111111111111111111111111112"
+                    tokenMintAddress: "So11111111111111111111111111111111111111112",
+                    imageUrl: nil,
+                    nftMetadata: nil
                 ),
                 signingData: SolanaSigningData(
                     feePayer: "FM36ah2bH8nQWJNPCRzu7R69gE5o6UhujqJFtDpWN5as",
