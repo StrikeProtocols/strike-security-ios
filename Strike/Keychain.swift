@@ -9,6 +9,7 @@ import Foundation
 import Security
 import LocalAuthentication
 import CryptoKit
+import BIP39
 
 public class Keychain {
     private class func queryDictionary(account: String, service: String) -> [String : Any] {
@@ -64,8 +65,13 @@ public class Keychain {
     }
 
     @discardableResult
-    public class func clear(account: String, service: String) -> Bool {
-        let query = queryDictionary(account: account, service: service)
+    public class func clear(account: String, service: String, synced: Bool = false) -> Bool {
+        var query = queryDictionary(account: account, service: service)
+
+        if synced {
+            query[kSecAttrSynchronizable as String] = true
+        }
+
         let result = SecItemDelete(query as CFDictionary)
         return result == noErr
     }
@@ -73,16 +79,13 @@ public class Keychain {
 
 extension Keychain {
     enum KeyError: Error {
-        case couldNotGeneratePassphrase
-        case couldNotSavePassphrase
-        case couldNotFindPassphrase
         case couldNotDecode
         case couldNotSavePrivateKey
         case noPrivateKey
     }
 
-    static private let passphraseService = "com.strikeprotocols.private-pass"
     static private let privateKeyService = "com.strikeprotocols.private-key"
+    static private let rootSeedService = "com.strikeprotocols.root-seed"
 
     struct KeyPair {
         let encryptedPrivateKey: String
@@ -90,11 +93,17 @@ extension Keychain {
     }
 
     static func publicKey(email: String) -> String? {
-        guard let privateKeyData = load(account: email, service: privateKeyService) else {
-            return nil
-        }
+        // RETIRE THIS BLOCK AND REMOVE PRODUCTION FLAG
+        #if !PRODUCTION
+        let passphraseService = "com.strikeprotocols.private-pass"
 
-        guard let privateKey = try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKeyData) else {
+        if load(account: email, service: passphraseService, synced: true) != nil {
+            clear(account: email, service: passphraseService, synced: true)
+            clear(account: email, service: privateKeyService)
+        }
+        #endif
+
+        guard let privateKey = privateKey(for: email) else {
             return nil
         }
 
@@ -102,53 +111,23 @@ extension Keychain {
         return Base58.encode(publicKeyData.bytes)
     }
 
-    static func keyPair(email: String) throws -> KeyPair {
-        if let passphrase = load(account: email, service: passphraseService, synced: true),
-           let privateKeyData = load(account: email, service: privateKeyService) {
-            let privateKey = try Curve25519.Signing.PrivateKey(rawRepresentation: privateKeyData)
-            let sealedData = try AES.GCM.seal(privateKey.rawRepresentation, using: .init(data: passphrase), nonce: nil)
-
-            return KeyPair(
-                encryptedPrivateKey: Base58.encode(sealedData.combined!.bytes),
-                publicKey: Base58.encode(privateKey.publicKey.rawRepresentation.bytes)
-            )
+    static func savePrivateKey(_ privateKey: Curve25519.Signing.PrivateKey, rootSeed: [UInt8], email: String) throws {
+        if !save(account: email, service: rootSeedService, data: Data(rootSeed)) {
+            throw KeyError.couldNotSavePrivateKey
         }
 
-        var bytes = [Int8](repeating: 0, count: 32)
-        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-
-        if status != errSecSuccess {
-            throw KeyError.couldNotGeneratePassphrase
+        if !save(account: email, service: privateKeyService, data: privateKey.rawRepresentation) {
+            throw KeyError.couldNotSavePrivateKey
         }
-
-        let passphrase = bytes.withUnsafeBufferPointer(Data.init(buffer:))
-
-        guard save(account: email, service: passphraseService, data: passphrase, synced: true) else {
-            throw KeyError.couldNotSavePassphrase
-        }
-
-        let privateKey = Curve25519.Signing.PrivateKey()
-
-        let sealedData = try AES.GCM.seal(privateKey.rawRepresentation, using: .init(data: passphrase), nonce: nil)
-
-        return KeyPair(
-            encryptedPrivateKey: Base58.encode(sealedData.combined!.bytes),
-            publicKey: Base58.encode(privateKey.publicKey.rawRepresentation.bytes)
-        )
     }
 
-    static func savePrivateKey(_ encryptedKey: String, email: String) throws {
-        guard let passphrase = load(account: email, service: passphraseService, synced: true) else {
-            throw KeyError.couldNotFindPassphrase
-        }
-
-        let data = Base58.decode(encryptedKey)
-        let combinedData = data.withUnsafeBufferPointer(Data.init(buffer:))
-        let sealedBox = try AES.GCM.SealedBox(combined: combinedData)
-        let decryptedData = try AES.GCM.open(sealedBox, using: .init(data: passphrase))
-
-        if !save(account: email, service: privateKeyService, data: decryptedData) {
-            throw KeyError.couldNotSavePrivateKey
+    static func privateKey(for account: String) -> Curve25519.Signing.PrivateKey? {
+        if let privateKeyData = load(account: account, service: privateKeyService) {
+            return try? Curve25519.Signing.PrivateKey(rawRepresentation: privateKeyData)
+        } else if let rootSeedData = load(account: account, service: rootSeedService) {
+            return try? Ed25519HierachicalPrivateKey.fromRootSeed(rootSeed: rootSeedData.bytes).privateKey
+        } else {
+            return nil
         }
     }
 }

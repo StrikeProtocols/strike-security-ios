@@ -25,9 +25,7 @@ struct SignedInNavigationView<Content>: View where Content : View {
 
     var body: some View {
         NavigationView {
-            content {
-                activeSheet = .dapp
-            }
+            content({ activeSheet = .profile })
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.Strike.primaryBackground.ignoresSafeArea())
                 .navigationBarTitleDisplayMode(.inline)

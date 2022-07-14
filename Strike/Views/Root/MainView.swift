@@ -35,8 +35,8 @@ struct MainView: View {
                 RetryView(error: error, action: reload)
             }
         case .success(let user):
-            SignedInNavigationView(user: user, onSignOut: onSignOut) { showDApp in
-                RegistrationView(user: user, onReloadUser: reload, onShowDApp: showDApp)
+            SignedInNavigationView(user: user, onSignOut: onSignOut) { onProfile in
+                RegistrationView(user: user, onReloadUser: reload, onProfile: onProfile)
             }
         }
     }

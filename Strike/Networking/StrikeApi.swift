@@ -139,7 +139,6 @@ extension StrikeApi {
 
     struct WalletSigner: Codable {
         let publicKey: String
-        let encryptedKey: String
         let walletType: String
     }
 

@@ -8,7 +8,6 @@
 import SwiftUI
 import Moya
 
-
 @main
 struct StrikeApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate

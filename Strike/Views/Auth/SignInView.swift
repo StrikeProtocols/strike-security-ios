@@ -34,44 +34,64 @@ struct SignInView: View {
     
     var body: some View {
         VStack {
-            Spacer()
+            ScrollView {
+                VStack {
+                    Image("Logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 22)
+                        .padding(50)
 
-            Image("Logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 44)
-                .padding(50)
-            
-            VStack(spacing: 20) {
-                TextField("Email", text: $username)
-                    .keyboardType(.emailAddress)
-                    .textContentType(.emailAddress)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .foregroundColor(Color.white)
-                    .accentColor(Color.Strike.purple)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                VStack(alignment: .trailing, spacing: 10) {
-                    SecureField("Password", text: $password) {
-                        if canSignIn { signIn() }
+                    Text("Sign in with the account you created on the web")
+                        .multilineTextAlignment(.center)
+                        .padding([.leading, .trailing], 60)
+                        .padding([.bottom], 20)
+
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Email")
+
+                        TextField("", text: $username, onEditingChanged: {value in
+                            print("sdf: \(value)")
+                        })
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .foregroundColor(Color.black)
+                            .accentColor(Color.Strike.purple)
+                            .textFieldStyle(LightRoundedTextFieldStyle())
+                            //.colorScheme(.dark)
+
+                        Text("Password")
+
+                        VStack(alignment: .trailing, spacing: 10) {
+                            SecureField("", text: $password) {
+                                if canSignIn { signIn() }
+                            }
+                            .textContentType(.password)
+                            .foregroundColor(Color.black)
+                            .accentColor(Color.Strike.purple)
+                            .textFieldStyle(LightRoundedTextFieldStyle())
+                            //.colorScheme(.dark)
+
+                            Button("Forgot password?") {
+                                currentSheet = .recoverPassword
+                            }
+                            .foregroundColor(Color.Strike.purple)
+                        }
                     }
-                    .textContentType(.password)
-                    .foregroundColor(Color.white)
-                    .accentColor(Color.Strike.purple)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    Button("Reset Password") {
-                        currentSheet = .recoverPassword
-                    }
-                    .foregroundColor(Color.Strike.purple)
+                    .padding(35)
+                    .background(
+                        Rectangle()
+                            .border(.gray.opacity(0.4), width: 1)
+                            .foregroundColor(.black)
+                    )
+                    .padding(20)
+                    .disabled(isAuthenticating)
                 }
             }
-            .padding()
-            .disabled(isAuthenticating)
-            
-            Spacer()
 
+            Spacer()
 
             Button(action: signIn) {
                 Text("Sign in")
@@ -81,11 +101,10 @@ struct SignInView: View {
             .buttonStyle(FilledButtonStyle())
             .disabled(!canSignIn)
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .padding()
+            .padding(30)
         }
         .background(
-            Color.Strike.primaryBackground
-                .ignoresSafeArea()
+            StrikeBackground()
         )
         .alert(item: $currentAlert) { item in
             switch item {

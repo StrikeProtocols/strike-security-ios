@@ -55,6 +55,19 @@
 		3D4C145F2710C9BE00382FBF /* raygun4apple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D61A0F42655983B00AD1EE7 /* raygun4apple.framework */; };
 		3D61A0FC2655B4FF00AD1EE7 /* SignedInNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61A0FA2655B4FF00AD1EE7 /* SignedInNavigationView.swift */; };
 		3D61A0FE2655B50700AD1EE7 /* MessageSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61A0FD2655B50700AD1EE7 /* MessageSupport.swift */; };
+		3D6334EC2885C299002CEC5A /* PenAndPaperConfirm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E42885C298002CEC5A /* PenAndPaperConfirm.swift */; };
+		3D6334ED2885C299002CEC5A /* PenAndPaperRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E52885C298002CEC5A /* PenAndPaperRecovery.swift */; };
+		3D6334EE2885C299002CEC5A /* KeyConfirmationSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E62885C298002CEC5A /* KeyConfirmationSuccess.swift */; };
+		3D6334EF2885C299002CEC5A /* KeyRecoverySuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E72885C298002CEC5A /* KeyRecoverySuccess.swift */; };
+		3D6334F02885C299002CEC5A /* PasswordManagerRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E82885C298002CEC5A /* PasswordManagerRecovery.swift */; };
+		3D6334F12885C299002CEC5A /* PasswordManagerConfirm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334E92885C299002CEC5A /* PasswordManagerConfirm.swift */; };
+		3D6334F22885C299002CEC5A /* PenAndPaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334EA2885C299002CEC5A /* PenAndPaper.swift */; };
+		3D6334F32885C299002CEC5A /* PasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334EB2885C299002CEC5A /* PasswordManager.swift */; };
+		3D6334F92885C2C9002CEC5A /* StrikeProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334F42885C2C9002CEC5A /* StrikeProgressView.swift */; };
+		3D6334FA2885C2C9002CEC5A /* FocusedOnAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334F52885C2C9002CEC5A /* FocusedOnAppear.swift */; };
+		3D6334FB2885C2C9002CEC5A /* DarkRoundedTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334F62885C2C9002CEC5A /* DarkRoundedTextFieldStyle.swift */; };
+		3D6334FC2885C2C9002CEC5A /* BackButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334F72885C2C9002CEC5A /* BackButtonBar.swift */; };
+		3D6334FD2885C2C9002CEC5A /* StrikeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6334F82885C2C9002CEC5A /* StrikeBackground.swift */; };
 		3D633E162748656500BACCCE /* BiometryCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D633E152748656500BACCCE /* BiometryCheck.swift */; };
 		3D6B530A285107B300F7F77F /* WrapConversionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B5309285107B300F7F77F /* WrapConversionRow.swift */; };
 		3D6B530C285107BE00F7F77F /* WrapConversionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B530B285107BE00F7F77F /* WrapConversionDetail.swift */; };
@@ -189,6 +202,19 @@
 		3D61A0F8265598F700AD1EE7 /* Strike-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Strike-Bridging-Header.h"; sourceTree = "<group>"; };
 		3D61A0FA2655B4FF00AD1EE7 /* SignedInNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignedInNavigationView.swift; sourceTree = "<group>"; };
 		3D61A0FD2655B50700AD1EE7 /* MessageSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSupport.swift; sourceTree = "<group>"; };
+		3D6334E42885C298002CEC5A /* PenAndPaperConfirm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenAndPaperConfirm.swift; sourceTree = "<group>"; };
+		3D6334E52885C298002CEC5A /* PenAndPaperRecovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenAndPaperRecovery.swift; sourceTree = "<group>"; };
+		3D6334E62885C298002CEC5A /* KeyConfirmationSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyConfirmationSuccess.swift; sourceTree = "<group>"; };
+		3D6334E72885C298002CEC5A /* KeyRecoverySuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyRecoverySuccess.swift; sourceTree = "<group>"; };
+		3D6334E82885C298002CEC5A /* PasswordManagerRecovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordManagerRecovery.swift; sourceTree = "<group>"; };
+		3D6334E92885C299002CEC5A /* PasswordManagerConfirm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordManagerConfirm.swift; sourceTree = "<group>"; };
+		3D6334EA2885C299002CEC5A /* PenAndPaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenAndPaper.swift; sourceTree = "<group>"; };
+		3D6334EB2885C299002CEC5A /* PasswordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordManager.swift; sourceTree = "<group>"; };
+		3D6334F42885C2C9002CEC5A /* StrikeProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrikeProgressView.swift; sourceTree = "<group>"; };
+		3D6334F52885C2C9002CEC5A /* FocusedOnAppear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusedOnAppear.swift; sourceTree = "<group>"; };
+		3D6334F62885C2C9002CEC5A /* DarkRoundedTextFieldStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkRoundedTextFieldStyle.swift; sourceTree = "<group>"; };
+		3D6334F72885C2C9002CEC5A /* BackButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButtonBar.swift; sourceTree = "<group>"; };
+		3D6334F82885C2C9002CEC5A /* StrikeBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrikeBackground.swift; sourceTree = "<group>"; };
 		3D633E152748656500BACCCE /* BiometryCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryCheck.swift; sourceTree = "<group>"; };
 		3D6B5309285107B300F7F77F /* WrapConversionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapConversionRow.swift; sourceTree = "<group>"; };
 		3D6B530B285107BE00F7F77F /* WrapConversionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapConversionDetail.swift; sourceTree = "<group>"; };
@@ -443,6 +469,11 @@
 				3DAA2716263092FD000F453D /* FirstTimeAppear.swift */,
 				3D2BCA07264D7A79000A6D56 /* ChangeDetails.swift */,
 				3D61A0FD2655B50700AD1EE7 /* MessageSupport.swift */,
+				3D6334F72885C2C9002CEC5A /* BackButtonBar.swift */,
+				3D6334F62885C2C9002CEC5A /* DarkRoundedTextFieldStyle.swift */,
+				3D6334F52885C2C9002CEC5A /* FocusedOnAppear.swift */,
+				3D6334F82885C2C9002CEC5A /* StrikeBackground.swift */,
+				3D6334F42885C2C9002CEC5A /* StrikeProgressView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -453,6 +484,14 @@
 				3D3D6D352616B84700FEEE0B /* RegistrationView.swift */,
 				3DC7A74027D0067D00A2BBA7 /* KeyGeneration.swift */,
 				3DC7A74227D006A900A2BBA7 /* KeyRetrieval.swift */,
+				3D6334E62885C298002CEC5A /* KeyConfirmationSuccess.swift */,
+				3D6334E72885C298002CEC5A /* KeyRecoverySuccess.swift */,
+				3D6334EB2885C299002CEC5A /* PasswordManager.swift */,
+				3D6334E92885C299002CEC5A /* PasswordManagerConfirm.swift */,
+				3D6334E82885C298002CEC5A /* PasswordManagerRecovery.swift */,
+				3D6334EA2885C299002CEC5A /* PenAndPaper.swift */,
+				3D6334E42885C298002CEC5A /* PenAndPaperConfirm.swift */,
+				3D6334E52885C298002CEC5A /* PenAndPaperRecovery.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -832,6 +871,7 @@
 				3D2BCA08264D7A79000A6D56 /* ChangeDetails.swift in Sources */,
 				3DBC44E5280F18830016E1AB /* LoginDetails.swift in Sources */,
 				3D11521628217FB5007CD43D /* BalanceAccountSettingsRow.swift in Sources */,
+				3D6334EC2885C299002CEC5A /* PenAndPaperConfirm.swift in Sources */,
 				3DBF9DC326E000CC00D7683E /* EmptyApprovalRequestsList.swift in Sources */,
 				3DB995FB27EB7997005655F0 /* AccountCreationRow.swift in Sources */,
 				3D11A60327580D3F008C03B1 /* DAppScan.swift in Sources */,
@@ -846,6 +886,8 @@
 				3D1C762027D871D80016BB32 /* Message.swift in Sources */,
 				40CB67F925C3195D00DB15D6 /* Mock.swift in Sources */,
 				3DAF53BC262E1421000DD558 /* Countdown.swift in Sources */,
+				3D6334F32885C299002CEC5A /* PasswordManager.swift in Sources */,
+				3D6334F92885C2C9002CEC5A /* StrikeProgressView.swift in Sources */,
 				40BCB0B7261BA17C00CF58A8 /* MFAChallengeView.swift in Sources */,
 				3DBC44E3280F17660016E1AB /* LoginRow.swift in Sources */,
 				3DC7A74327D006A900A2BBA7 /* KeyRetrieval.swift in Sources */,
@@ -857,6 +899,7 @@
 				3D3854222639BD7F00C8693C /* Data+Hex.swift in Sources */,
 				40CB67D725C1B75A00DB15D6 /* StrikeTheme.swift in Sources */,
 				3D311DEA260BD14A007A0B98 /* Moya+AuthProvider.swift in Sources */,
+				3D6334FB2885C2C9002CEC5A /* DarkRoundedTextFieldStyle.swift in Sources */,
 				3DC7A74527D67E8900A2BBA7 /* SolanaClientModel.swift in Sources */,
 				3D311D56260A3A1A007A0B98 /* OktaAuthProvider.swift in Sources */,
 				3D3D6CF12616437400FEEE0B /* AuthProvider.swift in Sources */,
@@ -872,6 +915,7 @@
 				3D3D6CEA2616432000FEEE0B /* UnsupportedAuthStatusView.swift in Sources */,
 				3DAF53C4262E1ACF000DD558 /* WithdrawalDetails.swift in Sources */,
 				3D11A60527580D81008C03B1 /* CameraPreview.swift in Sources */,
+				3D6334F12885C299002CEC5A /* PasswordManagerConfirm.swift in Sources */,
 				3DC2F3FF25F896C40061BB3A /* RemoteResult.swift in Sources */,
 				3DBF9DC526E0020300D7683E /* ApprovalRequestItem.swift in Sources */,
 				3D115204282169E1007CD43D /* WalletConfigPolicyDetails.swift in Sources */,
@@ -879,6 +923,7 @@
 				6C0E3EED27EE5AFE002FEE7C /* InitiationRequest+SolanaSignable.swift in Sources */,
 				3DDAF32F2639F7010015B54B /* RefreshScrollView.swift in Sources */,
 				3DA5EEE028353C5300D26BAF /* SolanaApprovalRequestType+Language.swift in Sources */,
+				3D6334F02885C299002CEC5A /* PasswordManagerRecovery.swift in Sources */,
 				3DB7F9BE26D6C10400A49B4E /* ConversionDetail.swift in Sources */,
 				3DAA26F0262F5147000F453D /* PrimaryButtonStyle.swift in Sources */,
 				3D311D43260A336A007A0B98 /* RoundedCell.swift in Sources */,
@@ -894,6 +939,8 @@
 				40BCB0AD261B8B8700CF58A8 /* MFARequiredView.swift in Sources */,
 				3DD9568725EF561F003F9ECF /* Moya+StrikeClient.swift in Sources */,
 				3DAA2717263092FD000F453D /* FirstTimeAppear.swift in Sources */,
+				3D6334EF2885C299002CEC5A /* KeyRecoverySuccess.swift in Sources */,
+				3D6334EE2885C299002CEC5A /* KeyConfirmationSuccess.swift in Sources */,
 				3DB9960127EE1A1B005655F0 /* Data+Extensions.swift in Sources */,
 				3D3D6D102616447200FEEE0B /* FilledButtonStyle.swift in Sources */,
 				3D11A60D27585F72008C03B1 /* ImageLoader.swift in Sources */,
@@ -908,6 +955,7 @@
 				3D2CE49925F8423800137E05 /* SignInView.swift in Sources */,
 				40F907A625DDC31B00B107B0 /* StrikeApi+Mock.swift in Sources */,
 				3D1C762227DA850A0016BB32 /* Base58.swift in Sources */,
+				3D6334FA2885C2C9002CEC5A /* FocusedOnAppear.swift in Sources */,
 				3DAF53C0262E158B000DD558 /* WithdrawalRow.swift in Sources */,
 				3DB995F827EB71FA005655F0 /* SignerUpdateDetails.swift in Sources */,
 				3D61A0FE2655B50700AD1EE7 /* MessageSupport.swift in Sources */,
@@ -916,12 +964,15 @@
 				3DAFFD2E25F8951100B408AD /* MainView.swift in Sources */,
 				3DC36BB5262B4E8C005DB1A7 /* ApprovalRequestsList.swift in Sources */,
 				3D115202282169D4007CD43D /* WalletConfigPolicyRow.swift in Sources */,
+				3D6334FC2885C2C9002CEC5A /* BackButtonBar.swift in Sources */,
 				40328E102593ED9900F2EE41 /* StrikeApp.swift in Sources */,
 				3D95240A283D0FC300D42243 /* BalanceAccountWhitelistDetails.swift in Sources */,
 				3D3D6CED2616432000FEEE0B /* LockedOutAccountView.swift in Sources */,
 				3D11521828217FC2007CD43D /* BalanceAccountSettingsDetails.swift in Sources */,
 				3D3D6D362616B84700FEEE0B /* RegistrationView.swift in Sources */,
 				3DAF53B4262E13A4000DD558 /* ApprovalRequestRow.swift in Sources */,
+				3D6334FD2885C2C9002CEC5A /* StrikeBackground.swift in Sources */,
+				3D6334F22885C299002CEC5A /* PenAndPaper.swift in Sources */,
 				40CB67AD25C1076300DB15D6 /* Configuration.swift in Sources */,
 				3D1C761B27D8503B0016BB32 /* TransactionInstruction.swift in Sources */,
 				40A9AEF825DF2E29004320EF /* AccountDetail.swift in Sources */,
@@ -937,6 +988,7 @@
 				3D3D6CEB2616432000FEEE0B /* RecoverPasswordChallengeView.swift in Sources */,
 				3DC2F42D25FAAFD00061BB3A /* MoyaLoader.swift in Sources */,
 				3D61A0FC2655B4FF00AD1EE7 /* SignedInNavigationView.swift in Sources */,
+				3D6334ED2885C299002CEC5A /* PenAndPaperRecovery.swift in Sources */,
 				3DC2F42925FAAA4E0061BB3A /* Networking+Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2056,7 +2108,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PRODUCTION";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -2122,6 +2174,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;

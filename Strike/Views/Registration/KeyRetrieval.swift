@@ -8,46 +8,86 @@
 import Foundation
 import SwiftUI
 
-struct KeyRetrieval: View {
-    @Environment(\.strikeApi) var strikeApi
-
-    @RemoteResult private var walletSigners: [StrikeApi.WalletSigner]?
-
-    var user: StrikeApi.User
-    var onReloadUser: () -> Void
+struct ProfileButton: View {
+    var action: () -> Void
 
     var body: some View {
-        switch $walletSigners {
-        case .idle:
-            ProgressView()
-                .onAppear(perform: reload)
-        case .loading:
-            ProgressView()
-        case .failure(let error):
-            RetryView(error: error, action: reload)
-        case .success(let walletSigners) where !walletSigners.isEmpty:
-            ProgressView()
-                .onAppear {
-                    do {
-                        try Keychain.savePrivateKey(walletSigners.first!.encryptedKey, email: user.loginName)
-                        onReloadUser()
-                    } catch {
-                        _walletSigners.content = .failure(error)
-                    }
-                }
-        case .success:
-            ProgressView()
-                .onAppear {
-                    onReloadUser()
-                }
-        }
-    }
+        HStack {
+            Button {
+                action()
+            } label: {
+                Image(systemName: "person")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(.white)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .frame(width: 20, height: 20)
+            .padding(5)
 
-    private func reload() {
-        _walletSigners.reload(
-            using: strikeApi.provider.loader(
-                for: .walletSigners
-            )
-        )
+            Spacer()
+        }
+        .padding()
     }
 }
+
+struct KeyRetrieval: View {
+    var user: StrikeApi.User
+    var publicKey: StrikeApi.PublicKey
+    var onSuccess: () -> Void
+    var onProfile: () -> Void
+
+    var body: some View {
+        VStack {
+            ProfileButton(action: onProfile)
+
+            Spacer()
+
+            Image(systemName: "key")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 150)
+                .padding(40)
+
+            Text("Its time to restore your private key using your secret recovery phrase")
+                .font(.system(size: 26).bold())
+                .multilineTextAlignment(.center)
+                .padding(20)
+
+            Text("How did you back it up?")
+                .padding()
+
+            NavigationLink {
+                PasswordManagerRecovery(user: user, publicKey: publicKey, onSuccess: onSuccess)
+            } label: {
+                Text("Password Manager")
+                    .frame(maxWidth: .infinity)
+            }
+            .padding([.leading, .trailing], 30)
+            .padding([.top, .bottom])
+
+            NavigationLink {
+                PenAndPaperRecovery(user: user, publicKey: publicKey, onSuccess: onSuccess)
+            } label: {
+                Text("Pen and Paper")
+                    .frame(maxWidth: .infinity)
+            }
+            .padding([.leading, .trailing], 30)
+
+            Spacer()
+        }
+        .buttonStyle(FilledButtonStyle())
+        .navigationBarHidden(true)
+        .background(StrikeBackground())
+    }
+}
+
+#if DEBUG
+struct KeyRetrieval_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            KeyRetrieval(user: .sample, publicKey: StrikeApi.PublicKey(key: "", walletType: ""), onSuccess: {}, onProfile: {})
+        }
+    }
+}
+#endif

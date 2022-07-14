@@ -11,18 +11,29 @@ import SwiftUI
 struct RegistrationView: View {
     @Environment(\.strikeApi) var strikeApi
 
+    @State private var storedPublicKey: String?
+
     var user: StrikeApi.User
     var onReloadUser: () -> Void
-    var onShowDApp: () -> Void
+    var onProfile: () -> Void
+
+    init(user: StrikeApi.User, onReloadUser: @escaping () -> Void, onProfile: @escaping () -> Void) {
+        self.user = user
+        self.onReloadUser = onReloadUser
+        self.onProfile = onProfile
+        self._storedPublicKey = State(initialValue: Keychain.publicKey(email: user.loginName))
+    }
 
     var body: some View {
-        let storedPublicKey = Keychain.publicKey(email: user.loginName)
-
         switch (storedPublicKey, user.publicKeys.first) {
         case (_, .none):
-            KeyGeneration(user: user, onSuccess: onReloadUser)
-        case (.none, .some):
-            KeyRetrieval(user: user, onReloadUser: onReloadUser)
+            KeyGeneration(user: user, onSuccess: onReloadUser, onProfile: onProfile)
+        case (.none, .some(let remotePublicKey)):
+            KeyRetrieval(user: user, publicKey: remotePublicKey) {
+                storedPublicKey = Keychain.publicKey(email: user.loginName)
+            } onProfile: {
+                onProfile()
+            }
         case (.some(let storedPublicKey), .some(let remotePublicKey)) where storedPublicKey == remotePublicKey.key:
             ApprovalRequestsView(user: user)
                 .navigationTitle("Approvals")
@@ -46,7 +57,7 @@ struct RegistrationView: View {
 #if DEBUG
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView(user: .sample, onReloadUser: { }, onShowDApp: { })
+        RegistrationView(user: .sample, onReloadUser: { }, onProfile: {})
     }
 }
 #endif

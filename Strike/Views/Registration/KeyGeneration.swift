@@ -7,50 +7,66 @@
 
 import Foundation
 import SwiftUI
+import BIP39
 
 struct KeyGeneration: View {
-    @Environment(\.strikeApi) var strikeApi
-
-    @RemoteResult private var walletSigner: StrikeApi.WalletSigner?
+    @State private var phrase = Mnemonic(strength: 256).phrase
 
     var user: StrikeApi.User
     var onSuccess: () -> Void
+    var onProfile: () -> Void
 
     var body: some View {
-        switch $walletSigner {
-        case .idle:
-            ProgressView()
-                .onAppear(perform: reload)
-        case .loading:
-            ProgressView()
-        case .failure(let error):
-            RetryView(error: error, action: reload)
-        case .success(let walletSigner):
-            ProgressView()
-                .onAppear {
-                    try? Keychain.savePrivateKey(walletSigner.encryptedKey, email: user.loginName)
-                    onSuccess()
-                }
+        VStack {
+            ProfileButton(action: onProfile)
+            
+            Spacer()
+
+            Image(systemName: "key")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 150)
+                .padding(40)
+
+            Text("Its time to back up your secret recovery phrase")
+                .font(.system(size: 26).bold())
+                .multilineTextAlignment(.center)
+                .padding(20)
+
+            Text("How would you like to save it?")
+                .padding()
+
+            NavigationLink {
+                PasswordManager(user: user, phrase: phrase, onSuccess: onSuccess)
+            } label: {
+                Text("Password Manager")
+                    .frame(maxWidth: .infinity)
+            }
+            .padding([.leading, .trailing], 30)
+            .padding([.top, .bottom])
+
+            NavigationLink {
+                PenAndPaper(user: user, phrase: phrase, onSuccess: onSuccess)
+            } label: {
+                Text("Pen and Paper")
+                    .frame(maxWidth: .infinity)
+            }
+            .padding([.leading, .trailing], 30)
+
+            Spacer()
         }
+        .buttonStyle(FilledButtonStyle())
+        .navigationBarHidden(true)
+        .background(StrikeBackground())
     }
+}
 
-    private func reload() {
-        do {
-            let keyPair = try Keychain.keyPair(email: user.loginName)
-
-            _walletSigner.reload(
-                using: strikeApi.provider.loader(
-                    for: .addWalletSigner(
-                        StrikeApi.WalletSigner(
-                            publicKey: keyPair.publicKey,
-                            encryptedKey: keyPair.encryptedPrivateKey,
-                            walletType: "Solana"
-                        )
-                    )
-                )
-            )
-        } catch {
-            _walletSigner.content = .failure(error)
+#if DEBUG
+struct KeyGeneration_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            KeyGeneration(user: .sample, onSuccess: {}, onProfile: {})
         }
     }
 }
+#endif
