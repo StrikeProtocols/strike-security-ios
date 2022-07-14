@@ -596,6 +596,7 @@ extension StrikeTests {
             numberOfDispositionsRequired: 1,
             numberOfApprovalsReceived: 1,
             numberOfDeniesReceived: 1,
+            vaultName: "Test Vault",
             details: .approval(requestType)
         )
     }
@@ -611,6 +612,7 @@ extension StrikeTests {
             numberOfDispositionsRequired: 1,
             numberOfApprovalsReceived: 1,
             numberOfDeniesReceived: 1,
+            vaultName: "Test Vault",
             details: .multisigOpInitiation(initiation, requestType: requestType)
         )
     }

@@ -14,9 +14,6 @@ struct AcceptVaultInvitationDetails: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            FactList {
-                Fact("Vault Name", acceptVaultInvitation.vaultName)
-            }
         }
     }
 }

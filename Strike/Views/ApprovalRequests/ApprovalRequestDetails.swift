@@ -62,6 +62,9 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                     content()
 
                     FactsSection(title: "STATUS") {
+                        if let vaultName = request.vaultName {
+                            Fact("Vault Name", vaultName)
+                        }
                         Fact("Initiated By", request.submitterEmail) {
                             isComposingMail = true
                         }

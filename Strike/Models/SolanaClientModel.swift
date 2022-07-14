@@ -69,6 +69,7 @@ struct WalletApprovalRequest: Codable, Equatable {
     let numberOfDispositionsRequired: Int
     let numberOfApprovalsReceived: Int
     let numberOfDeniesReceived: Int
+    let vaultName: String?
     let details: SolanaApprovalRequestDetails
 }
 
@@ -673,6 +674,7 @@ extension WalletApprovalRequest {
             numberOfDispositionsRequired: 3,
             numberOfApprovalsReceived: 1,
             numberOfDeniesReceived: 1,
+            vaultName: "Test Vault",
             details: .approval(.withdrawalRequest(.sample))
         )
     }
@@ -688,6 +690,7 @@ extension WalletApprovalRequest {
             numberOfDispositionsRequired: 3,
             numberOfApprovalsReceived: 1,
             numberOfDeniesReceived: 1,
+            vaultName: "Test Vault",
             details: .approval(.conversionRequest(.sample))
         )
     }
