@@ -39,7 +39,7 @@ struct Profile: View {
                             Text("SECURITY NOTICE:")
                                 .font(.subheadline.bold())
 
-                            Text("To help protect your account's security a Strike Protocols Support representative will never call you to request any confidential information in regards to your account (such as password etc.). If you receive a call from anyone claiming to represent Strike Protocols that seems suspicious, please hang up and contact us immediately.")
+                            Text("To help protect your account's security Strike will never request any confidential information in regards to your account (such as password or secret recovery phrase).")
 
                             Spacer()
 

@@ -37,11 +37,11 @@ struct PasswordManagerConfirm: View {
                     .padding([.leading, .trailing], 50)
                     .padding([.top, .bottom], 10)
             } else {
-                Text("Uh oh.  That phrase is not correct.")
+                Text("Uh oh.  That recovery phrase is not correct.")
                     .padding([.leading, .trailing], 50)
                     .padding([.top, .bottom], 10)
 
-                Text("You can try again or go back to copy your phrase.")
+                Text("You can try again or go back to copy your recovery phrase.")
                     .padding([.leading, .trailing], 50)
                     .padding([.top, .bottom], 10)
             }

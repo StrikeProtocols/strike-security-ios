@@ -25,7 +25,7 @@ struct PasswordManager: View {
 
             Spacer()
 
-            Text("Copy your recovery phrase to your clipboard")
+            Text("Copy your secret recovery phrase to your clipboard")
                 .font(.system(size: 26).bold())
                 .multilineTextAlignment(.center)
                 .padding()
@@ -72,7 +72,7 @@ struct PasswordManager: View {
             NavigationLink {
                 PasswordManagerConfirm(user: user, phrase: phrase, onSuccess: onSuccess)
             } label: {
-                Text("I saved the phrase →")
+                Text("I saved the recovery phrase →")
                     .frame(height: 100)
                     .frame(maxWidth: .infinity)
             }

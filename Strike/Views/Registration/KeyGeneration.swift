@@ -28,7 +28,7 @@ struct KeyGeneration: View {
                 .frame(height: 150)
                 .padding(40)
 
-            Text("Its time to back up your secret recovery phrase")
+            Text("Your secret recovery phrase has been generated")
                 .font(.system(size: 26).bold())
                 .multilineTextAlignment(.center)
                 .padding(20)

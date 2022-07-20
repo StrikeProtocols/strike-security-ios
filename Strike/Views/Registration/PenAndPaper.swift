@@ -107,7 +107,7 @@ struct PenAndPaper: View {
             NavigationLink {
                 PenAndPaperConfirm(user: user, phrase: phrase, onSuccess: onSuccess)
             } label: {
-                Text("I saved the phrase →")
+                Text("I saved the recovery phrase →")
                     .frame(maxWidth: .infinity)
             }
             .padding(30)
