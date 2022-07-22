@@ -14,10 +14,17 @@ extension String {
         return "\(prefix(4))•••\(suffix(4))"
     }
     
-    func walletName() -> String {
+    func toWalletName() -> String {
         if self.lowercased().hasSuffix("wallet") {
             return self
         }
         return "\(self) Wallet"
+    }
+    
+    func toVaultName() -> String {
+        if self.lowercased().hasSuffix("vault") {
+            return self
+        }
+        return "\(self) Vault"
     }
 }

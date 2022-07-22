@@ -23,6 +23,14 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
     var timerPublisher: Publishers.Autoconnect<Timer.TimerPublisher>
     var onStatusChange: (() -> Void)?
     @ViewBuilder var content: () -> Content
+    var statusTitle: String {
+        switch request.requestType {
+        case .acceptVaultInvitation:
+            return ""
+        default:
+            return "STATUS"
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -61,17 +69,26 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
 
                     content()
 
-                    FactsSection(title: "STATUS") {
+                    FactsSection(title: statusTitle) {
                         if let vaultName = request.vaultName {
                             Fact("Vault Name", vaultName)
                         }
-                        Fact("Initiated By", request.submitterEmail) {
-                            isComposingMail = true
+
+                        switch request.requestType {
+                        case .acceptVaultInvitation:
+                            Fact("Invited By", request.submitterName)
+                            Fact("Invited By Email", request.submitterEmail) {
+                                isComposingMail = true
+                            }
+                        default:
+                            Fact("Initiated By", request.submitterEmail) {
+                                isComposingMail = true
+                            }
+                            Fact("Approvals Received", "\(request.numberOfApprovalsReceived) of \(request.numberOfDispositionsRequired)")
+
+                            Fact("Denials Received", "\(request.numberOfDeniesReceived) of \(request.numberOfDispositionsRequired)")
                         }
-
-                        Fact("Approvals Received", "\(request.numberOfApprovalsReceived) of \(request.numberOfDispositionsRequired)")
-
-                        Fact("Denials Received", "\(request.numberOfDeniesReceived) of \(request.numberOfDispositionsRequired)")
+                        
                         
                         if let expireDate = request.expireDate {
                             if expireDate <= Date() {

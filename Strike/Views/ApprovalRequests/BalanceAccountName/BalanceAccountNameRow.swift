@@ -24,7 +24,7 @@ struct BalanceAccountNameRow: View {
                 .foregroundColor(Color.white)
                 .padding(EdgeInsets(top: 15, leading: 20, bottom: 0, trailing: 20))
 
-            Text("\(update.accountInfo.name.walletName()) → \(update.newAccountName.walletName())")
+            Text("\(update.accountInfo.name.toWalletName()) → \(update.newAccountName.toWalletName())")
                 .font(.title3)
                 .lineLimit(1)
                 .allowsTightening(true)

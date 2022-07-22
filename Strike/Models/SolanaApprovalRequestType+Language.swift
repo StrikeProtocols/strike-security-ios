@@ -54,20 +54,20 @@ extension SolanaApprovalRequestType {
         case .loginApproval:
             return "Log In"
         case .acceptVaultInvitation:
-            return "Accept Vault Invitation"
+            return "Accept Invitation"
         }
     }
     
     var header2: String? {
         switch self {
         case .balanceAccountSettingsUpdate(let update):
-            return update.account.name.walletName()
+            return update.account.name.toWalletName()
         case .balanceAccountPolicyUpdate(let update):
-            return update.accountInfo.name.walletName()
+            return update.accountInfo.name.toWalletName()
         case .balanceAccountAddressWhitelistUpdate(let update):
-            return update.accountInfo.name.walletName()
+            return update.accountInfo.name.toWalletName()
         case .balanceAccountNameUpdate(let update):
-            return "\(update.accountInfo.name.walletName()) → \(update.newAccountName.walletName())"
+            return "\(update.accountInfo.name.toWalletName()) → \(update.newAccountName.toWalletName())"
         default:
             return nil
         }
@@ -89,70 +89,6 @@ extension SolanaApprovalRequestType {
             }
         default:
             return nil
-        }
-    }
-
-    var titleDescription: String {
-        switch self {
-        case .withdrawalRequest,
-             .conversionRequest,
-             .wrapConversionRequest,
-             .balanceAccountCreation,
-             .balanceAccountNameUpdate,
-             .balanceAccountPolicyUpdate,
-             .balanceAccountSettingsUpdate,
-             .balanceAccountAddressWhitelistUpdate,
-             .dAppTransactionRequest:
-            return "Wallet Change"
-        case .signersUpdate,
-             .acceptVaultInvitation:
-            return "User Change"
-        case .addressBookUpdate,
-             .dAppBookUpdate:
-            return "Address Book Change"
-        case .walletConfigPolicyUpdate:
-            return "Administration Change"
-        case .loginApproval:
-            return "Authentication"
-        case .unknown:
-            return "Unknown"
-        }
-    }
-
-    var icon: Image {
-        switch self {
-        case .withdrawalRequest:
-            return Image("transfer")
-        case .unknown:
-            return Image(systemName: "questionmark.circle")
-        case .conversionRequest:
-            return Image("conversion")
-        case .wrapConversionRequest:
-            return Image("conversion")
-        case .signersUpdate:
-            return Image(systemName: "iphone")
-        case .balanceAccountCreation:
-            return Image("policy")
-        case .balanceAccountNameUpdate:
-            return Image("policy")
-        case .balanceAccountPolicyUpdate:
-            return Image("policy")
-        case .balanceAccountSettingsUpdate:
-            return Image("policy")
-        case .balanceAccountAddressWhitelistUpdate:
-            return Image("policy")
-        case .addressBookUpdate:
-            return Image("policy")
-        case .dAppBookUpdate:
-            return Image("policy")
-        case .walletConfigPolicyUpdate:
-            return Image("policy")
-        case .dAppTransactionRequest:
-            return Image("conversion")
-        case .loginApproval:
-            return Image("person.crop.circle.badge.questionmark")
-        case .acceptVaultInvitation:
-            return Image(systemName: "iphone")
         }
     }
 }

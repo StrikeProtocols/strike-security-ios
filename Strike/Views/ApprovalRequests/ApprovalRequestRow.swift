@@ -23,19 +23,27 @@ struct ApprovalRequestRow<Row, Detail>: View where Row : View, Detail: View {
     var onStatusChange: (() -> Void)?
     @ViewBuilder var row: () -> Row
     @ViewBuilder var detail: () -> Detail
+    
+    var titleVaultName: String? {
+        switch request.requestType {
+        case .acceptVaultInvitation:
+            return nil
+        default:
+            return request.vaultName?.toVaultName()
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center) {
-                request.requestType.icon
-
-                Text(request.requestType.titleDescription)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
-                    .allowsTightening(true)
-                    .textCase(.uppercase)
-                    .font(.subheadline)
-                    .foregroundColor(Color.white)
+                if let titleVaultName = titleVaultName {
+                    Text(titleVaultName)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .allowsTightening(true)
+                        .font(.subheadline)
+                        .foregroundColor(Color.white)
+                }
                 Spacer()
                 if let expireDate = request.expireDate {
                     Countdown(date: expireDate, timerPublisher: timerPublisher)
