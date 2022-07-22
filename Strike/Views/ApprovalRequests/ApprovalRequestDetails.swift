@@ -11,6 +11,7 @@ import CryptoKit
 import Combine
 
 struct ApprovalRequestDetails<Content>: View where Content : View {
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.strikeApi) var strikeApi
 
     @State private var action: Action = .none
@@ -148,6 +149,19 @@ struct ApprovalRequestDetails<Content>: View where Content : View {
                 return Alert.withDismissButton(title: Text("Error"), message: Text(ignoreMessage(for: error)))
             }
         }
+        .navigationBarItems(
+            leading: Button {
+                presentationMode.wrappedValue.dismiss()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 18, height: 18)
+                    .foregroundColor(.white)
+                    .font(.body.bold())
+            }
+        )
+        .navigationBarBackButtonHidden(true)
         .navigationTitle("Details")
         .sheet(isPresented: $isComposingMail) {
             ComposeMail(

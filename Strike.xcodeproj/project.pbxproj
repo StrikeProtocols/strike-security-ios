@@ -1081,6 +1081,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-demo2.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://demo2.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1206,6 +1207,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-demo2.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://demo2.strikeprotocols.com";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -1339,6 +1341,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-prerelease.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://prerelease.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1462,6 +1465,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-prerelease.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://prerelease.strikeprotocols.com";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -1593,6 +1597,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
+				STRIKE_AUTH_BASE_URL = "https://demo2.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1716,6 +1721,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
+				STRIKE_AUTH_BASE_URL = "https://demo2.strikeprotocols.com";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -1847,6 +1853,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-prerelease.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://prerelease.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG STUBBED";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1975,6 +1982,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = confirmed;
 				SOLANA_RPC_URL = "https://solana-validator-prerelease.strikeprotocols.com";
+				STRIKE_AUTH_BASE_URL = "https://prerelease.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STUBBED;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -2108,6 +2116,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
+				STRIKE_AUTH_BASE_URL = "https://wallet.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PRODUCTION";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2174,6 +2183,7 @@
 				SDKROOT = iphoneos;
 				SOLANA_COMMITMENT = finalized;
 				SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
+				STRIKE_AUTH_BASE_URL = "https://wallet.strikeprotocols.com";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCTION;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

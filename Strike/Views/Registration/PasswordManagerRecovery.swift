@@ -53,6 +53,7 @@ struct PasswordManagerRecovery: View {
                 .padding(30)
                 .multilineTextAlignment(.leading)
                 .accentColor(Color.Strike.purple)
+                .disableAutocorrection(true)
 
             Spacer()
             Spacer()

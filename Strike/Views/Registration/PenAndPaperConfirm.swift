@@ -54,6 +54,7 @@ struct PenAndPaperConfirm: View {
                 incorrectPhrase = true
             })
             .autocapitalization(.none)
+            .disableAutocorrection(true)
             .textFieldStyle(DarkRoundedTextFieldStyle(tint: incorrectPhrase ? .Strike.red : .white))
             .padding([.trailing, .leading], 30)
             .multilineTextAlignment(.leading)
@@ -71,7 +72,7 @@ struct PenAndPaperConfirm: View {
         .onChange(of: typedPhrase) { newValue in
             incorrectPhrase = false
 
-            if typedPhrase.lowercased() == currentPhrase.lowercased() {
+            if typedPhrase.lowercased().trimmingCharacters(in: .whitespaces) == currentPhrase.lowercased() {
                 moveNext()
             }
         }

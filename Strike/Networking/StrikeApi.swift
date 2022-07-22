@@ -25,6 +25,8 @@ struct StrikeApi {
         case registerPushToken(String, deviceIdentifier: String)
         case unregisterPushToken(deviceIdentifier: String)
         case connectDApp(code: String)
+
+        case resetPassword(String)
     }
     
     /// The provider for the Moya Target definition for this API.
@@ -377,6 +379,8 @@ extension StrikeApi.Target: Moya.TargetType {
         switch self {
         case .multipleAccountNonce:
             return Configuration.solanaRpcURL
+        case .resetPassword:
+            return Configuration.strikeAuthBaseURL
         default:
             return Configuration.apiBaseURL
         }
@@ -403,6 +407,8 @@ extension StrikeApi.Target: Moya.TargetType {
             return ""
         case .initiateRequest(let request):
             return "v1/wallet-approvals/\(request.requestID)/initiations"
+        case .resetPassword(let email):
+            return "email/\(email.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "[INVALID_EMAIL]")/reset"
         }
     }
     
@@ -416,7 +422,8 @@ extension StrikeApi.Target: Moya.TargetType {
              .addWalletSigner,
              .multipleAccountNonce,
              .registerApprovalDisposition,
-             .initiateRequest:
+             .initiateRequest,
+             .resetPassword:
             return .post
         case .registerPushToken:
             return .post
@@ -429,7 +436,8 @@ extension StrikeApi.Target: Moya.TargetType {
         switch self {
         case .verifyUser,
              .walletSigners,
-             .walletApprovals:
+             .walletApprovals,
+             .resetPassword:
             return .requestPlain
         case .addWalletSigner(let walletSigner):
             return .requestJSONEncodable(walletSigner)

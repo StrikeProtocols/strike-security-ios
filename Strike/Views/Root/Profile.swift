@@ -121,6 +121,7 @@ struct ProfileItem<Content>: View where Content : View {
 struct Profile_Previews: PreviewProvider {
     static var previews: some View {
         Profile(user: .sample, onSignOut: {})
+            .environmentObject(ViewRouter())
     }
 }
 #endif

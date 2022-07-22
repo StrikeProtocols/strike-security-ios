@@ -49,6 +49,7 @@ struct PenAndPaperRecovery: View {
 
             TextField("", text: $typedWord)
                 .autocapitalization(.none)
+                .disableAutocorrection(true)
                 .textFieldStyle(DarkRoundedTextFieldStyle(tint: .white))
                 .padding([.trailing, .leading], 30)
                 .multilineTextAlignment(.leading)
@@ -130,7 +131,7 @@ struct PenAndPaperRecovery: View {
 
     private func finish() {
         do {
-            let rootSeed = try Mnemonic(phrase: typedPhrase.map({ $0.lowercased() })).seed
+            let rootSeed = try Mnemonic(phrase: typedPhrase.map({ $0.lowercased().trimmingCharacters(in: .whitespaces) })).seed
             let privateKey = try Ed25519HierachicalPrivateKey.fromRootSeed(rootSeed: rootSeed).privateKey
             let publicKeyData = privateKey.publicKey.rawRepresentation
             let phraseEncodedPublicKey = Base58.encode(publicKeyData.bytes)

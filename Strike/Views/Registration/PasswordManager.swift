@@ -69,11 +69,12 @@ struct PasswordManager: View {
             .multilineTextAlignment(.center)
             .opacity(copied ? 1 : 0)
 
+            Spacer()
+
             NavigationLink {
                 PasswordManagerConfirm(user: user, phrase: phrase, onSuccess: onSuccess)
             } label: {
                 Text("I saved the phrase →")
-                    .frame(height: 100)
                     .frame(maxWidth: .infinity)
             }
             .padding(30)

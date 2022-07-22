@@ -19,6 +19,7 @@ struct Configuration {
     static let raygunEnabled: Bool = stringValue(for: "RAYGUN_ENABLED").lowercased() == "yes"
     static let solanaRpcURL = URLValue(for: "SOLANA_RPC_URL")
     static let solanaCommitment = stringValue(for: "SOLANA_COMMITMENT")
+    static let strikeAuthBaseURL: URL = URLValue(for: "STRIKE_AUTH_BASE_URL")
 }
 
 extension Configuration {
